@@ -176,11 +176,10 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
     </xsl:variable>
     <DIV style="margin-left: 50%; font-size: 75%;">
       <P>
-        Each style point has a summary for which additional information is available
-        by toggling the accompanying arrow button that looks this way:
+        각각의 스타일 포인트마다의 추가적인 정보를 접고 펼치려면 다음과 같은 화살표 버튼을 클릭하세요:
         <SPAN class="showhide_button" style="margin-left: 0; float: none">
           <xsl:value-of select="$show_button_text"/></SPAN>.
-        You may toggle all summaries with the big arrow button:
+        모든 추가정보를 한번에 접고 펼치려면, 큰 화살표 버튼을 클릭하세요:
       </P>
       <DIV style=" font-size: larger; margin-left: +2em;">
         <SPAN class="showhide_button" style="font-size: 180%; float: none">
@@ -189,7 +188,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
           <xsl:attribute name="id"><xsl:value-of select="$show_hide_all_button"/></xsl:attribute>
           <xsl:value-of select="$button_text"/>
         </SPAN>
-        Toggle all summaries
+        모든 추가정보 접기/펼치기
       </DIV>
     </DIV>
     <xsl:call-template name="TOC">
