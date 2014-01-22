@@ -18,83 +18,64 @@ Tashana Landray
 </address>
 
 <OVERVIEW>
-<CATEGORY title="Important Note">
-  <STYLEPOINT title="Displaying Hidden Details in this Guide">
+<CATEGORY title="중요 알림">
+  <STYLEPOINT title="이 가이드에서 숨겨진 세부 사항 보기">
      <SUMMARY>
-       This style guide contains many details that are initially
-       hidden from view.  They are marked by the triangle icon, which you
-       see here on your left.  Click it now.
-       You should see "Hooray" appear below.
+       이 스타일 가이드는 처음에는 숨겨진 많은 세부 사항을 가지고 있다. 
+       세부 사항들은 왼쪽에 보이는 삼각형 아이콘으로 표시되어 있다.
+       클릭하면, 아래에 "안녕" 이 보일 것이다.
      </SUMMARY>
      <BODY>
        <p>
-        Hooray!  Now you know you can expand points to get more
-        details.  Alternatively, there's an "expand all" at the
-        top of this document.
+        안녕! 이제 세부 사항을 보는 방법을 알았다. 다른 방법으로는, 이 문서의
+        제일 위쪽에 "모두 펼치기" 가 있다.
        </p>
      </BODY>
   </STYLEPOINT>
 </CATEGORY>
-<CATEGORY title="Background">
+<CATEGORY title="배경">
   <p>
-    C++ is the main development language
-    
-    used by many of Google's open-source
-    projects.
-    As every C++ programmer knows, the language has many powerful features,
-    but this power brings with it complexity, which in turn can make code
-    more bug-prone and harder to read and maintain.
+    C++ 은 구글의 많은 오픈소스 프로젝트에 쓰이는 주요 개발 언어이다.
+    모든 C++ 프로그래머가 아는 것처럼, 이 언어는 많은 강력한 기능들을 가지지만,
+    이 강력함은 복잡함을 가져오는데, 결과적으로 코드를 버그가 생기기 쉽고,
+    읽기와 유지보수가 어렵게 만들 수 있다.
   </p>
   <p>
-    The goal of this guide is to manage this complexity by describing
-    in detail the dos and don'ts of writing C++
-    code. These rules exist to
-    keep
-    
-    the
-    code base manageable while still allowing coders to use C++ language
-    features productively.
+    이 가이드의 목적은 C++ 코드를 작성함에 있어서 해야할 것과 하지 말아야 할 것을
+    자세히 설명하여, 이런 복잡함을 관리하는 것이다.
+    이 규칙들은 프로그래머들이 C++ 언어의 기능들을 생산적으로 사용하면서도,
+    코드 베이스를 관리가능하게 유지하기 위해 존재한다.
   </p>
   <p>
-    <em>Style</em>, also known as readability, is what we call the
-    conventions that govern our C++ code. The term Style is a bit of a
-    misnomer, since these conventions cover far more than just source
-    file formatting.
+    <em>스타일</em>(가독성으로도 알려진)은 우리가 C++ 코드를 관리하기 위해
+    컨벤션이라고 부르는 것이다. 이 컨벤션은 단순히 소스 파일 포맷팅보다
+    훨씬 많은 것들을 포함하기 때문에, 스타일이라는 명칭은 약간 잘못된 것이다.
   </p>
   <p>
-    One way in which we keep the code base manageable is by enforcing
-    <em>consistency</em>.
-    
-    It is very important that any
-    
-    programmer
-    be able to look at another's code and quickly understand it.
-    Maintaining a uniform style and following conventions means that we can
-    more easily use "pattern-matching" to infer what various symbols are
-    and what invariants are true about them. Creating common, required
-    idioms and patterns makes code much easier to understand.  In some
-    cases there might be good arguments for changing certain style
-    rules, but we nonetheless keep things as they are in order to
-    preserve consistency.
+    코드 베이스를 관리가능하게 유지하는 하나의 방법은 <em>일관성</em>을
+    강요하는 것이다.
+    어떤 프로그래머가 다른 사람의 코드를 보고 빠르게 이해할 수 있는 것은
+    매우 중요하다.
+    통일된 스타일을 유지하고 컨벤션을 따르는 것은, 다양한 심볼들과 값들을
+    추론하기 위해 좀더 쉽게 "패턴-일치" 를 사용함을 의미한다.
+    일반적이고, 필수적인 관용구와 패턴을 만드는 것은 코드를 좀더 이해하기
+    쉽게 만든다. 어떤 경우에는 정해진 스타일 규칙을 변경하기 위한 좋은 논쟁이
+    있을 수 있으나, 그럼에도 불구하고 일관성을 유지하기 위해 이것들을 유지한다.
   </p>
   <p>
-    Another issue this guide addresses is that of C++ feature bloat.
-    C++ is a huge language with many advanced features. In some cases
-    we constrain, or even ban, use of certain features. We do this to
-    keep code simple and to avoid the various common errors and
-    problems that these features can cause.  This guide lists these
-    features and explains why their use is restricted.
+    이 가이드가 해결하는 다른 이슈는 C++ 기능의 비대함이다.
+    C++ 은 많은 고급 기능들을 가진 거대한 언어이다.
+    어떤 경우에는 특정 기능들의 사용에 제약을 가하고, 심지어 금지한다.
+    코드를 단순하게 유지하고, C++ 의 기능들이 만들어낼 수 있는
+    다양한 일반적인 에러들과 문제들을 피하기 위해서이다.
+    이 가이드는 이런 기능들을 나열하고 왜 이런 사용이 제한되었는지 설명한다.
   </p>
   <p>
-    
-    Open-source projects developed by Google
-    conform to the requirements in this guide.
+    구글에서 개발하는 오픈소스 프로젝트들은 이 가이드의 요구사항들을 따른다.
   </p>
   
   <p>
-    Note that this guide is not a C++ tutorial: we assume that the
-    reader is familiar with the language.
-    
+    이 가이드는 C++ 튜토리얼이 아니다. 읽는이가 C++ 에 친숙함을 가정한다.
   </p>
   
 </CATEGORY>
