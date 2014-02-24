@@ -1,4 +1,4 @@
-google-styleguide-cpp-kr
+google-styleguide-cpp-ko-KR
 =================
 
-여기는 구글 C++ 가이드 한글 번역 작업의 부분이라구.
+이것은 구글 C++ 가이드 한글 번역 작업의 일부분이라구.
