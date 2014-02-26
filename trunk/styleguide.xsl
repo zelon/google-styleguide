@@ -300,7 +300,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
   <xsl:template match="DEFINITION">
     <P>
       <xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
-      <SPAN class="stylepoint_section">Definition:  </SPAN>
+      <SPAN class="stylepoint_section">정의:  </SPAN>
       <xsl:apply-templates/>
     </P>
   </xsl:template>
@@ -308,7 +308,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
   <xsl:template match="PROS">
     <P>
       <xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
-      <SPAN class="stylepoint_section">Pros:  </SPAN>
+      <SPAN class="stylepoint_section">장점:  </SPAN>
       <xsl:apply-templates/>
     </P>
   </xsl:template>
@@ -316,7 +316,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
   <xsl:template match="CONS">
     <P>
       <xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
-      <SPAN class="stylepoint_section">Cons: </SPAN>
+      <SPAN class="stylepoint_section">단점: </SPAN>
       <xsl:apply-templates/>
     </P>
   </xsl:template>
@@ -324,7 +324,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
   <xsl:template match="DECISION">
     <P>
       <xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
-      <SPAN class="stylepoint_section">Decision:  </SPAN>
+      <SPAN class="stylepoint_section">결론:  </SPAN>
       <xsl:apply-templates/>
     </P>
   </xsl:template>
