@@ -564,8 +564,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        A class can define another class within it; this is also
-        called a <SYNTAX>member class</SYNTAX>.
+        클래스는 다른 클래스 안에 정의될 수 있는데, <SYNTAX>멤버 클래스</SYNTAX>라고도 불리지.
         <CODE_SNIPPET>
           class Foo {
 
@@ -579,86 +578,72 @@ Tashana Landray
         </CODE_SNIPPET>
       </DEFINITION>
       <PROS>
-        This is useful when the nested (or member) class is only used
-        by the enclosing class; making it a member puts it in the
-        enclosing class scope rather than polluting the outer scope
-        with the class name.  Nested classes can be forward declared
-        within the enclosing class and then defined in the
-        <code>.cc</code> file to avoid including the nested class
-        definition in the enclosing class declaration, since the
-        nested class definition is usually only relevant to the
-        implementation.
+        nested(혹은 멤버) 클래스는 오직 포함한 클래스에 의해서만 사용될 때
+        유용하지: 클래스 이름으로 바같 영역을 더럽히는 대신 클래스를 포함한 클래스에
+        넣어 멤버로 만들지. nested 클래스는 포함한 클래스 내에서 전방 선언된 담에
+        <code>.cc</code> 파일에서 정의하지. 보통 nested 클래스는 오직 구현부에만 상관이 있으니까
+        nested 클래스의 정의를 포함한 클래스의 선언에서 include하지 않으려고 그러는 거지.
       </PROS>
       <CONS>
-        Nested classes can be forward-declared only within the
-        definition of the enclosing class. Thus, any header file
-        manipulating a <code>Foo::Bar*</code> pointer will have to
-        include the full class declaration for <code>Foo</code>.
+        nested 클래스는 오직 포함한 클래스의 정의 안에서만 전방 선언될 수 있지.
+        그러므로 <code>Foo::Bar*</code> 포인터를 다루고자 하는 어떤 헤더 파일도
+        <code>Foo</code> 클래스의 전체 선언을 include해야 하지.
       </CONS>
       <DECISION>
-        Do not make nested classes public unless they are actually
-        part of the interface, e.g., a class that holds a set of
-        options for some method.
-        
+        nested 클래스가 실제 인터페이스의 일부인 경우가 아니면 public nested 클래스를 만들지 말라구.
+        예를 들면 어떤 메서드의 옵션 세트를 담은 클래스 따위가 실제 인터페이스의 일부인 nested 클래스라구.
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Nonmember, Static Member, and Global Functions">
+  <STYLEPOINT title="멤버 아닌 함수, static 멤버 함수, 전역 함수">
     <SUMMARY>
-      Prefer nonmember functions within a namespace or static member
-      functions to global functions; use completely global functions
-      rarely.
+      전역 함수보다는 네임스페이스 안에 있는 멤버 아닌 함수나 static 함수를 선호하라구.
+      완전 전역 함수는 거의 사용해서는 안 된다구.
     </SUMMARY>
     <BODY>
       <PROS>
-        Nonmember and static member functions can be useful in some
-        situations.  Putting nonmember functions in a namespace avoids
-        polluting the global namespace.
+        어떤 상황에서는 멤버 아닌 함수나 static 멤버 함수가 쓸 모가 있지.
+        멤버 아닌 함수를 네임스페이스에 넣으면 전체 이름 영역을 더럽히지 않을 수 있지.
       </PROS>
       <CONS>
-        Nonmember and static member functions may make more sense as
-        members of a new class, especially if they access external
-        resources or have significant dependencies.
+        멤버 아닌 함수나 static 멤버 함수들은 새 클래스의 멤버로 정의하는 게 더 말이 될 수도 있지.
+        특리 그 함수들이 외부 리소스에 접근하는 경우나 상당한 의존관계를 가지고 있는 경우가 그러하지.
       </CONS>
       <DECISION>
         <p>
-          Sometimes it is useful, or even necessary, to define a
-          function not bound to a class instance.  Such a function can
-          be either a static member or a nonmember function.
-          Nonmember functions should not depend on external variables,
-          and should nearly always exist in a namespace.  Rather than
-          creating classes only to group static member functions which
-          do not share static data, use
-          <a href="#Namespaces">namespaces</a> instead.
+          함수를 특정 클래스에 제한해서 정의하지 않는 것은 어떤 경우에는 유용하고 심지어 필요하기도 하지.
+          이러한 함수들은 static 멤버 함수거나 멤버가 아닌 함수가 될 수 있지.
+          멤버가 아닌 함수는 외부 변수에 의존적이어서는 안된다구.
+          그리고 거의 항상 네임스페이스 안에 있어야 한다구.
+          static한 데이터를 공유하는 static 멤버 함수들의 그룹일 경우에만 클래스로 감싸고,
+          그렇지 않을 때는 <a href="#네임스페이스">네임스페이스</a>로 대신 감싸라구.
         </p>
         <p>
-          Functions defined in the same compilation unit as production
-          classes may introduce unnecessary coupling and link-time
-          dependencies when directly called from other compilation
-          units; static member functions are particularly susceptible
-          to this.  Consider extracting a new class, or placing the
-          functions in a namespace possibly in a separate library.
+          생성된 클래스로서의 어떤 컴파일 단위에 정의된 함수들이 다른 컴파일 단위에서 직접 호출될 때
+          불필요한 결합이나 링크 시의 종속 관계를 만들 수 있다구; static 멤버 함수가 특별히 민감하지.
+          이런 함수들을 새로운 클래스로 뽑아내거나 네임스페이스 안에 이런 함수들을 넣는 것을 고려해 보라구.
+          어쩌면 다른 라이브러리로 분리한 네임스페이스 안에 함수를 넣을 수도 있다구.
         </p>
         <p>
-          If you must define a nonmember function and it is only
-          needed in its <code>.cc</code> file, use an unnamed
-          <a HREF="#Namespaces">namespace</a> or <code>static</code>
-          linkage (eg <code>static int Foo() {...}</code>) to limit
-          its scope.
+          만약 정의한 멤버가 아닌 함수가 오직 그 <code>.cc</code> 파일에서만 필요하다면,
+          그 인식 범위를 제한하기 위해 이름없는 <a href="#네임스페이스">네임스페이스</a>를 사용하거나
+          <code>static</code> 멤버 함수(예를 들자면 <code>static int Foo() {...}</code>)로 만들라구.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Local Variables">
+  <STYLEPOINT title="로컬 변수">
     <SUMMARY>
-      Place a function's variables in the narrowest scope possible,
-      and initialize variables in the declaration.
+      함수의 변수는 가능한 한 좁은 범위에 위치해야 하고, 선언과 동시에 초기화되어야 한다구.
     </SUMMARY>
     <BODY>
       <p>
-        C++ allows you to declare variables anywhere in a function.
+        C++은 함수 어디에서나 변수를 선언할 수 있도록 허용하고 있지. 최대한 첫번째 사용처에 가까운
+        장소에 선언하고, 최대한 이름 인식 영역이 좁은 형태로 변수를 선언하기를 권장 
+        
+        allows you to declare variables anywhere in a function.
         We encourage you to declare them in as local a scope as
         possible, and as close to the first use as possible. This
         makes it easier for the reader to find the declaration and see
