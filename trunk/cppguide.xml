@@ -374,13 +374,13 @@ Tashana Landray
         <p>
           예를 들면 전체 영역에서 <code>Foo</code>라는 클래스를 가진 두 개의 다른 
           프로젝트가 있다면 이들 기호들은 컴파일할 때나 실행할 때 서로 충돌할 수 있지.
-          If each project places their code in a namespace, <code>project1::Foo</code>
-          and <code>project2::Foo</code> are now distinct symbols that
-          do not collide.
+          만약 각각의 프로젝트가 그들의 코드를 네임스페이스 안에 넣었다면 
+          <code>project1::Foo</code>와 <code>project2::Foo</code>는 이젠 서로 다른 기호니까
+          충돌하지 않겠지.
         </p>
         <p>
-          Inline namespaces automatically place their names in the
-          enclosing scope. Consider the following snippet, for example:
+          인라인 네임스페이스는 자동적으로 자신을 포함하는 네임스페이스에다 넣어주지.
+          예를 들어 아래 코드 조각을 보자면:
         </p>
         <CODE_SNIPPET>
             namespace X {
@@ -390,39 +390,33 @@ Tashana Landray
             }
         </CODE_SNIPPET>
         <p>
-          The expressions <code>X::Y::foo()</code> and
-          <code>X::foo()</code> are interchangeable. Inline namespaces
-          are primarily intended for ABI compatibility across versions.
+          <code>X::Y::foo()</code>와 <code>X::foo()</code>는 서로 바꾸어 쓸 수 있지.
+          인라인 네임스페이스는 원래 버전간 ABI 호환성을 위한 것이지.
         </p>
       </PROS>
       <CONS>
         <p>
-          Namespaces can be confusing, because they provide an
-          additional (hierarchical) axis of naming, in addition to the
-          (also hierarchical) name axis provided by classes.
+          네임스페이스는 클래스에 의해 부여된 이름 계층에다 추가적으로
+          (계층적인) 이름 계열을 더하기 때문에 종종 혼란스럽지.
         </p>
         <p>
-          Inline namespaces, in particular, can be confusing because
-          names aren't actually restricted to the namespace where they
-          are declared. They are only useful as part of some larger
-          versioning policy.
+          특히 인라인 네임스페이스는 실질적으로 선언한 이름들이 그 네임스페이스에 제한되지 않기 때문에 혼란스럽지.
+          인라인 네임스페이스는 더 큰 버전 정책 하에서 사용될 때만 유용하지.
         </p>
         <p>
-          Use of unnamed namespaces in header files can easily cause
-          violations of the C++ One Definition Rule (ODR).
+          헤더 파일에서 이름없는 네임스페이스를 사용하는 것은 C++ One Definition Rule (ODR)을 깨뜨리기 쉽지.
         </p>
       </CONS>
       <DECISION>
         <p>
-          Use namespaces according to the policy described below.
-          Terminate namespaces with comments as shown in the given examples.
+          네임스페이스는 아래와 같은 정책에 따라 사용하라구.
+          네임스페이스는 아래 예제에서 보이는 것처럼 코멘트를 사용해서 닫으라구.
         </p>
 
-        <SUBSECTION title="Unnamed Namespaces">
+        <SUBSECTION title="이름없는 네임스페이스">
           <ul>
-            <li> Unnamed namespaces are allowed and even encouraged in
-                 <code>.cc</code> files, to avoid runtime naming
-                 conflicts:
+            <li> 실행 시의 이름 충돌을 막기 위해 이름없는 네임스페이스를 사용하는 것은
+                 <code>.cc</code> 파일에서 허용될 뿐 아니라 심지어 권장된다구:
                  <CODE_SNIPPET>
                    namespace {                           // This is in a .cc file.
 
@@ -434,29 +428,22 @@ Tashana Landray
                  </CODE_SNIPPET>
 
                  <p>
-                   However, file-scope declarations that are
-                   associated with a particular class may be declared
-                   in that class as types, static data members or
-                   static member functions rather than as members of
-                   an unnamed namespace.
+                   하지만 특정 클래스와 연관이 있는 파일 영역 선언문은 이름없는 네임스페이스의 멤버보다는
+                   연관이 있는 클래스 안에 타입이나 static 데이터 멤버나 static 멤버 함수로 선언될 수 있다구.
                  </p>
                  </li>
-            <li> Do not use unnamed namespaces in <code>.h</code>
-                 files.
-                 </li>
+            <li><code>.h</code> 파일에서는 이름없는 네임스페이스를 사용하지 말라구.</li>
           </ul>
         </SUBSECTION>
 
-        <SUBSECTION title="Named Namespaces">
+        <SUBSECTION title="이름 있는 네임스페이스">
           <p>
-            Named namespaces should be used as follows:
+            이름 있는 네임스페이스는 아래와 같이 사용되어야 한다구:
           </p>
           <ul>
-            <li> Namespaces wrap the entire source file after includes,
-                 
-                 <a href="http://google-gflags.googlecode.com/">gflags</a>
-                 definitions/declarations, and forward declarations of classes
-                 from other namespaces:
+            <li> 네임스페이스는 include 구문과
+                 <a href="http://google-gflags.googlecode.com/">gflags</a> 선언/정의,
+                 다른 네임스페이스에 있는 클래스 전방 선언 아래부터 전체 소스 파일을 감싸야 한다구:
                  <CODE_SNIPPET>
                    // In the .h file
                    namespace mynamespace {
@@ -483,9 +470,8 @@ Tashana Landray
                    }  // namespace mynamespace
                  </CODE_SNIPPET>
                  <p>
-                   The typical <code>.cc</code> file might have more
-                   complex detail, including the need to reference classes
-                   in other namespaces.
+                   전형적인 <code>.cc</code> 파일은 다른 네임스페이스의 클래스를 참조해야 할 필요가 있는 등
+                   더 복잡한 항목들을 가지고 있다구.
                  </p>
                  <CODE_SNIPPET>
                    #include "a.h"
@@ -505,26 +491,23 @@ Tashana Landray
 
             
 
-            <li> Do not declare anything in namespace
-                 <code>std</code>, not even forward declarations of
-                 standard library classes.  Declaring entities in
-                 namespace <code>std</code> is undefined behavior,
-                 i.e., not portable.  To declare entities from the
-                 standard library, include the appropriate header
-                 file.
+            <li> <code>std</code> 네임스페이스 안에는 어떠한 것도 선언해서는 안 된다구.
+                 심지어 standard library 클래스들의 전방 선언도 해서는 안 된다구.
+                 <code>std</code> 네임스페이스에 어떤 요소를 선언하면 정의되지 않은 거동이 일어나는 데다
+                 포팅도 불가능해진다구. standard library에 요소를 선언하고 싶으면 
+                 해당 헤더 파일을 include하라구.
                  </li>
 
-            <li> You may not use a <SYNTAX>using-directive</SYNTAX> to
-                 make all names from a namespace available.
+            <li> 어느 네임스페이스에 있는 모든 이름을 사용하기 위해서 
+                 <SYNTAX>using-directive</SYNTAX>를 사용하려고 하면 안 된다구. 
                  <BAD_CODE_SNIPPET>
                    // Forbidden -- This pollutes the namespace.
                    using namespace foo;
                  </BAD_CODE_SNIPPET>
                  </li>
 
-            <li> You may use a <SYNTAX>using-declaration</SYNTAX>
-                 anywhere in a <code>.cc</code> file, and in functions,
-                 methods or classes in <code>.h</code> files.
+            <li> <SYNTAX>using-선언</SYNTAX>의 경우에는 <code>.cc</code> 파일의 어느 부분에나 사용할 수 있고,
+                 <code>.h</code> 파일의 함수나 멤버나 클래스 안에서 사용할 수 있다구.
                  <CODE_SNIPPET>
                    // OK in .cc files.
                    // Must be in a function, method or class in .h files.
@@ -532,10 +515,9 @@ Tashana Landray
                  </CODE_SNIPPET>
                  </li>
 
-            <li> Namespace aliases are allowed anywhere in a
-                 <code>.cc</code> file, anywhere inside the named
-                 namespace that wraps an entire <code>.h</code> file,
-                 and in functions and methods.
+            <li> 네임스페이스 alias의 사용은 <code>.cc</code> 파일의 어느 부분에서나 허용되고,
+                 전체 <code>.h</code> 파일을 감싸고 있는 이름있는 네임스페이스 안의 어느 부분에서나
+                 허용되고, 함수나 메서드 안에서도 허용된다구.
                  <CODE_SNIPPET>
                    // Shorten access to some commonly used names in .cc files.
                    namespace fbz = ::foo::bar::baz;
@@ -556,15 +538,13 @@ Tashana Landray
                    }  // namespace librarian
                  </CODE_SNIPPET>
                  <p>
-                 Note that an alias in a .h file is visible to everyone
-                 #including that file, so public headers (those available
-                 outside a project) and headers transitively #included by them,
-                 should avoid defining aliases, as part of the general
-                 goal of keeping public APIs as small as possible.
+                 <code>.h</code> 파일에 있는 네임스페이스 alias는 그 파일을 <code>#include</code>하는
+                 누구에게나 보인다는 점에 주의하라구. 그러니까 공개 헤더들(프로젝트 바같에서 
+                 사용할 수 있는 종류의)과 결과적으로 그 공개 헤더들을 include하게 되는 헤더들은 가능한 한
+                 공개 API를 작게 유지하려는 목적에서 alias들을 정의하는 것을 피해야 한다구.
                  </p>
                  </li>
-            <li> Do not use inline namespaces.
-                 </li>
+            <li> 인라인 네임스페이스를 사용하지 말라구.</li>
           </ul>
         </SUBSECTION>
 
@@ -577,11 +557,10 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Nested Classes">
+  <STYLEPOINT title="nested 클래스">
     <SUMMARY>
-      Although you may use public nested classes when they are part of
-      an interface, consider a <a HREF="#Namespaces">namespace</a> to
-      keep declarations out of the global scope.
+      nested 클래스가 인터페이스의 일부인 경우에는 public nested 클래스를 사용할 수 있다구.
+      그럼에도 전체 이름 영역에 선언이 들어가지 않도록 <a href="#네임스페이스">네임스페이스</a> 사용을 고려하라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
