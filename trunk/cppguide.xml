@@ -641,15 +641,9 @@ Tashana Landray
     <BODY>
       <p>
         C++은 함수 어디에서나 변수를 선언할 수 있도록 허용하고 있지. 최대한 첫번째 사용처에 가까운
-        장소에 선언하고, 최대한 이름 인식 영역이 좁은 형태로 변수를 선언하기를 권장 
-        
-        allows you to declare variables anywhere in a function.
-        We encourage you to declare them in as local a scope as
-        possible, and as close to the first use as possible. This
-        makes it easier for the reader to find the declaration and see
-        what type the variable is and what it was initialized to.  In
-        particular, initialization should be used instead of
-        declaration and assignment, e.g.
+        장소에 선언하고, 최대한 이름 인식 영역이 좁은 형태로 변수를 선언하기를 권장한다구. 이렇게 하면
+        읽는 사람이 선언을 찾고 그 변수 타입이 뭔지 보고 어떻게 초기화 되었는 지 보는 게 편해진다구.
+        특히 선언하고 대입하지 말고 변수 초기화 구문을 사용해야 한다구. 예를 들자면
       </p>
       <BAD_CODE_SNIPPET>
         int i;
@@ -667,21 +661,17 @@ Tashana Landray
         vector&lt;int&gt; v = {1, 2};  // Good -- v starts initialized.
       </CODE_SNIPPET>
       <p>
-        Note that gcc implements <code>for (int i = 0; i
-        &lt; 10; ++i)</code> correctly (the scope of <code>i</code> is
-        only the scope of the <code>for</code> loop), so you can then
-        reuse <code>i</code> in another <code>for</code> loop in the
-        same scope.  It also correctly scopes declarations in
-        <code>if</code> and <code>while</code> statements, e.g.
+        gcc가 <code>for (int i = 0; i&lt; 10; ++i)</code>를 제대로
+        (<code>i</code>의 인식 영역은 오로지 <code>for</code> 루프 안쪽) 구현하고 있다는 점에 주의하라구.
+        그러니까 같은 영역 안의 다른 <code>for</code> 루프에서 <code>i</code>를 재사용할 수 있다구.
+        이는 또한 <code>if</code>문이나 <code>while</code>문에서 같다구. 예를 들면
       </p>
       <CODE_SNIPPET>
         while (const char* p = strchr(str, '/')) str = p + 1;
       </CODE_SNIPPET>
       <p>
-        There is one caveat:  if the variable is an object, its
-        constructor is invoked every time it enters scope and is
-        created, and its destructor is invoked every time it goes
-        out of scope.
+        경고할 게 하나 있다구: 만약 변수가 객체이면 그 생성자는 인식 영역에 들어갈 때마다 호출되고
+        그 소멸자는 영역에서 빠져나갈 때마다 호출된다구.
       </p>
       <BAD_CODE_SNIPPET>
         // Inefficient implementation:
@@ -691,8 +681,7 @@ Tashana Landray
         }
       </BAD_CODE_SNIPPET>
       <p>
-        It may be more efficient to declare such a variable used in a
-        loop outside that loop:
+        이런 변수를 사용할 때에는 루프 바같에 선언하는 것이 훨씬 성능이 좋다구,
       </p>
       <CODE_SNIPPET>
         Foo f;  // My ctor and dtor get called once each.
@@ -703,68 +692,50 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Static and Global Variables">
+  <STYLEPOINT title="static 변수와 전역 변수">
     <SUMMARY>
-      Static or global variables of class type are forbidden: they cause
-      hard-to-find bugs due to indeterminate order of construction and
-      destruction.
-      However, such variables are allowed if they are <code>constexpr</code>:
-      they have no dynamic initialization or destruction.
+      클래스 타입의 static 변수와 전역 변수는 사용하지 말라구: 갸들은 생성과 소멸 순서를 확정할 수
+      없기 때문에 찾기-힘든 버그들을 만들 수 있다구. 하지만 <code>constexpr</code> 이라면 이런 변수는
+      허용될 수 있다구: 이들은 동적으로 초기화하거나 소멸하거나 하지 않는다구.
     </SUMMARY>
     <BODY>
       <p>
-        Objects with static storage duration, including global variables,
-        static variables, static class member variables, and function static
-        variables, must be Plain Old Data (POD): only ints, chars, floats, or
-        pointers, or arrays/structs of POD.
+        전역 변수, static 변수, static 클래스 멤버 변수, 함수 static 변수를 포함해서 static storage
+        지속기간에 속하는 객체들은 Plain Old Data (POD)여야 한다구: 오직 int들, char들, float들, 포인터들,
+        혹은 POD의 행렬이나 구조체여야 한다구.
       </p>
       <p>
-        The order in which class constructors and initializers for
-        static variables are called is only partially specified in C++ and can
-        even change from build to build, which can cause bugs that are difficult
-        to find.  Therefore in addition to banning globals of class type, we do
-        not allow static POD variables to be initialized with the result of a
-        function, unless that function (such as getenv(), or getpid()) does not
-        itself depend on any other globals.
+        static 변수의 클래스 생성자와 클래스 초기화 함수가 호출되는 순서는 C++에서 부분적으로만 명확하고,
+        심지어 빌드마다 그 호출 순서가 변할 수도 있어 찾기 힘든 버그를 만들 수 있다구. 그러므로 클래스 타입의
+        전역 변수를 금지하는 것은 물론, 우리는 static POD 변수가 함수의 결과로 최기화되는 것도 허용하지 않는다구.
+        단 (getenv()나 getpid()처럼) 다른 전역 요소에 의존하지 않는 함수는 static POD 변수를 초기화하는 데 
+        사용할 수 있다구.
       </p>
       <p>
-        Likewise, global and static variables are destroyed when the
-        program terminates, regardless of whether the termination is by
-        returning from <code>main()</code> or by calling
-        <code>exit()</code>. The order in which destructors are called is
-        defined to be the reverse of the order in which the constructors
-        were called.  Since constructor order is indeterminate, so is
-        destructor order.  For example, at program-end time a static
-        variable might have been destroyed, but code still running —
-        perhaps in another thread — tries to access it and fails.  Or
-        the destructor for a static <code>string</code> variable might be
-        run prior to the destructor for another variable that contains a
-        reference to that string.
+        마찬가지로 전역 변수나 static 변수는 <code>main()</code> 함수에서 리턴하거나 <code>exit()</code>이
+        호출되거나 상관없이 프로그램이 종료될 때 소멸하지. 소멸자의 호출 순서는 생성자의 호출 순서의 반대 순서로
+        정의되어 있지. 생성자의 순서가 확정되어 있지 않기 때문에 소멸자의 호출 순서도 마찬가지지. 예를 들어
+        프로그램이 종료되는 와중에는 static 변수는 소멸되지만 여전히 수행 중인 코드에서 - 아마도 다른 스레드에서 -
+        그것들에 접근하려다 실패할 수 있지. 혹은 어느 static <code>string</code> 변수에 대한 소멸자가 그 string을 
+        참조하는 다른 변수에 대한 소멸자보다 먼저 수행될 수도 있지.
       </p>
       <p>
-        One way to alleviate the destructor problem is to terminate the
-        program by calling <code>quick_exit()</code> instead of
-        <code>exit()</code>. The difference is that <code>quick_exit()</code>
-        does not invoke destructors and does not invoke any handlers that were
-        registered by calling <code>atexit()</code>. If you have a handler that
-        needs to run when a program terminates via
-        <code>quick_exit()</code> (flushing logs, for example), you can
-        register it using <code>at_quick_exit()</code>. (If you have a handler
-        that needs to run at both <code>exit()</code> and
-        <code>quick_exit()</code>, you need to register it in both places.)
+        소멸자 문제를 다소나마 해결하는 방법은 <code>exit()</code> 대신 <code>quick_exit()</code>을 불러 
+        프로그램을 종료하는 것이지. <code>quick_exit()</code>가 다른 점은 소멸자를 호출하지 않고, 
+        <code>atexit()</code>에 등록된 핸들러들을 호출하는 것이지. 만약 <code>quick_exit()</code>을 사용해서
+        프로그램을 종료할 때에 수행해야 하는 핸들러가 있다면(예를 들면 로그를 flush 한다거나), 
+        <code>at_quick_exit()</code>에 등록할 수 있지. (만약 <code>exit()</code>과 <code>quick_exit()</code>에
+        모두 수행해야 하는 핸듫러가 있다면 두 군데 다 등록해야 하지.)
       </p>
       <p>
-        As a result we only allow static variables to contain POD data.  This
-        rule completely disallows <code>vector</code> (use C arrays instead), or
-        <code>string</code> (use <code>const char []</code>).
+        결과적으로 우리는 오직 POD 데이터만을 가진 static 변수를 허용한다구. 이 규칙은 <code>vector</code>
+        (대신 C 배열을 사용하라구)나 <code>string</code> (대신 <code>const char []</code>를 사용하라구)을 완전히 금지한다구.
       </p>
       
       <p>
-        If you need a static or global variable of a class type, consider
-        initializing a pointer (which will never be freed), from either your
-        main() function or from pthread_once().  Note that this must be a raw
-        pointer, not a "smart" pointer, since the smart pointer's destructor
-        will have the order-of-destructor issue that we are trying to avoid.
+        만약에 클래스 타입을 가진 static 변수나 전역 변수가 필요하다면, 너희들의 main() 함수나 pthread_once()에서
+        (정대로 해제되지 않는)포인터를 초기화하는 방법을 고려해 보라구. 이것은 "smart"한 포인터가 아니고 말 그대로의
+        포인터여야 한다구. smart 포인터의 소멸자는 우리가 피하려고 하는 바로 이 소멸자 순서 문제를 가지고 있기 때문이라구. 
       </p>
       
       
@@ -772,246 +743,173 @@ Tashana Landray
   </STYLEPOINT>
 </CATEGORY>
 
-<CATEGORY title="Classes">
-  Classes are the fundamental unit of code in C++. Naturally, we use
-  them extensively. This section lists the main dos and don'ts you
-  should follow when writing a class.
+<CATEGORY title="클래스">
+  클래스는 C++의 기본적인 단위지. 당연히 우리는 클래스를 널리 쓰지. 이 섹션은 클래스를 적을 때 지켜야 할 것과 하지 말아야 할 것을
+  담고 있지.
 
-  <STYLEPOINT title="Doing Work in Constructors">
+  <STYLEPOINT title="생성자에서 작업">
     <SUMMARY>
-      Avoid doing complex initialization in constructors (in particular,
-      initialization that can fail or that requires virtual method calls).
+      생성자에서 복잡한 초기화 작업을 하는 건 피하라구.(특히 실패할 수 있는 초기화나 virtual 함수 호출이 필요한 작업 따위)
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        It is possible to perform initialization in the body of the
-        constructor.
+        생성자의 함수 본문에서 초기화를 하는 게 가능하지.
       </DEFINITION>
       <PROS>
-        Convenience in typing.  No need to worry about whether the
-        class has been initialized or not.
+        타이핑하기 편하지. 클래스가 초기화 되었는지 아닌지 신경 쓸 필요가 없어지지.
       </PROS>
       <CONS>
-        The problems with doing work in constructors are:
+        생성자에서 작업을 하는 경우에 생길 수 있는 문제로는:
         <ul>
-          <li> There is no easy way for constructors to signal errors,
-               short of using exceptions (which are
-               <a HREF="#Exceptions">forbidden</a>).
+          <li> (<a HREF="#Exceptions">금지되어 있는</a>) exception을 제외하고는 생성자에서 실패를 알릴 수 있는 쉬운 방법이 없지.
                </li>
-          <li> If the work fails, we now have an object whose
-               initialization code failed, so it may be an
-               indeterminate state.
+          <li> 만약 작업이 실패할 경우에는 우리는 초기화에 실패한 객체를 가지게 되는데, 이런 객체의 상태는 확정할 수가 없지.
                </li>
-          <li> If the work calls virtual functions, these calls will
-               not get dispatched to the subclass implementations.
-               Future modification to your class can quietly introduce
-               this problem even if your class is not currently
-               subclassed, causing much confusion.
+          <li> 만약 작업이 virtual 함수 호출을 할 경우에는 이런 호출은 서브 클래스 구현체에 전달되지 않지. 만약 클래스가 현재
+               상속되지 않는 경우라 할 지라도, 언젠가 이 클래스를 수정하는 경우에 조용히 이 문제가 발생해서 많은 혼란을 줄 수 있지.
                </li>
-          <li> If someone creates a global variable of this type
-               (which is against the rules, but still), the
-               constructor code will be called before
-               <code>main()</code>, possibly breaking some implicit
-               assumptions in the constructor code.  For instance,
-               
-               <a href="http://google-gflags.googlecode.com/">gflags</a>
-               will not yet have been initialized.
+          <li> 만약 누군가가 이런 타입의 전역 변수를 만드는 경우에(이건 규칙 위반이지만 그래도 하는 경우에는) 생성자 코드가 
+               <code>main()</code>보다 먼저 수행하게 되고, 생성자 코드에서 암묵적으로 가정했던 것을 깨뜨릴 수 있다구. 예를 들면
+               <a href="http://google-gflags.googlecode.com/">gflags</a>들이 아직 초기화되지 않았을 수 있지.
                </li>
         </ul>
       </CONS>
       <DECISION>
-        Constructors should never call virtual functions or attempt to raise
-        non-fatal failures. If your object requires non-trivial
-        initialization, consider using  a factory function or <code>Init()</code> method.
+        생성자는 절대 virtual 함수를 불러서는 안 되고 치명적이지 않은 실패를 발생시키면 안 된다구. 만약 객체가 사소하지 않은
+        초기화 과정이 필요하다면 factory 함수를 사용하거나 <code>Init()</code> 메서드를 사용하는 것을 고려해 보라구.
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Initialization">
+  <STYLEPOINT title="초기화">
     <SUMMARY>
-      If your class defines member variables, you must provide an
-      in-class initializer for every member variable or write a constructor
-      (which can be a default constructor). If you do not declare
-      any constructors yourself then the compiler will generate a default
-      constructor for you, which may leave some fields uninitialized or
-      initialized to inappropriate values.
+      만약 클래스가 멤버 변수를 정의했다면, 반드시 모든 멤버 변수를 대상으로 한 클래스-내-초기화 구문을
+      준비하거나 생성자를 써야 한다구(default 생성자일 수도 있다구). 만약 직접 어떠한 생성자도 선언하지
+      않았다면 컴파일러가 default 생성자를 만들어 주는데, 이 녀석은 여러 필드를 초기화되지 않은 채로 내버려 두거나
+      부적절한 값('s', 'e', 'x' 같은 거)으로 초기화시킬 수 있다구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        The default constructor is called when we <code>new</code> a class
-        object with no arguments.  It is always called when calling
-        <code>new[]</code> (for arrays). In-class member initialization means
-        declaring a member variable using a construction like <code>int count_
-        = 17;</code> or <code>string name_{"abc"};</code>, as opposed to just
-        <code>int count_;</code> or <code>string name_;</code>.
+        default 생성자는 argument 없이 클래스 객체를 <code>new</code>했을 때 불리지. (배열의 경우에) 
+        <code>new[]</code>를 호출할 때 항상 불리지. 클래스-내-초기화란 멤버 변수를 선언하면서 구성하는 것으로
+        예를 들면 <code>int count_;</code>나 <code>string name_;</code>하지 않고 
+        <code>int count_ = 17;</code>나 <code>string name_{"abc"};</code>를 하는 것이지.
       </DEFINITION>
       <PROS>
         <p>
-          A user defined default constructor is used to initialize an object
-          if no initializer is provided. It can ensure that an object is
-          always in a valid and usable state as soon as it's constructed; it
-          can also ensure that an object is initially created in an obviously
-          "impossible" state, to aid debugging.
+          다른 초기화 구문이 없는 경우에 객체를 초기화하기 위해 사용자가 정의한 생성자가 사용되지. 이는 객체가 항상
+          생성과 동시에 유효하고 사용가능한 상태임을 보장하지; 또한 디버깅을 지원하기 위해 객체가 처음에는 명백하게
+          "불가능한" 상태로 생성되도록 보장하지.
         </p>
         <p>
-          In-class member initialization ensures that a member variable will
-          be initialized appropriately without having to duplicate the
-          initialization code in multiple constructors. This can reduce bugs
-          where you add a new member variable, initialize it in one
-          constructor, and forget to put that initialization code in another
-          constructor.
+          클래스-내-초기화 구문은 여러 생성자에 초기화 구문을 중복해서 넣지 않고도 멤버 변수가 적절히 초기화되도록
+          보장하지. 이렇게 하면 새 멤버 변수를 추가할 때 어떤 생성자에는 초기화 코드를 넣고 다른 생성자에는 초기화
+          코드를 넣지 않아서 버그가 생기는 일이 줄어들 수 있지.
         </p>
       </PROS>
       <CONS>
         <p>
-          Explicitly defining a default constructor is extra work for
-          you, the code writer.
+          당신같은 코드 작성자에게 default 생성자를 명시적으로 정의하는 일은 추가적인 작업이 되지.
         </p>
         <p>
-          In-class member initialization is potentially confusing if a member
-          variable is initialized as part of its declaration and also
-          initialized in a constructor, since the value in the constructor
-          will override the value in the declaration.
+          클래스-내-초기화 구문은 만약 멤버 변수가 선언의 부분으로 초기화된 다음에 다시 생성자에서 초기화되면
+          생성자 초기화 값이 선언부의 초기화 값을 재정의하기 때문에 어쩌면 혼란스러울 수도 있지.
         </p>
       </CONS>
       <DECISION>
         <p>
-          Use in-class member initialization for simple initializations,
-          especially when a member variable must be initialized the same way
-          in more than one constructor.
+          간단한 초기화에는, 특히 여러 생성자에서 같은 방식으로 초기화되는 멤버 변수같은 경우에는 클래스-내-초기화 구문을
+          사용하라구.
         </p>
         <p>
-          If your class defines member variables that aren't
-          initialized in-class, and if it has no other constructors,
-          you must define a default constructor (one that takes no
-          arguments). It should preferably initialize the object in
-          such a way that its internal state is consistent and valid.
+          클래스의 멤버 변수가 클래스-내-초기화되지 않고 다른 생성자도 없는 경우에는 반드시 default 생성자(argument 없는 생성자)를
+          정의해야 한다구. 정의하는 생성자는 되도록이면 객체의 초기상태가 일관되고 유효하도록 객체를 초기화해야 한다구.
         </p>
         <p>
-          The reason for this is that if you have no other
-          constructors and do not define a default constructor, the
-          compiler will generate one for you. This compiler
-          generated constructor may not initialize your object
-          sensibly.
+          이렇게 하는 이유는 다른 생성자도 없고, 정의된 default 생성자도 없으면 컴파일러가 default 생성자를 만들기 때문이라구.
+          이 컴파일러가 만든 생성자로는 객체를 제대로 초기화하지 못할 수 있다구. 
         </p>
         <p>
-          If your class inherits from an existing class but you add no
-          new member variables, you are not required to have a default
-          constructor.
-          
+          만약 클래스가 기존 클래스를 상속하고 새로운 멤버 변수를 더하지 않은 경우라면 default 생성자를 만들 필요는 없다구.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Explicit Constructors">
+  <STYLEPOINT title="explicit 생성자">
     <SUMMARY>
-      Use the C++ keyword <code>explicit</code> for constructors with
-      one argument.
+      argument가 하나인 생성자에는 C++ 키워드인 <code>explicit</code>을 사용하라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Normally, if a constructor takes one argument, it can be used
-        as a conversion.  For instance, if you define
-        <code>Foo::Foo(string name)</code> and then pass a string to a
-        function that expects a <code>Foo</code>, the constructor will
-        be called to convert the string into a <code>Foo</code> and
-        will pass the <code>Foo</code> to your function for you.  This
-        can be convenient but is also a source of trouble when things
-        get converted and new objects created without you meaning them
-        to.  Declaring a constructor <code>explicit</code> prevents it
-        from being invoked implicitly as a conversion.
+        보통 생성자가 argument를 하나만 가지면, 이 생성자는 변환에 사용될 수 있지. 예를 들면 <code>Foo::Foo(string name)</code>을
+        정의하고 <code>Foo</code>를 받으려는 함수에다 string을 전달하면, 그 생성자가 호출되어 string을 
+        <code>Foo</code>로 바꾸고 그 <code>Foo</code>가 함수에 전달되게 되겠지. 이는 편리할 수 있지만, 동시에 의도하지
+        않는 변환이 일어나고 새 객체가 생성되는 골치덩어리가 될 수 있지. 생성자를 <code>explicit</code>으로 선언하게 되면
+        은연 중에 변환으로 호출되는 것을 막을 수 있지.
       </DEFINITION>
       <PROS>
-        Avoids undesirable conversions.
+        바람직하지 않은 변환을 예방할 수 있지.
       </PROS>
       <CONS>
-        None.
+        없지.
       </CONS>
       <DECISION>
         <p>
-          We require all single argument constructors to be
-          explicit. Always put <code>explicit</code> in front of
-          one-argument constructors in the class definition:
+          우리는 argument가 하나인 모든 생성자들이 <code>explicit</code>일 것을 요구한다구. argument가 하나인 생성자 정의의 앞에
+          항상 <code>explicit</code>을 넣으라구;
           <code>explicit Foo(string name);</code>
         </p>
         <p>
-          The exception is copy constructors, which, in the rare
-          cases when we allow them, should probably not be
-          <code>explicit</code>.
-          
-          Classes that are intended to be
-          transparent wrappers around other classes are also
-          exceptions.
-          Such exceptions should be clearly marked with comments.
+          흔치 않게 우리가 허용할 때가 있는 복사 생성자의 경우에는 반드시 <code>explicit</code>이 아니어야 하니 예외라구.
+          다른 클래스에 대한 보이지 않는 wrapper로 쓸 클래스의 경우도 다른 예외지. 이런 예외들은 주석을 통해 명백하게 표시해야 한다구.
         </p>
         <p>
-          Finally, constructors that take only an initializer_list may be
-          non-explicit. This is to permit construction of your type using the
-          assigment form for brace init lists (i.e. <code>MyType m = {1, 2}
-          </code>).
+          마지막으로 초기화 리스트만을 취하는 생성자들도 eplicit이 아닐 수 있다구. 이는 중괄호 리스트들의 할당을 사용하여
+          타입을 생성하는 것을 허용하기 위함이라구(예를 들면 <code>MyType m = {1, 2}</code>)
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Copy Constructors">
+  <STYLEPOINT title="복사 생성자">
     <SUMMARY>
-      Provide a copy constructor and assignment operator only when necessary.
-      Otherwise, disable them with <code>DISALLOW_COPY_AND_ASSIGN</code>.
+      꼭 필요한 경우에만 복사 생성자와 할당 연산자를 만들라구. 그렇지 않은 경우에는 
+      <code>DISALLOW_COPY_AND_ASSIGN</code>을 사용하여 갸들을 쓸 수 없게 만들라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        The copy constructor and assignment operator are used to create copies
-        of objects. The copy constructor is implicitly invoked by the
-        compiler in some situations, e.g. passing objects by value.
+        복사 생성자와 할당 연산자는 객체의 복사본을 만들 때 쓰이지. 복사 생성자는 어떤 경우에는
+        컴파일러에 의해 암시적으로 호출되지. 예를 들면 객체를 값으로 전달한(by value) 경우 그렇지.
       </DEFINITION>
       <PROS>
-        Copy constructors make it easy to copy objects.  STL
-        containers require that all contents be copyable and
-        assignable. Copy constructors can be more efficient than
-        <code>CopyFrom()</code>-style workarounds because they combine
-        construction with copying, the compiler can elide them in some
-        contexts, and they make it easier to avoid heap allocation.
+        복사 생성자를 사용하면 객체를 복사하는 게 쉬워지지. STL 컨테이너는 모든 구성요소들이 복사가능하고
+        할당가능할 것을 요구하지. 복사 생성자는 생성과 복사를 결합하는데, 어떤 경우 컴파일러가 복사를 제거하기
+        때문에 heap 메모리 할당을 피할 수 있어서 <code>CopyFrom()</code> 형태의 차선책보다 더 성능이 좋을 수 있지.
       </PROS>
       <CONS>
-        Implicit copying of objects in C++ is a rich source of bugs
-        and of performance problems. It also reduces readability, as
-        it becomes hard to track which objects are being passed around
-        by value as opposed to by reference, and therefore where
-        changes to an object are reflected.
+        C++의 암시적 객체 복사로 인해 많은 버그와 성능 문제가 생기지. 동시에 어떤 객체에 대한 변경이 반영되었을 때
+        객체들이 레퍼런스로 전달되지 않고 값으로 전달되는 지 추적하기 힘들기 때문에 가독성도 떨어지지.
       </CONS>
       <DECISION>
         <p>
-          Few classes need to be copyable. Most should have neither a
-          copy constructor nor an assignment operator. In many situations,
-          a pointer or reference will work just as well as a copied value,
-          with better performance. For example, you can pass function
-          parameters by reference or pointer instead of by value, and you can
-          store pointers rather than objects in an STL container.
+          복사가능해야 하는 객체는 거의 없다구. 대부분은 복사 생성자와 할당 연산자 둘 다 가지면 안 된다구. 많은 경우
+          복사된 값만큼 포인터나 레퍼런스가 잘 동작하고 성능도 좋다구. 예를 들면 함수 파라미터로 값을 전달하는 대신
+          레퍼런스나 포인터를 전달할 수 있고, STL 컨테이너에 객체를 저장하는 대신 포인터를 저장할 수 있다구.
         </p>
         <p>
-          If your class needs to be copyable, prefer providing a copy method,
-          such as <code>CopyFrom()</code> or <code>Clone()</code>, rather than
-          a copy constructor, because such methods cannot be invoked
-          implicitly. If a copy method is insufficient in your situation
-          (e.g. for performance reasons, or because your class needs to be
-          stored by value in an STL container), provide both a copy
-          constructor and assignment operator.
+          만약 클래스가 복사 가능해야 한다면, 복사 생성자보다 <code>CopyFrom()</code>이나 <code>Clone()</code>과
+          같은 복사 메서드를 만드는 게 좋다구. 이런 메서드들은 암시적으로 호출되지 않는다구. 만약 복사 메서드가
+          충분하지 않은 상황이라면 (예를 들면 성능상의 문제로 클래스가 STL 컨테이너가 값으로 저장될 필요가 있는 경우)
+          복사 생성자와 할당 연산자를 동시에 제공하라구.
         </p>
         <p>
-          If your class does not need a copy constructor or assignment
-          operator, you must explicitly disable them.
-          
-          
-          To do so, add dummy declarations for the copy constructor and
-          assignment operator in the <code>private:</code> section of your
-          class, but do not provide any corresponding definition (so that
-          any attempt to use them results in a link error). 
+          만약 복사생성자와 할당 연산자가 모두 필요없는 경우라면 명시적으로 쓸 수 없도록 만들라구. 그러기 위해서
+          클래스의 <code>private:</code> 부분에 기능없는 복사 생성자와 할당연산자의 선언을 추가하고 그에 해당하는
+          정의를 제공하지 않을 거라구. (그러므로 이들을 사용하려고 하면 링크 오류가 생긴다구.)
         </p>
         <p>
-          For convenience, a <code>DISALLOW_COPY_AND_ASSIGN</code> macro
-          can be used:
+          편의상, <code>DISALLOW_COPY_AND_ASSIGN</code> 매크로가 사용될 수 있다구:
         </p>
         <CODE_SNIPPET>
           // A macro to disallow the copy constructor and operator= functions
@@ -1021,7 +919,7 @@ Tashana Landray
             void operator=(const TypeName&amp;)
         </CODE_SNIPPET>
         <p>
-          Then, in <code>class Foo</code>:
+          그렇다면 클래스 <code>class Foo</code>에서는:
         </p>
         <CODE_SNIPPET>
           class Foo {
@@ -1040,20 +938,16 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Delegating and inheriting constructors">
+  <STYLEPOINT title="생성자 위임과 생성자 상속">
     <SUMMARY>
-      Use delegating and inheriting constructors
-      when they reduce code duplication. 
+      코드 중복을 줄일 수 있을 경우 생성자 위임과 상속을 사용하라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
         <p>
-          Delegating and inheriting constructors are two different features,
-          both introduced in C++11, for reducing code duplication in
-          constructors. Delegating constructors allow one of a class's
-          constructors to forward work to one of the class's other
-          constructors, using a special variant of the initialization list
-          syntax. For example:
+          생성자 위임과 생성자 상속은 생성자의 코드 중복을 줄이기 위해 두 가지 모두 C++11에 도입된
+          서로 다른 두 기능이지. 생성자 위임은 초기화 리스트 구문의 특별한 변형을 사용해서 어느 클래스 생성자에서
+          그 클래스의 다른 생성자로 일을 넘겨줄 수 있도록 하지. 예를 들면:
         </p>
         <CODE_SNIPPET>
           X::X(const string&amp; name) : name_(name) {
@@ -1063,11 +957,8 @@ Tashana Landray
           X::X() : X("") { }
         </CODE_SNIPPET>
         <p>
-          Inheriting constructors allow a derived class to have its base
-          class's constructors available directly, just as with any of the
-          base class's other member functions, instead of having to redeclare
-          them. This is especially useful if the base has multiple
-          constructors. For example:
+          생성자 상속은 파생 클래스가 사용가능한 베이스 클래스의 생성자를 마치 베이스 클래스의 다른 멤버 함수처럼
+          재선언하지 않고 직접 가질 수 있지. 이는 특히 베이스 클래스가 여러 생성자를 가진 경우에 유용하지. 예를 들면:
         </p>
         <CODE_SNIPPET>
           class Base {
@@ -1084,253 +975,186 @@ Tashana Landray
           };
         </CODE_SNIPPET>
         <p>
-          This is especially useful when <code>Derived</code>'s constructors
-          don't have to do anything more than calling <code>Base</code>'s
-          constructors.
+          이는 특히 <code>Derived</code>의 생성자가 <code>Base</code>의 생성자를 호출하는 이외에 어떤 다른 일도
+          할 필요가 없기 때문에 유용하지.
         </p>
       </DEFINITION>
       <PROS>
         <p>
-          Delegating and inheriting constructors reduce verbosity
-          and boilerplate, which can improve readability.
+          생성자 위임과 생성자 상속은 장황함과 상용문구들을 줄여서 가독성을 좋게 하지.
         </p>
         <p>
-          Delegating constructors are familiar to Java programmers.
+          생성자 위임은 Java 프로그래머에게 친숙하지.
         </p>
       </PROS>
       <CONS>
         <p>
-          It's possible to approximate the behavior of delegating constructors
-          by using a helper function.
+          helper 함수를 통해 생성자 위임의 거동을 대충 비슷하게 만들 수 있지.
         </p>
         <p>
-          Inheriting constructors may be confusing if a derived class
-          introduces new member variables, since the base class constructor
-          doesn't know about them.
+          생성자 상속은 파생 클래스가 새 멤버 변수를 도입한 경우 베이스 클래스의 생성자는 그들을 모르기 때문에
+          혼란스러울 수 있지.
         </p>
       </CONS>
       <DECISION>
         <p>
-          Use delegating and inheriting
-          constructors when they reduce boilerplate and improve
-          readability. Be cautious about inheriting
-          constructors when your derived class has new member variables.
-          Inheriting constructors may still be appropriate in that case
-          if you can use in-class member initialization for the derived
-          class's member variables.
-          
+          생성자 위임과 생성자 상속은 상용문구를 줄이고 가독성을 개선할 수 있는 경우 사용하라구. 만약 파생 클래스가
+          새 멤버 변수를 도입할 경우 생성자를 상속하는 데 주의하라구. 생성자 상속은 파생 클래스의 멤버 변수가
+          클래스-내-초기화 구문을 사용할 경우 여전히 적절할 수 있다구.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Structs vs. Classes">
+  <STYLEPOINT title="구조체 대 클래스">
     <SUMMARY>
-      Use a <code>struct</code> only for passive objects that carry data;
-      everything else is a <code>class</code>.
+      데이터를 나르는 수동적인 객체의 경우에만 <code>struct</code>를 사용하라구; 다른 모든 경우에는 <code>class</code>를 쓰라구.
     </SUMMARY>
     <BODY>
       <p>
-        The <code>struct</code> and <code>class</code> keywords behave
-        almost identically in C++.  We add our own semantic meanings
-        to each keyword, so you should use the appropriate keyword for
-        the data-type you're defining.
+        C++에서 <code>struct</code> 키워드와 <code>class</code> 키워드는 거의 똑같이 동작하지. 우리는 이 각각의 키워드에 우리만의
+        으미를 부여했기에, 너희들이 데이터 타입을 정의할 때는 반드시 적절한 키워드를 사용해야 한다구.
       </p>
       <p>
-        <code>structs</code> should be used for passive objects that carry
-        data, and may have associated constants, but lack any functionality
-        other than access/setting the data members. The
-        accessing/setting of fields is done by directly accessing the
-        fields rather than through method invocations. Methods should
-        not provide behavior but should only be used to set up the
-        data members, e.g., constructor, destructor,
-        <code>Initialize()</code>, <code>Reset()</code>,
-        <code>Validate()</code>.
+        <code>structs</code>는 데이터를 나르는 수동적 객체로서 연관된 상수들을 가질 수 있지만, 데이터 멤버에 접근하거나 데이터 멤버를
+        설정하는 이외의 어떤 기능도 가져서는 안 된다구. 필드를 접근하거나 설정하는 것은 메서드 호출이 아닌 직접 필드에 접근하는 방식으로
+        <code>Initialize()</code>, <code>Reset()</code>, <code>Validate()</code>.
       </p>
       <p>
-        If more functionality is required, a <code>class</code> is more
-        appropriate.  If in doubt, make it a <code>class</code>.
+        만약 더 많은 기능이 필요하다면 <code>class</code>가 적당하다구. 아리송한 경우에도 <code>class</code>로 만들라구.
       </p>
       <p>
-        For consistency with STL, you can use <code>struct</code>
-        instead of <code>class</code> for functors and traits.
+        STL과 일관성을 지키려고 functor와 trait에 대해선 <code>class</code> 대신 <code>struct</code>를 사용할 수 있다구.
       </p>
       <p>
-        Note that member variables in structs and classes have
-        <a HREF="#Variable_Names">different naming rules</a>.
+        구조체와 클래스의 멤버 변수들은 <a HREF="#Variable_Names">서로 다른 이름 규칙</a>을 가지는 데 주의하라구.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Inheritance">
+  <STYLEPOINT title="상속">
     <SUMMARY>
-      Composition is often more appropriate than inheritance.  When
-      using inheritance, make it <code>public</code>.
+      컴포지션이 보통 상속보다 적절하다구. 상속을 쓰려면 <code>public</code>으로 만들라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        When a sub-class inherits from a base class, it includes the
-        definitions of all the data and operations that the parent
-        base class defines.  In practice, inheritance is used in two
-        major ways in C++: implementation inheritance, in which
-        actual code is inherited by the child, and <A HREF="#Interfaces">interface inheritance</A>, in which only
-        method names are inherited.
+        서브 클래스가 베이스 클래스로부터 상속할 때, 서브 클래스는 구 부모인 베이스 클래스가 정의한 모든 데이터와
+        동작을 포함하게 되지. 실무적으로는 상속은 C++에서 주로 두가지 용도로 사용되지: 실제 코드가 자식에 의래 상속되는
+        구현 상속과 오직 메서드 이름만이 상속되는 <A HREF="#인터페이스">인터페이스 상속</A>이 그것이지.
       </DEFINITION>
       <PROS>
-        Implementation inheritance reduces code size by re-using the
-        base class code as it specializes an existing type.  Because
-        inheritance is a compile-time declaration, you and the
-        compiler can understand the operation and detect errors.
-        Interface inheritance can be used to programmatically enforce
-        that a class expose a particular API.  Again, the compiler
-        can detect errors, in this case, when a class does not define
-        a necessary method of the API.
+        구현 상속은 베이스 클래스의 코드를 현재 클래스에 특화된 것처럼 재사용함으로써 코드 크기를 줄이지.
+        상속은 컴파일-시점의 선언이기 때문에, 너희와 컴파일러는 동작을 이해하고 오류를 찾을 수 있지. 인터페이스 상속은
+        프로그램적으로 클래스가 특정 API를 노출하도록 강제할 때 사용되지. 마찬가지로 컴파일러는 오류를, 예를 들면 
+        클래스가 필요한 API를 정의하지 않았다거나 하는 따위의 오류를 찾을 수 있지.
       </PROS>
       <CONS>
-        For implementation inheritance, because the code implementing
-        a sub-class is spread between the base and the sub-class, it
-        can be more difficult to understand an implementation.  The
-        sub-class cannot override functions that are not virtual, so
-        the sub-class cannot change implementation.  The base class
-        may also define some data members, so that specifies physical
-        layout of the base class.
+        구현 상속의 경우에 코드가 서브 클래스와 베이스 클래스에 구현 코드가 흩어지기 때문에, 구현을 이해하기 더 어려울 수
+        있지. 서브 클래스는 virtual이 아닌 함수를 재정의할 수 없으므로, 서브 클래스는 구현을 변경할 수 없지. 
+        베이스 클래스가 일부 데이터 멤버를 정의할 수 있어서, 베이스 클래스의 물리적 레이아웃을 특정해 버릴 수 있지.
       </CONS>
       <DECISION>
         <p>
-          All inheritance should be <code>public</code>.  If you want to
-          do private inheritance, you should be including an instance of
-          the base class as a member instead.
+          모든 상속은 <code>public</code>이어야 한다구. 만약 private 상속을 원한다면, 상속 대신 베이스 클래스의 인스턴스를
+          멤버로 포함시키라구.
         </p>
         <p>
-          Do not overuse implementation inheritance.  Composition is
-          often more appropriate. Try to restrict use of inheritance
-          to the "is-a" case: <code>Bar</code> subclasses
-          <code>Foo</code> if it can reasonably be said that
-          <code>Bar</code> "is a kind of" <code>Foo</code>.
+          구현 상속을 과용하지 말라구. 대부분 컴포지션이 더 적절하다구. 상속의 사용을 "동일 관계"의 경우에만 사용하도록
+          제한하려고 노력하라구: <code>Bar</code>가 <code>Foo</code>의 "종류 중 하나"라고 합당하게 말할 수 있을 때
+          <code>Bar</code>가 <code>Foo</code>를 상속하는 거라구.
         </p>
         <p>
-          Make your destructor <code>virtual</code> if necessary. If
-          your class has virtual methods, its destructor
-          
-          should be virtual.
+          필요한 경우 소멸자를 <code>virtual</code>로 만들라구. 만약 클래스가 virtual 메서드를 가지고 있다면, 소멸자는 반드시 
+          virtual이어야 한다구.
         </p>
         <p>
-          Limit the use of <code>protected</code> to those member
-          functions that might need to be accessed from subclasses.
-          Note that <a href="#Access_Control">data members should
-          be private</a>.
+          서브 클래스로부터 접근해야 할 필요가 있는 멤버 함수들에게만 <code>protected</code>의 사용을 제한하라구. 
+          <a href="#Access_Control">데이터 멤버는 항상 private여야</a> 하는 데 주의하라구.
         </p>
         <p>
-          When redefining an inherited virtual function, explicitly
-          declare it <code>virtual</code> in the declaration of the
-          derived class.  Rationale: If <code>virtual</code> is
-          omitted, the reader has to check all ancestors of the
-          class in question to determine if the function is virtual
-          or not.
+          만약 상속받은 virtual 함수를 재정의할 때에는 명시적으로 상속받은 클래스의 선언에 <code>virtual</code>이라고 선언하라구.
+          이유는: 만약 <code>virtual</code>이 없으면 읽는 사람이 이 함수가 virtual인지 아닌지를 분간하고 싶다면 이 클래스의 모든 조상을
+          확인해야 한다구.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Multiple Inheritance">
+  <STYLEPOINT title="다중 상속">
     <SUMMARY>
-      Only very rarely is multiple implementation inheritance actually
-      useful.  We allow multiple inheritance only when at most one of
-      the base classes has an implementation; all other base classes
-      must be <A HREF="#Interfaces">pure interface</A> classes tagged
-      with the <code>Interface</code> suffix.
+      실제 매우 드문 경우만 다중 상속이 유용하다구. 우리는 다중 상속을 베이스 클래스 중 많아야 하나만 구현을
+      가진 경우에만 허용한다구; 모든 다른 베이스 클래스는 <code>Interface</code> 접미사가 달린 
+      <A HREF="#인터페이스">순수한 인터페이스 클래스</A>여야 한다구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Multiple inheritance allows a sub-class to have more than one
-        base class.  We distinguish between base classes that are
-        <em>pure interfaces</em> and those that have an
-        <em>implementation</em>.
+        다중 상속은 서브 클래스가 하나 이상의 베이스 클래스를 가지는 것을 허용하지. 우리는 베이스 클래스를 
+        <em>구현을 가지고 있는 것</em>과 <em>순수한 인터페이스</em>인 것으로 구분하지.
       </DEFINITION>
       <PROS>
-        Multiple implementation inheritance may let you re-use even more code
-        than single inheritance (see <a HREF="#Inheritance">Inheritance</a>).
+        다중 상속은 단일 상속보다 더 많은 코드를 재사용하게 할 수 있지 (<a HREF="#상속">상속</a>을 보라구).
       </PROS>
       <CONS>
-        Only very rarely is multiple <em>implementation</em>
-        inheritance actually useful. When multiple implementation
-        inheritance seems like the solution, you can usually find a
-        different, more explicit, and cleaner solution.
+        실제 매우 드문 경우만 다중 상속이 유용하지. 다중 상속이 해답처럼 생각될 경우라도 보통 다른 더 명시적이고
+        깨끗한 방법을 찾을 수 있지.
       </CONS>
       <DECISION>
-        Multiple inheritance is allowed only when all superclasses, with the
-        possible exception of the first one, are <A HREF="#Interfaces">pure
-        interfaces</A>.  In order to ensure that they remain pure interfaces,
-        they must end with the <code>Interface</code> suffix.
-        <SUBSECTION title="Note:">
-          There is an <a HREF="#Windows_Code">exception</a> to this
-          rule on Windows.
+        다중 상속은 최대 하나의 예외를 제외하고는 모든 상위 클래스가 오직 <A HREF="#Interfaces">순수한 인터페이스</A>일
+        때만 허용된다구. 순수한 인터페이스로 남아 있음을 확실하게 하기 위해 상위 클래스는 <code>Interface</code>라는 접미어로
+        끝나야 한다구.
+        <SUBSECTION title="주의:">
+          윈도우즈의 경우에는 이 규칙의 <a HREF="#Windows_Code">예외</a>라구.
         </SUBSECTION>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Interfaces">
+  <STYLEPOINT title="인터페이스">
     <SUMMARY>
-      Classes that satisfy certain conditions are allowed, but not required, to
-      end with an <code>Interface</code> suffix.
+      어떤 조건을 만족하는 클래스는 <code>Interface</code>라는 접미어로 끝날 수도 있다구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
         <p>
-        A class is a pure interface if it meets the following requirements:
+        아래와 같은 조건을 만족할 때 클래스는 순수한 인터페이스지:
         </p>
         <ul>
-          <li> It has only public pure virtual ("<code>= 0</code>") methods
-               and static methods (but see below for destructor).
+          <li> 오직 순수한 virtual ("<code>= 0</code>") 메서드와 static 메서드만을 가지고 있어야 하지
+               (하지만 소멸자의 경우는 아래를 보라구).
                </li>
-          <li> It may not have non-static data members.
+          <li> static 데이터 멤버가 아닌 데이터 멤버를 가질 수 없지.
                </li>
-          <li> It need not have any constructors defined.  If a constructor is
-               provided, it must take no arguments and it must be protected.
+          <li> 어떤 생성자도 가지지 말아야 하지. 만약 생정자를 가지고 있다면, 인자가 없어야 하고 protected여야 해.
                </li>
-          <li> If it is a subclass, it may only be derived from classes
-               that satisfy these conditions and are tagged with the
-               <code>Interface</code> suffix.
+          <li> 만약 하위 클래스라면 오직 이와 같은 조건을 만족하며 <code>Interface</code>라는 접미어로 표시된 클래스로부터
+               상속받아야 하지.
                </li>
         </ul>
         <p>
-          An interface class can never be directly instantiated
-          because of the pure virtual method(s) it declares.  To make
-          sure all implementations of the interface can be destroyed
-          correctly, the interface must also declare a virtual destructor (in
-          an exception to the first rule, this should not be pure).  See
-          Stroustrup, <cite>The C++ Programming Language</cite>, 3rd
-          edition, section 12.4 for details.
+          인터페이스는 그가 선언한 가상 메서드 때문에 직접 인스턴스화 될 수 없지. 인터페이스의 모든 구현체가 바르게 소멸되었는지
+          확신하기 위해서 인터페이스는 가상 소멸자를 정의할 수 있지 (첫번 째 규칙의 예외로 이 소멸자는 순수한 가상 메서드일 필요는 없지).
+          자세한 설명이 필요하다면 Stroustrup의 <cite>The C++ Programming Language</cite>, 3 판의, 12.4 섹션을 보라구.
         </p>
       </DEFINITION>
       <PROS>
-        Tagging a class with the <code>Interface</code> suffix lets
-        others know that they must not add implemented methods or non
-        static data members.  This is particularly important in the case of
-        <A HREF="#Multiple_Inheritance">multiple inheritance</A>.
-        Additionally, the interface concept is already well-understood by
-        Java programmers.
+        클래스를 <code>Interface</code>라는 접미사로 표시한 걸 보면 다른 사람들이 이들에 구현된 메서드를 넣거나 정적이지 않은 데이터
+        멤버를 추가하지 말아야 한다는 사실을 알게 되지. 이는 특히 <A HREF="#다중 상속">다중 상속</A>의 경우에 특별히 중요하지. 또한 인터페이스라는 개념은
+        자바 프로그래머에게 이미 잘 알려져 있지.
       </PROS>
       <CONS>
-        The <code>Interface</code> suffix lengthens the class name, which
-        can make it harder to read and understand.  Also, the interface
-        property may be considered an implementation detail that shouldn't
-        be exposed to clients.
+        <code>Interface</code> 접미어는 클래스 이름을 길게 만들어, 읽고 이해하기 힘들게 만들 수 있지. 또한 인터페이스의 속성은 클라이언트에 노출되지
+        말아야 할 구현 상세로 간주할 수도 있지.
       </CONS>
       <DECISION>
-        A class may end with <code>Interface</code> only if it meets the
-        above requirements.  We do not require the converse, however:
-        classes that meet the above requirements are not required to end
-        with <code>Interface</code>.
+        위의 조건을 만족하는 경우에만 클래스는 <code>Interface</code>로 끝날 수 있다고. 하지만 반대의 경우는 성립하지 않는다구: 위의 조건을 만족하는 클래스가
+        <code>Interface</code>로 끝나야 하는 것은 아니라구.
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Operator Overloading">
+  <STYLEPOINT title="연산자 오버로딩">
     <SUMMARY>
-      Do not overload operators except in rare, special circumstances.
-      Do not create user-defined literals.
+      흔하지 않고 특별한 경우가 아니면 연산자를 오버로딩하지 말라구. 사용자가 정의한 리터럴을 만들지 말라구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
