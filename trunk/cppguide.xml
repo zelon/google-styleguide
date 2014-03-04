@@ -1941,49 +1941,44 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Default Arguments">
+  <STYLEPOINT title="디폴트 인자">
     <SUMMARY>
-      We do not allow default function parameters, except in limited
-      situations as explained below.  Simulate them with function
-      overloading instead, if appropriate.
+      아래에 설명된 상황을 제외하고는 디폴트 함수 인자는 허용하지 않는다.
+      그대신 적절하다면 함수 오버로딩을 고려해라.
     </SUMMARY>
     <BODY>
       <PROS>
-        Often you have a function that uses default values, but
-        occasionally you want to override the defaults.  Default
-        parameters allow an easy way to do this without having to
-        define many functions for the rare exceptions.  Compared to
-        overloading the function, default arguments have a cleaner
-        syntax, with less boilerplate and a clearer distinction
-        between 'required' and 'optional' arguments.
+        자주 디폴트 값을 가지고, 가끔 디폴트 값을 덮어쓰는 함수가 있다.
+        디폴트 인자는 이런 예외적인 상황에서 많은 함수들을 정의하지 않고
+        이런 것을 할 수 있는 쉬운 방법이다. 함수 오버로딩과 비교해서
+        디폴트 인자는 더 명확한 문법을 가지며, 적은 반복 코드와
+        '필요'한지 '선택적'인지를 더 명확하게 구별하게 해준다.
       </PROS>
       <CONS>
-        Function pointers are confusing in the presence of default
-        arguments, since the function signature often doesn't match
-        the call signature.  Adding a default argument to an existing
-        function changes its type, which can cause problems with code
-        taking its address.  Adding function overloads avoids these
-        problems.  In addition, default parameters may result in
-        bulkier code since they are replicated at every call-site --
-        as opposed to overloaded functions, where "the default"
-        appears only in the function definition.
+        디폴트 인자에서는 함수 포인터 사용은 혼란스럽다. 자주 함수 시그너처가
+        호출 시그너처와 맞지 않기 때문이다. 이미 존재하는 함수에
+        디폴트 인자를 추가하는 것은 함수의 타입을 변경하며,
+        해당 함수의 주소를 받는 코드에 문제를 만들 수 있다. 함수 오버로드를
+        추가하여 이런 문제들을 피할 수 있다. 게다가, 디폴트 인자는
+        오버로드된 함수와는 다르게 "기본값" 이 함수 선언 부분에만
+        나타나서, 호출하는 지점마다 복사되기 때문에
+        비대한 코드를 만들어낼 수 있다.
       </CONS>
       <DECISION>
         <p>
-          While the cons above are not that onerous, they still
-          outweigh the (small) benefits of default arguments over
-          function overloading.  So except as described below, we
-          require all arguments to be explicitly specified.
+          위의 단점이 그렇게 부담이 되는건 아니지만, 여전히 함수 오버로딩에
+          비한 디폴트 인자의 (작은)장점보다 단점이 크다. 그래서
+          아래에 기술된 것을 제외하고는 모든 인자는 명시적으로 지정되어야
+          한다.
         </p>
         <p>
-          One specific exception is when the function is a static
-          function (or in an unnamed namespace) in a .cc file.  In
-          this case, the cons don't apply since the function's use is
-          so localized.
+          다른 명시적인 예외는 .cc 파일에서의 정적 함수(혹은
+          이름 없는 네임스페이스 안의 함수)이다. 이런 경우,
+          함수의 사용이 지역적이기 때문에 단점이 적용되지 않는다.
         </p>
         <p>
-          Another specific exception is when default arguments are
-          used to simulate variable-length argument lists.
+          또다른 명시적인 예외는 디폴트 인자가 가변길이 인자 목록 리스트로
+          쓰여질 때이다.
         </p>
         <CODE_SNIPPET>
           // Support up to 4 params by using a default empty AlphaNum.
@@ -1996,108 +1991,100 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Variable-Length Arrays and alloca()">
+  <STYLEPOINT title="가변길이 배열과 alloca()">
     <SUMMARY>
-      We do not allow variable-length arrays or <code>alloca()</code>.
+      가변길이 배열이나 <code>alloca()</code>를 허용하지 않는다.
     </SUMMARY>
     <BODY>
       <PROS>
-        Variable-length arrays have natural-looking syntax.  Both
-        variable-length arrays and <code>alloca()</code> are very
-        efficient.
+        가변길이 배열은 자연스러운 문법이다. 가변길이 배열과
+         <code>alloca()</code> 는 매우 효율적이다.
       </PROS>
       <CONS>
-        Variable-length arrays and alloca are not part of Standard
-        C++.  More importantly, they allocate a data-dependent amount
-        of stack space that can trigger difficult-to-find memory
-        overwriting bugs: "It ran fine on my machine, but dies
-        mysteriously in production".
+        가변길이 배열과 alloca 는 C++ 표준이 아니다.
+        더욱 중요한 것은, 데이터 의존적인 스택 공간의 양을 할당하여,
+        찾기 어려운 메모리 덮어쓰기(overwriting) 버그를 만들 수 있다는
+        것이다: "나의 머신에서는 잘 작동하였는데, 릴리즈되면 이상하게도
+        죽어버린다"
       </CONS>
       
       <DECISION>
-        Use a safe allocator instead, such as
-        <code>scoped_ptr</code>/<code>scoped_array</code>.
+        <code>scoped_ptr</code>/<code>scoped_array</code> 같은 안전한
+         할당자를 사용하여라.
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="Friends">
     <SUMMARY>
-      We allow use of <code>friend</code> classes and functions,
-      within reason.
+      <code>friend</code> 클래스와 함수들을 적절하게 사용한다.
     </SUMMARY>
     <BODY>
       <p>
-        Friends should usually be defined in the same file so that the
-        reader does not have to look in another file to find uses of
-        the private members of a class.  A common use of
-        <code>friend</code> is to have a <code>FooBuilder</code> class
-        be a friend of <code>Foo</code> so that it can construct the
-        inner state of <code>Foo</code> correctly, without exposing
-        this state to the world.  In some cases it may be useful to
-        make a unittest class a friend of the class it tests.
+        Friend 는 코드를 읽는이가 클래스의 private 멤버의 사용을
+        다른 파일에서 확인할 필요가 없도록 하기 위해서 일반적으로
+        같은 파일에서 선언된다. <code>friend</code>의 일반적인
+        사용은 <code>Foo</code> 클래스의 내부 상태를 외부에 노출시키지 않고
+        제대로 구성하기 위해 <code>FooBuilder</code> 클래스가 <code>Foo</code>
+        클래스의 friend 가 되는 것이다. 몇몇 경우에는 유닛테스트 클래스를
+        만들기에 유용하다.
       </p>
       <p>
-        Friends extend, but do not break, the encapsulation
-        boundary of a class.  In some cases this is better than making
-        a member public when you want to give only one other class
-        access to it.  However, most classes should interact with
-        other classes solely through their public members.
+        Friend는 클래스의 캡슐화 영역(boundary)을 확장한다. 하지만 깨트리지는 않는다.
+        몇몇 경우에는 단지 하나의 다른 클래스가 접근하기 위해서 public 멤버를
+        만드는 것보다는 낫다. 그러나 대부분의 클래스들은 오로지 public 멤버들을
+        통해서 다른 클래스들과 상호작용하여야 한다.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Exceptions">
+  <STYLEPOINT title="예외">
     <SUMMARY>
-      We do not use C++ exceptions.
+      C++ 예외를 사용하지 않는다.
     </SUMMARY>
     <BODY>
       <PROS>
         <ul>
-          <li>Exceptions allow higher levels of an application to
-          decide how to handle "can't happen" failures in deeply
-          nested functions, without the obscuring and error-prone
-          bookkeeping of error codes.</li>
+          <li>**예외는 고레벨의 어플리케이션이 깊게 중첩된 함수에서
+            불분명함과 에러에 취약한 에러 코드들의 기록없이 "일어날 수 없는" 실패를 어떻게 처리할 것인지 결정한다.</li>
 
-          
+          <li>예외는 대부분의 다른 현대 언어들에서 사용된다.
+            C++ 에서 예외를 사용하는 것은 파이썬, 자바 그리고 다른이들이
+            친숙한 C++ 과 보다 일관적으로 만든다.</li>
 
-          <li>Exceptions are used by most other modern
-          languages.  Using them in C++ would make it more consistent with
-          Python, Java, and the C++ that others are familiar with.</li>
+          <li>몇몇 서드파티 C++ 라이브러리들은 예외를 사용하고,
+            내부적으로 예외를 사용하지 않는 것은 이런 라이브러리들과의
+            통합을 어렵게 만든다.</li>
 
-          <li>Some third-party C++ libraries use exceptions, and turning
-          them off internally makes it harder to integrate with those
-          libraries.</li>
+          <li>예외는 생성자가 실패처리를 할 수 있는 유일한
+            방법이다. 이것을 팩토리 함수나 <code>Init()</code>
+            메서드로 흉내낼 수 있지만, 이런 방법들은 힙 할당이나
+            새로운 "유효하지 않은" 상태를 각각 만들어낸다.</li>
 
-          <li>Exceptions are the only way for a constructor to fail.
-          We can simulate this with a factory function or an
-          <code>Init()</code> method, but these require heap
-          allocation or a new "invalid" state, respectively.</li>
-
-          <li>Exceptions are really handy in testing frameworks.</li>
+          <li>예외는 테스트하는 프레임워크에서는 정말 편리하다.</li>
         </ul>
       </PROS>
       <CONS>
         <ul>
-          <li>When you add a <code>throw</code> statement to an existing
-          function, you must examine all of its transitive callers. Either
-          they must make at least the basic exception safety guarantee, or
-          they must never catch the exception and be happy with the
-          program terminating as a result. For instance, if
-          <code>f()</code> calls <code>g()</code> calls
-          <code>h()</code>, and <code>h</code> throws an exception
-          that <code>f</code> catches, <code>g</code> has to be
-          careful or it may not clean up properly.</li>
+          <li>기존의 함수에 <code>throw</code> 문을 추가할 때,
+          반드시 함수의 모든 이행적(transitive) 호출자들을
+          확인해야 한다. 최소한 기본적인 예외 안전을 보장하거나,
+          예외를 아예 catch 하지 않아서 프로그램이 잘 종료되도록
+          해야 한다. 예를 들어, <code>f()</code> 가 <code>g()</code> 를
+          <code>g()</code> 가 <code>h()</code> 를 호출하고, <code>h</code> 가 예외를 던지고, <code>f</code> 가 catch 할 때, <code>g</code> 
+          는 조심히 작성되어야 하며 그렇지 않으면 제대로 리소스가
+          정리되지 못할 수 있다.</li>
 
-          <li>More generally, exceptions make the control flow of
-          programs difficult to evaluate by looking at code: functions
-          may return in places you don't expect. This causes
-          maintainability and debugging difficulties. You can minimize
-          this cost via some rules on how and where exceptions can be
-          used, but at the cost of more that a developer needs to know
-          and understand.</li>
+          <li>더 일반적으로, 예외는 프로그램의 흐름을 코드를 볼 때
+            평가하기 어렵게 만든다. 함수들이 어디서 제대로
+            리턴할지 기대하기 어렵게 만든다. 이것은 유지보수와
+            디버깅을 어렵게 만든다. 이 비용을 어디서 어떻게
+            예외를 사용할지 규칙을 정해서 줄일 수 있지만
+            개발자가 알고 이해해야한다.</li>
 
-          <li>Exception safety requires both RAII and different coding
+          <li>예외 안정성은 RAII 와 다른 코딩 관습들도 요구된다.
+            
+            Exception safety requires both RAII and different coding
           practices. Lots of supporting machinery is needed to make
           writing correct exception-safe code easy. Further, to avoid
           requiring readers to understand the entire call graph,
@@ -2160,8 +2147,7 @@ Tashana Landray
           <code>std::nested_exception</code>.
         </p>
         <p>
-          There is an <a HREF="#Windows_Code">exception</a> to this
-          rule (no pun intended) for Windows code.
+          이 규칙에는 윈도우즈 코드의 <a HREF="#Windows_Code">예외사항</a>이 있다.
         </p>
       </DECISION>
     </BODY>
