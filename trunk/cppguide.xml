@@ -2413,108 +2413,100 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Use of const">
+  <STYLEPOINT title="const의 사용">
     <SUMMARY>
-      Use <code>const</code> whenever it makes sense.
-      With C++11,
-      <code>constexpr</code> is a better choice for some uses of const.
+      이치에 맞는 곳마다 <code>const</code> 를 사용해라.
+      C++11 에서는 const 의 어떤 사용에서는 <code>constexpr</code> 가
+      더 나은 선택이다.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Declared variables and parameters can be preceded by the
-        keyword <code>const</code> to indicate the variables are not
-        changed (e.g., <code>const int foo</code>).  Class functions
-        can have the <code>const</code> qualifier to indicate the
-        function does not change the state of the class member
-        variables (e.g., <code>class Foo { int Bar(char c) const;
+        선언된 변수와 인자들 앞에는 변수들이 변하지 않을 것임을 
+        알리기 위해 <code>const</code> 가 올 수 있다(예, <code>const int foo</code>).
+        클래스 함수들은 함수가 클래스 멤버 변수들의 상태를 변경하지
+        않음을 알리기 위해 <code>const</code> 제한자를 가질 수 있다
+        (예, <code>class Foo { int Bar(char c) const;
         };</code>).
       </DEFINITION>
       <PROS>
-        Easier for people to understand how variables are being used.
-        Allows the compiler to do better type checking, and,
-        conceivably, generate better code.  Helps people convince
-        themselves of program correctness because they know the
-        functions they call are limited in how they can modify your
-        variables.  Helps people know what functions are safe to use
-        without locks in multi-threaded programs.
+        사람들이 어떻게 변수들이 쓰일지 이해하기 쉽다.
+        컴파일러가 타입 체크를 더 잘하게 해주고, 생각건대 더 나은 코드를
+        생성하게 해준다. 호출한 함수가 변수들을 어떻게 변경할지가 제한되어
+        있다는 것을 알기 때문에 사람들이 프로그램의 정확함을
+        이해하는 데 도움을 준다. 멀티쓰레드 프로그램에서 락(lock)이 없이
+        사용하기에 안전한 함수인지를 알 수 있게 도와준다.
       </PROS>
       <CONS>
-        <code>const</code> is viral: if you pass a <code>const</code>
-        variable to a function, that function must have <code>const</code>
-        in its prototype (or the variable will need a
-        <code>const_cast</code>).  This can be a particular problem
-        when calling library functions.
+        **<code>const</code> 는 말이 많다. 만약 <code>const</code> 변수 하나를
+        함수에 넘겨준다면, 그 함수는 반드시 그 프로토타입(혹은 그 변수는
+        <code>const_cast</code> 가 필요할 것이다)에 <code>const</code> 를
+        가져야 한다. 이것은 라이브러리 함수들을 호출할 때 특정한
+        문제가 될 수 있다.
       </CONS>
       <DECISION>
         <p>
-          <code>const</code> variables, data members, methods and
-          arguments add a level of compile-time type checking; it
-          is better to detect errors as soon as possible.
-          Therefore we strongly recommend that you use
-          <code>const</code> whenever it makes sense to do so:
+          <code>const</code> 변수, 데이터 멤버들, 메서드들 그리고
+          인자들은 컴파일 시간 타입 체크 단계를 추가한다. 이것은
+          가능하면 빨리 오류를 찾기 위해서 더 좋다. 그러므로 
+          <code>const</code> 를 가능한 곳마다 사용하기를
+          강력히 권장한다.
         </p>
         <ul>
-          <li> If a function does not modify an argument passed by
-               reference or by pointer, that argument should be
-               <code>const</code>.
+          <li> 만약 함수가 레퍼런스나 포인터에 의해서 전달된
+            인자를 변경하지 않으면, 인자는 <code>const</code>가
+            되어야 한다.
                </li>
-          <li> Declare methods to be <code>const</code> whenever
-               possible. Accessors should almost always be
-               <code>const</code>. Other methods should be const if they do
-               not modify any data members, do not call any
-               non-<code>const</code> methods, and do not return a
-               non-<code>const</code> pointer or non-<code>const</code>
-               reference to a data member.
-               </li>
-          <li> Consider making data members <code>const</code>
-               whenever they do not need to be modified after
-               construction.
+          <li> 가능한 곳마다 <code>const</code>로 메서드를 선언해라.
+               접근자는 거의 항상 <code>const</code> 가 되어야 한다.
+               그외 다른 메서드들은 어떤 데이터 멤버들을 수정하지 않고,
+               어떤 비-<code>const</code> 메서드들도 호출하지 않고,
+               비-<code>const</code> 포인터 혹은 데이터 멤버에 대한
+               비-<code>const</code> 레퍼런스도 반환하지 않는다면
+               const 가 되어야 한다.
+          <li> 생성된 후 수정될 필요가 없는 데이터 멤버들은 
+               <code>const</code> 로 만드는 것을 고려해라
                </li>
         </ul>
         <p>
-          The <code>mutable</code> keyword is allowed but is unsafe
-          when used with threads, so thread safety should be carefully
-          considered first.
+          <code>mutable</code> 키워드는 허용되지만, 쓰레드와 함께
+          사용될 때 안전하지 않다. 그래서 쓰레드 안전이 먼저
+          조심스럽게 고려되어야 한다.
         </p>
       </DECISION>
-      <SUBSECTION title="Where to put the const">
+      <SUBSECTION title="const 의 위치">
         <p>
-          Some people favor the form <code>int const *foo</code> to
-          <code>const int* foo</code>.  They argue that this is more
-          readable because it's more consistent: it keeps the rule
-          that <code>const</code> always follows the object it's
-          describing.  However, this consistency argument doesn't
-          apply in codebases with few deeply-nested pointer
-          expressions since most <code>const</code> expressions have
-          only one <code>const</code>, and it applies to the
-          underlying value.  In such cases, there's no consistency to
-          maintain.
-          Putting the <code>const</code> first is arguably more readable,
-          since it follows English in putting the "adjective"
-          (<code>const</code>) before the "noun" (<code>int</code>).
+          어떤 사람들은 <code>const int* foo</code> 보다 
+          <code>int const *foo</code> 형태를 선호한다.
+          그들은 보다 일관적이기 때문에 이것이 더 읽기 쉽다고 주장한다.
+          이것은 <code>const</code> 가 항상 기술하는 객체를 따르는
+          규칙을 유지한다.
+          그러나, 이 일관성 주장은, <code>const</code> 표현식 대부분은
+          단지 하나의 <code>const</code>를 가지고, **밑에 있는 값에
+          적용되기 때문에, 거의 깊게 중첩되지 않는 포인터 표현식을 가지는
+          코드에는 적용되지 않는다.
+          이런 경우들에, 유지할 일관성은 없다.
+          "형용사"(<code>const</code>) 가 "명사" (<code>int</code>)보다
+          앞에 있는 것이 영어를 따르기 때문에 <code>const</code>를
+          먼저 위치하는 것은 아마 좀 더 가독성있을 것이다.
         </p>
         <p>
-          That said, while we encourage putting <code>const</code> first,
-          we do not require it.  But be consistent with the code around
-          you!
+          <code>const</code> 를 먼저 위치하는 것을 권장하지만, 
+          꼭 해야하는 것은 아니다. 그런 코드에서 일관성을 지켜라.
         </p>
       </SUBSECTION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Use of constexpr">
+  <STYLEPOINT title="constexpr의 사용">
     <SUMMARY>
-      In C++11, use <code>constexpr</code>
-      to define true constants or to ensure constant initialization.
+      C++11에서, 진짜 상수를 정의하거나, 상수 초기화를 확실히하기 위해
+      <code>constexpr</code>를 사용해라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Some variables can be declared <code>constexpr</code>
-        to indicate the variables are true constants,
-        i.e. fixed at compilation/link time.
-        Some functions and constructors can be declared <code>constexpr</code>
-        which enables them to be used
-        in defining a <code>constexpr</code> variable.
+        어떤 변수들은 변수들이 (예를 들어 컴파일/링크 시간에 고정되는)
+        진짜 상수라는 것을 알리기 위해 <code>constexpr</code>로 선언될 수 있다. 
+        **<code>constexpr</code> 변수들을 정의하기 위해서 사용되는 어떤 함수들과 생성자들은 <code>constexpr</code> 로 선언될 수 있다.
       </DEFINITION>
       <PROS>
         Use of <code>constexpr</code> enables
@@ -2524,132 +2516,115 @@ Tashana Landray
         definition of constants with function calls.
       </PROS>
       <CONS>
-        Prematurely marking something as constexpr
-        may cause migration problems if later on it has to be downgraded.
-
-        Current restrictions on what is allowed
-        in constexpr functions and constructors
-        may invite obscure workarounds in these definitions.
+        너무 이르게 constexpr 로 표시하는 것은 나중에 다운그레이드를 해야할 때,
+        마이그레이션 문제를 유발할 수 있다.
+        **constexpr 함수과 생성자들에서 어떤 것이 허용되어야하는지의 현재 제한은
+        불분명한 회피 방법들을 이런 개념들 안에서 유발할 수 있다.
       </CONS>
       <DECISION>
         <p>
-          <code>constexpr</code> definitions enable a more robust
-          specification of the constant parts of an interface.
-          Use <code>constexpr</code> to specify true constants
-          and the functions that support their definitions.
-          Avoid complexifying function definitions to enable
-          their use with <code>constexpr</code>.
-          Do not use <code>constexpr</code> to force inlining.
+          **<code>constexpr</code> 개념은 인터페이스의 constant 부분으로써
+          보다 견고한 구체화를 가능하게 한다.
+          진짜 상수를 구체화하고 그 개념들을 지원하는 함수들을 구체화하기
+          위해 <code>constexpr</code> 를 사용해라. 
+          <code>constexpr</code> 를 사용하기 위해 함수 정의를 복잡하게하는
+           것을 피해라.
+          inline 을 강요하기 위해 <code>constexpr</code> 를 사용하지 마라.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Integer Types">
+  <STYLEPOINT title="정수 타입들">
     <SUMMARY>
-      Of the built-in C++ integer types, the only one used
-      
-      is <code>int</code>.  If a program needs a variable of a different
-      size, use
-      
-      a precise-width integer type from
-      <code>&lt;stdint.h&gt;</code>, such as <code>int16_t</code>. If
-      your variable represents a value that could ever be greater than or
-      equal to 2^31 (2GiB), use a 64-bit type such as <code>int64_t</code>.
-      Keep in mind that even if your value won't ever be too large for an
-      <code>int</code>, it may be used in intermediate calculations which may
-      require a larger type. When in doubt, choose a larger type.
+      C++ 정수 내장 타입 중에, 유일하게 사용하는 것은 <code>int</code> 이다.
+      만약 프로그램이 다른 크기의 변수들이 필요하면, <code>int16_t</code>처럼
+      <code>&lt;stdint.h&gt;</code> 에 있는 길이가 정해진 정수 타입을 사용해라.
+      만약 변수가 2^31 (2GiB) 보다 크거나 같은 값을 표현한다면,
+      <code>int64_t</code> 같은 64비트 타입을 사용해라.
+      만약 값이 <code>int</code> 에 담기 너무 크지 않더라도, 더 큰 타입을
+      요구하는 중간 계산값이 쓰일 수 있다.
+      의심되면, 더 큰 타입을 사용해라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        C++ does not specify the sizes of its integer types. Typically
-        people assume that <code>short</code> is 16 bits,
-        <code>int</code> is 32 bits, <code>long</code> is 32 bits and
-        <code>long long</code> is 64 bits.
+        C++ 은 정수 타입의 크기를 명시하지 않는다. 전형적으로 사람들은
+        <code>short</code>가 16비트, <code>int</code>가 32비트,
+         <code>long</code>이 32비트, <code>long long</code>이 64비트라고
+         가정한다.
+
       </DEFINITION>
       <PROS>
-        Uniformity of declaration.
+        선언의 획일성.
       </PROS>
       <CONS>
-        The sizes of integral types in C++ can vary based on compiler
-        and architecture.
+        C++ 의 정수 타입의 크기들은 컴파일러와 아키텍쳐에 따라 
+        달라질 수 있다.
       </CONS>
       <DECISION>
         <p>
           
-          <code>&lt;stdint.h&gt;</code> defines
-          types like <code>int16_t</code>, <code>uint32_t</code>,
-          <code>int64_t</code>, etc.
-          You should always use those in preference to
-          <code>short</code>, <code>unsigned long long</code> and the
-          like, when you need a guarantee on the size of an integer.
-          Of the C integer types, only <code>int</code> should be
-          used.  When appropriate, you are welcome to use standard
-          types like <code>size_t</code> and <code>ptrdiff_t</code>.
+          <code>&lt;stdint.h&gt;</code>는 <code>int16_t</code>,
+           <code>uint32_t</code>, <code>int64_t</code> 같은
+           타입들을 정의한다.
+          정수의 크기를 보장해야 할 필요가 있을 때 <code>short</code>,
+           <code>unsigned long long</code> 보다 이런 타입들을 항상 사용해야 한다. 
+           C 정수 타입들 중, 단지 <code>int</code> 만 사용되어야 한다.
+           적절하면, <code>size_t</code>와 <code>ptrdiff_t</code> 같은
+           표준 타입들을 사용하는 것은 괜찮다.
         </p>
         <p>
-          We use <code>int</code> very often, for integers we know are not
-          going to be too big, e.g., loop counters. Use plain old
-          <code>int</code> for such things. You should assume that an
-          <code>int</code> is
-          
-          at least 32 bits,
-          but don't assume that it has more than 32 bits.
-          If you need a 64-bit integer type, use
-          <code>int64_t</code> or
-          <code>uint64_t</code>.
+          반복문 카운터처럼 꽤 크지 않은 정수들일 때 우리는 매우 자주
+          <code>int</code>를 사용한다. 이런 것들은 plain old <code>int</code>
+          를 사용해라. <code>int</code>가 최소 32비트라는 것을 가정해야하지만,
+          32비트가 넘는다고 가정하지 마라. 만약 64비트 정수 타입이 필요하다면,
+          <code>int64_t</code> 혹은 <code>uint64_t</code>를 사용해라.
         </p>
         <p>
-          For integers we know can be "big",
-           use
-          <code>int64_t</code>.
+          "큰" 정수가 될 수 있다면 <code>int64_t</code>를 써라.
           
         </p>
         <p>
-          You should not use the unsigned integer types such as
-          <code>uint32_t</code>,
-          unless there is a valid reason such as representing a bit pattern
-          rather than a number, or you need defined overflow modulo 2^N.
-          In particular, do not use unsigned types to say a number will never
-          be negative.  Instead, use
-          
-          assertions for this.
+          숫자보다 비트 패턴을 표현하거나, 2^N 나누기(modulo) 오버플로우를 정의하는 것이
+          필요한 것이 아니라면 <code>uint32_t</code> 같은 부호없는 정수 타입을 사용하지 마라.
+          특히, 숫자가 절대 음수가 되지 않을 것을 말하기 위해 부호없는 타입들을 사용하지 마라.
+          대신에, assert 를 사용해라.
         </p>
         
         <p>
-          If your code is a container that returns a size, be sure to use
-          a type that will accommodate any possible usage of your container.
-          When in doubt, use a larger type rather than a smaller type.
+          만약 크기를 리턴하는 컨테이너 코드라면, 컨테이너의 어떠한 사용에서도
+          가능한 크기를 수용할 수 있는 타입을 사용하는 것을 확실히 해라.
+          의심된다면, 작은 타입보다, 더 큰 타입을 사용해라.
         </p>
         <p>
-          Use care when converting integer types. Integer conversions and
-          promotions can cause non-intuitive behavior.
-          
+          정수 타입들을 변환할 때 조심해라. 정수 변환과 promotion들은
+          직관적이지 않은 행동을 유발할 수 있다.
         </p>
       </DECISION>
 
-      <SUBSECTION title="On Unsigned Integers">
+      <SUBSECTION title="부호없는 정수들">
         <p>
-          Some people, including some textbook authors, recommend
-          using unsigned types to represent numbers that are never
-          negative.  This is intended as a form of self-documentation.
-          However, in C, the advantages of such documentation are
-          outweighed by the real bugs it can introduce.  Consider:
+          (어떤 교과서의 저자들을 포함하여)어떤 사람들은 절대 음수가
+          될 수 없는 숫자를 표현하기 위해서 부호없는 타입들을
+          사용하는 것을 권장한다. 이것은 셀프-문서화(self-documentation)의 한
+          형태로 의도된 것이다. 그러나, C 에서 그런 문서화의 장점은 
+          그것들이 만들어낼 수 있는 실제 버그들보다 좋지 않다.
+          아래의 코드를 생각해보자.
         </p>
         <CODE_SNIPPET>
           for (unsigned int i = foo.Length()-1; i &gt;= 0; --i) ...
         </CODE_SNIPPET>
         <p>
-          This code will never terminate!  Sometimes gcc will notice
-          this bug and warn you, but often it will not.  Equally bad
-          bugs can occur when comparing signed and unsigned
-          variables.  Basically, C's type-promotion scheme causes
-          unsigned types to behave differently than one might expect.
+          이 코드는 절대 종료하지 않는다! 가끔 gcc 는 이 버그를
+          경고해주지만, 경고하지 않는 경우도 많다. 마찬가지로
+          부호있는(signed) 변수들과 부호없는(unsigned) 변수들을 비교할 때
+          나쁜 버그들이 발생할 수 있다. 기본적으로, C의 type-promotion
+          scheme 은 부호없는 타입들이 기대하는 것과 다르게 행동하는
+          것의 원인이 된다.
         </p>
         <p>
-          So, document that a variable is non-negative using
-          assertions.
-          Don't use an unsigned type.
+          그래서, assert 를 사용해서 변수가 음수가 아니라는 것을 문서화해라.
+          부호없는 타입을 사용하지 마라.
         </p>
       </SUBSECTION>
     </BODY>
