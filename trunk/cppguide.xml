@@ -1158,204 +1158,154 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        A class can define that operators such as <code>+</code> and
-        <code>/</code> operate on the class as if it were a built-in
-        type. An overload of <code>operator""</code> allows
-        the built-in literal syntax to be used to create objects of
-        class types.
+        클래스가 마치 내장된 타입들인 것처럼 <code>+</code>나 <code>/</code>와 같은 연산자를 정의할 수 있지. 
+        <code>operator""</code>를 오버로드하면
+        내장 리터럴 문법을 클래스 타입의 객체를 만드는 데 사용할 수 있지.
       </DEFINITION>
       <PROS>
         <p>
-          Operator overloading can make code appear more intuitive because a
-          class will behave in the same way as built-in types (such as
-          <code>int</code>).  Overloaded operators are more playful names for
-          functions that are less-colorfully named, such as
-          <code>Equals()</code> or <code>Add()</code>.
+          연산자를 오버로딩하면 클래스가 내장 타입(<code>int</code> 따위)들과 같은 바익으로 동작하기에 코드가
+          더 직관적으로 보이게 할 수 있지. 오버로드된 연산자는 <code>Equals()</code>이나 <code>Add()</code>와
+          같은 단조로운 이름보다는 함수 이름으로서는 더 재미있지.
         </p>
         <p>
-          For some template functions to work correctly, you may need to
-          define operators.
+          어떤 템플릿 함수가 바르게 동작하려면 연산자를 정의해야만 할 수 있지.
         </p>
         <p>
-          User-defined literals are a very concise notation for creating
-          objects of user-defined types.
+          사용자 정의 리터럴은 사용자 정의 타입의 객체를 생성하는 방법으로 매우 간결한 방법일 수 있지.
         </p>
       </PROS>
       <CONS>
-        While operator overloading can make code more intuitive, it
-        has several drawbacks:
+        견산자 오버로딩이 코드를 더 직관적으로 만드는 반면, 몇가지 단점이 있지:
         <ul>
-          <li> It can fool our intuition into thinking that expensive
-               operations are cheap, built-in operations.
+          <li> 비싼 연산을 마치 내장 연산자처럼 값이 싼 연산으로 직관적으로 반대로 느껴지게 할 수 있지.
                </li>
-          <li> It is much harder to find the call sites for overloaded
-               operators.  Searching for <code>Equals()</code> is much
-               easier than searching for relevant invocations of
-               <code>==</code>.
+          <li> 오버로딩된 연산자가 호출된 장소를 찾는 것은 훨씬 어려운 일이지. <code>==</code>의 호출 장소를
+               찾는 것보다 <code>Equals()</code>와 같은 함수를 찾는 것이 훨씬 쉬운 일이지.
                </li>
-          <li> Some operators work on pointers too, making it easy to
-               introduce bugs.  <code>Foo + 4</code> may do one thing,
-               while <code>&amp;Foo + 4</code> does something totally
-               different. The compiler does not complain for either of
-               these, making this very hard to debug.
+          <li> 어떤 연산자는 포인터에서도 동작하는데, 버그를 만들기 쉽지. <code>Foo + 4</code>가 하는 일과
+               <code>&amp;Foo + 4</code>가 하는 일은 완전히 다르지. 컴파일러는 어떤 경우에도 문제삼지 않을
+               것이기에 디버깅 하기 아주 힘들어지지.
                </li>
-          <li> User-defined literals allow creating new syntactic forms
-               that are unfamiliar even to experienced C++ programmers.
+          <li> 사용자 정의 리터럴로 숙련된 C++ 프로그래머에게도 생소한 문법을 만들어 낼 수 있지.
                </li>
         </ul>
-        Overloading also has surprising ramifications.  For instance,
-        if a class overloads unary <code>operator&amp;</code>, it
-        cannot safely be forward-declared.
+        또한 오버로딩으로 상상하기 힘든 파생되는 문제를 만들 수 있지. 예를 들면 클래스에서 단일 대상 
+        <code>operator&amp;</code>를 오버로드하면 그 클래스는 안전하게 전방 선언될 수 없게 되지.
       </CONS>
       <DECISION>
         <p>
-          In general, do not overload operators. The assignment operator
-          (<code>operator=</code>), in particular, is insidious and
-          should be avoided.  You can define functions like
-          <code>Equals()</code> and <code>CopyFrom()</code> if you
-          need them.  Likewise, avoid the dangerous
-          unary <code>operator&amp;</code> at all costs, if there's
-          any possibility the class might be forward-declared.
+          보통은 연산자를 오버로딩하지 말라구. 할당 연산자(<code>operator=</code>)의 경우 특별히 위험하기 때문에
+          반드시 피해야 하지. 필요한 경우 <code>Equals()</code>나 <code>CopyFrom()</code> 따위의 함수를 정의하라구.
+          마찬가지로 전방 선언이 될 수 있는 조금의 가능성이라도 있다면 어떤 대가를 치러서라도 <code>operator&amp;</code>도
+          피해야 한다구.
         </p>
         <p>
-          Do not overload <code>operator""</code>, i.e.
-          do not introduce user-defined literals.
+          <code>operator""</code>를 오버로딩하지 말라구. 예를 들자면 사용자 정의 리터럴을 정의하지 말라구.
         </p>
         <p>
-          However, there may be rare cases where you need to overload
-          an operator to interoperate with templates or "standard" C++
-          classes (such as <code>operator&lt;&lt;(ostream&amp;, const
-          T&amp;)</code> for logging).  These are acceptable if fully
-          justified, but you should try to avoid these whenever
-          possible.  In particular, do not overload <code>operator==</code>
-          or <code>operator&lt;</code> just so that your class can be
-          used as a key in an STL container; instead, you should
-          create equality and comparison functor types when declaring
-          the container.
+          하지만 매우 드물게 템를릿이나 "standard" C++ 라이브러리와 연동하기 위해 연산자를 오버로딩해야 하는 경우가 있지
+          (로깅에 사용하는 <code>operator&lt;&lt;(ostream&amp;, const T&amp;)</code> 따위). 만약 정말 그럴만 하다면
+          허용되어야 겠지만, 최대한 그런 상황을 피하려고 노력하라구. 특히 STL 컨테이너에 키로 쓰이는 클래스의 경우에
+          <code>operator==</code>와 <code>operator&lt;</code>를 오버로드해서는 안된다구; 대신 컨테이너를 선언할 때,
+          항등 여부 조사 functor type과 비교 functor type을 만들라구.
         </p>
         <p>
-          Some of the STL algorithms do require you to overload
-          <code>operator==</code>, and you may do so in these cases,
-          provided you document why.
+          어떤 STL 알고리즘은 <code>operator==</code>을 오버로드할 것을 요구하기도 하는데, 그럴 경우에는 오버로드를 하되
+          그 이유를 설명으로 남기라구.
         </p>
         <p>
-          See also <a HREF="#Copy_Constructors">Copy Constructors</a>
-          and <a HREF="#Function_Overloading">Function
-          Overloading</a>.
+          <a HREF="#복사 연산자">복사 연산자</a>와 <a HREF="#함수 오버로딩">함수 오버로딩</a>을 참조하라구.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Access Control">
+  <STYLEPOINT title="접근 제어">
     <SUMMARY>
-      Make data members <code>private</code>, and provide
-      access to them through accessor functions as needed (for
-      technical reasons, we allow data members of a test fixture class
-      to be <code>protected</code> when using
-      
-      <A HREF="http://code.google.com/p/googletest/">
-      Google Test</A>). Typically a variable would be
-      called <code>foo_</code> and the accessor function
-      <code>foo()</code>.  You may also want a mutator function
-      <code>set_foo()</code>.
-      Exception: <code>static const</code> data members (typically
-      called <code>kFoo</code>) need not be <code>private</code>.
+      데이터 멤버를 <code>private</code>으로 만들고 필요한 경우 접근 함수를 통해 접근하도록 하라구
+      (기술적인 이유로 우리는 <A HREF="http://code.google.com/p/googletest/">Google Test</A>를
+      사용하는 경우 test fixture 클래스의 데이터 멤버가 <code>protected</code>인 것은 허용하고 있다구).
+      전형적으로 <code>foo_</code>라고 불리는 변수가 있다면 접근 함수는 <code>foo()</code>라고 불린다구.
+      만약 변경 함수도 필요하다면 <code>set_foo()</code>라고 할 수 있다구.
+      예외: <code>static const</code> 데이터 멤버 (전형적으로 <code>kFoo</code>)들은 <code>private</code>여야
+      할 필요는 없다구.
     </SUMMARY>
     <BODY>
       <p>
-        The definitions of accessors are usually inlined in the header
-        file.
+        보통 접근자의 정의는 헤더 파일에 인라인되지.
       </p>
       <p>
-        See also <a HREF="#Inheritance">Inheritance</a> and <a HREF="#Function_Names">Function Names</a>.
+        <a HREF="#상속">상속</a>과 <a HREF="#함수 이름">함수 이름</a>을 참조하라구.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Declaration Order">
+  <STYLEPOINT title="선언 순서">
     <SUMMARY>
-      Use the specified order of declarations within a class:
-      <code>public:</code> before <code>private:</code>, methods
-      before data members (variables), etc.
+      클래스 내의 선언에는 특별한 순서를 사용하라구: <code>public:</code>이 <code>private:</code>보다
+      먼저 나와야 하고 메서드가 데이터 멤버 (변수)보다 먼저 나와야 한다거나, 기타 등등
     </SUMMARY>
     <BODY>
       <p>
-        Your class definition should start with its <code>public:</code>
-        section, followed by its <code>protected:</code> section and
-        then its <code>private:</code> section. If any of these sections
-        are empty, omit them.
+        클래스 정의는 반드시 <code>public:</code> 구역으로 시작해야 한다구. 그 다음에 <code>protected:</code>
+        구역이 따라오고 그 다음이 <code>private:</code> 구역이라구. 만약 이 구역 중 비어 있는 게 있다면,
+        그 구역을 빼 버리라구.
       </p>
       <p>
-        Within each section, the declarations generally should be in
-        the following order:
+        각각의 구역 안에서 선언은 보통 다음과 같은 순서여야 한다구.
       </p>
       <ul>
-        <li> Typedefs and Enums</li>
-        <li> Constants (<code>static const</code> data members)</li>
-        <li> Constructors</li>
-        <li> Destructor</li>
-        <li> Methods, including static methods</li>
-        <li> Data Members (except <code>static const</code> data members)</li>
+        <li> Typedef들과 Enum들</li>
+        <li> 상수들 (<code>static const</code> 데이터 멤버)</li>
+        <li> 생성자들</li>
+        <li> 소멸자</li>
+        <li> 메서드, 정적 메서드를 포함하여</li>
+        <li> 데이터 멤버 (단 <code>static const</code> 데이터 멤버는 제외하고)</li>
       </ul>
       <p>
-        Friend declarations should always be in the private section, and
-        the <code>DISALLOW_COPY_AND_ASSIGN</code> macro invocation
-        should be at the end of the <code>private:</code> section. It
-        should be the last thing in the class. See <a HREF="#Copy_Constructors">Copy Constructors</a>.
+        Friend 선언은 항상 private 구역 안에 있어야 하고 <code>DISALLOW_COPY_AND_ASSIGN</code> 매크로는 
+        <code>private:</code> 구역의 마지막에 있어야 한다구. 그 녀석은 클래스의 마지막에 있어야 한다구.
+        <a HREF="#복사 생성자">복사 생성자</a>를 참조하라구.
       </p>
       <p>
-        Method definitions in the corresponding <code>.cc</code> file
-        should be the same as the declaration order, as much as possible.
+        해당하는 <code>.cc</code> 파일의 메서드 정의는 가능한 한 선언과 같은 순서여야 한다구.
       </p>
       <p>
-        Do not put large method definitions inline in the class
-        definition.  Usually, only trivial or performance-critical,
-        and very short, methods may be defined inline.  See <a HREF="#Inline_Functions">Inline Functions</a> for more
-        details.
+        클래스 정의에 너무 많은 메서드 정의를 인라인으로 넣지 말라구. 보통 사소한 정도의 양이나 성능에 중요한
+        부분이나 매우 짧은 메서드만이 인라인으로 정의된다구. <a HREF="#인라인 함수">인라인 함수</a>를 참조하라구.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Write Short Functions">
+  <STYLEPOINT title="짧은 함수를 쓰기">
     <SUMMARY>
-      Prefer small and focused functions.
+      짧고 집중하는 함수를 선호하라구.
     </SUMMARY>
     <BODY>
       <p>
-        We recognize that long functions are sometimes appropriate, so
-        no hard limit is placed on functions length. If a function
-        exceeds about 40 lines, think about whether it can be broken
-        up without harming the structure of the program.
+        우리는 어떤 경우에는 긴 함수가 적절하다는 것을 알고 있기에, 함수 길이에 대해 강력한 제한을 두진 않는다구.
+        만약 함수의 길이가 40 라인을 넘어가면 이 함수를 프로그램의 구조를 해치지 않는 범위에서 나눌 수 있는지 생각하라구.
       </p>
       <p>
-        Even if your long function works perfectly now, someone
-        modifying it in a few months may add new behavior. This could
-        result in bugs that are hard to find.  Keeping your functions
-        short and simple makes it easier for other people to read and
-        modify your code.
+        만약 긴 함수가 지금은 완벽하게 동작하고 있는 경우라고 해도, 누군가 몇 개월 후에 고쳐서 새로운 동작을 넣을 수 있다구.
+        이러면 찾기 힘든 버그를 만들 수 있다구. 함수를 짧고 간단하게 유지하는 것은 다른 사람이 코드를 읽고 고치기 쉽게
+        해 준다구.
       </p>
       <p>
-        You could find long and complicated functions when working
-        with
-        
-        some
-        code.  Do not be intimidated by modifying existing
-        code: if working with such a function proves to be difficult,
-        you find that errors are hard to debug, or you want to use a
-        piece of it in several different contexts, consider breaking
-        up the function into smaller and more manageable pieces.
+        만약 어떤 코드에서 일하다가 길고 복잡한 함수를 만날 수 있다구. 기존의 코드를 수정하는 데 두려움을 가지지 말라구:
+        민약 그런 함수와 작업하는 게 어렵다면 에러가 디버그라기 힘들게 되었다고 느끼거가, 함수가 가진 여러 다른 맥락의 부분만을
+        다루기 원하게 될 것인데, 그러면 그 함수를 더 작고 관리가능한 단위로 쪼개는 것을 고려해 보라구. 
       </p>
     </BODY>
   </STYLEPOINT>
 </CATEGORY>
 
-<CATEGORY title="Google-Specific Magic">
+<CATEGORY title="구글만의 특별한 마법">
   
   <p>
-    There are various tricks and utilities that we use to make C++
-    code more robust, and various ways we use C++ that may differ from
-    what you see elsewhere.
+    다른 곳에서는 볼 수 없는, C++ 코드를 더 튼튼하게 만들기 위해 사용하는 다양한 기법과 장치들, 
+    그리고 C++을 사용하는 특별한 방법이 있다구.
   </p>
 
   
@@ -1475,24 +1425,21 @@ Tashana Landray
 
   <STYLEPOINT title="cpplint">
     <SUMMARY>
-      Use
-      <code>cpplint.py</code>
-      to detect style errors.
+      스따일 문제를 잡기 위해 <code>cpplint.py</code>를 쓰라구.
     </SUMMARY>
     <BODY>
       <p>
-        <code>cpplint.py</code>
-        is a tool that reads a source file and
-        identifies many style errors.  It is not perfect, and has both false
-        positives and false negatives, but it is still a valuable tool.  False
-        positives can be ignored by putting <code>// NOLINT</code> at
-        the end of the line.
+        <code>cpplint.py</code>는 소스 파일을 읽고 많은 스따일 문제를 식별하는 도구라구.
+        완벽하지 않고, 오류 없는 것을 오류라고 식별하는 문제와 오류 있는 것을 식별하는 하지 못하는 문제를 모두 가지고 있지만,
+        여전히 소중한 도구하구. <code>// NOLINT</code>룰 파일 마지막에 넣어주면 오류 없는 것을 오류로 식별하는 문제를
+        피해갈 수 있다구.
       </p>
       
       <p>
-        Some projects have instructions on how to run <code>cpplint.py</code>
-        from their project tools. If the project you are contributing to does
-        not, you can download <A HREF="http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py"><code>cpplint.py</code></A> separately.
+        어떤 프로젝트는 프로젝트 툴에서 <code>cpplint.py</code>를 어떻게 구동할 지 설명을 포함하고 있지. 
+        만약 지금 하는 프로젝트가 그헐지 않다면 별개로 
+        <A HREF="http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py"><code>cpplint.py</code></A>를 
+        다운로드받을 수도 있다구.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -1500,64 +1447,48 @@ Tashana Landray
   
 </CATEGORY>
 
-<CATEGORY title="Other C++ Features">
-  <STYLEPOINT title="Reference Arguments">
+<CATEGORY title="그 외의 C++ 기능">
+  <STYLEPOINT title="레퍼런스 인자">
     <SUMMARY>
-      All parameters passed by reference must be labeled
-      <code>const</code>.
+      레퍼런스로 전달되는 모든 인자는 <code>const</code>로 표시되어야 한다구.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        In C, if a function needs to modify a variable, the
-        parameter must use a pointer, eg <code>int foo(int
-        *pval)</code>.  In C++, the function can alternatively
-        declare a reference parameter: <code>int foo(int
-        &amp;val)</code>.
+        C에서 함수가 변수를 변경시켜야 할 때에는 예를 들면 <code>int foo(int *pval)</code>처럼 인자는 포인터를 사용해야 하지.
+        C++에서는 대신 함수가 레퍼런스 인자를 선언할 수 있지: <code>int foo(int &amp;val)</code>
       </DEFINITION>
       <PROS>
-        Defining a parameter as reference avoids ugly code like
-        <code>(*pval)++</code>.  Necessary for some applications like
-        copy constructors.  Makes it clear, unlike with pointers, that
-        a null pointer is not a possible value.
+        인자를 레퍼런스로 정의하면 <code>(*pval)++</code>과 같은 못 생긴 코드를 피할 수 있지. 복사 생성자와 같은 어떤 응용에서는
+        필요할 수 있지. 포인터와 다르게 null 포인터가 들어올 수 없다는 것을 명확하게 할 수 있지.
       </PROS>
       <CONS>
-        References can be confusing, as they have value syntax but
-        pointer semantics.
+        레퍼런스는 포인터의 의미를 가지지만 값(value)의 구문을 가지기 때문에 혼란스러울 수 있지.
       </CONS>
       <DECISION>
         <p>
-          Within function parameter lists all references must be
-          <code>const</code>:
+          함수 인자에 있어서 모든 레퍼런스는 <code>const</code>여야 한다구:
         </p>
         <CODE_SNIPPET>
           void Foo(const string &amp;in, string *out);
         </CODE_SNIPPET>
         <p>
-          In fact it is a very strong convention in Google code that input
-          arguments are values or <code>const</code> references while
-          output arguments are pointers.  Input parameters may be
-          <code>const</code> pointers, but we never allow
-          non-<code>const</code> reference parameters
-          except when required by convention, e.g., <code>swap()</code>.
+          사실 구글 코드에서는 입력 인자는 값이거나 <code>const</code> 레퍼런스여야 하고 출력인자는 포인터여야 한다는 강력한 관행이 있지.
+          입력인자는 <code>const</code> 포인터일 수 있지만, <code>swap()</code>처럼 관행에 따라 요구되는 경우를 제외하고는
+          <code>const</code>가 아닌 레퍼런스 인자는 절대 안된다구.
         </p>
         <p>
 
-         However, there are some instances where using <code>const T*</code>
-         is preferable to <code>const T&amp;</code> for input parameters. For
-         example:
+         하지만 어떤 경우에는 입력 인자에서 <code>const T*</code>가 <code>const T&amp;</code>보다 나은 경우가 있는데, 예를 들면:
          <ul>
-           <li>You want to pass in a null pointer.</li>
-           <li>The function saves a pointer or reference to the input.</li>
+           <li>null 포인터를 전달하고 싶을 때</li>
+           <li>함수가 입력에 대한 참조로서 포인터를 저장하고자 할 때</li>
          </ul>
          
 
-         Remember that most of the time input parameters are going to be
-         specified as <code>const T&amp;</code>.  Using <code>const T*</code>
-         instead communicates to the reader that the input is somehow treated
-         differently.  So if you choose <code>const T*</code> rather than
-         <code>const T&amp;</code>, do so for a concrete reason; otherwise it
-         will likely confuse readers by making them look for an explanation
-         that doesn't exist.
+         대부분의 경우에는 입력 인자가 <code>const T&amp;</code>로 지정된다는 점을 기억하라구. 대신 <code>const T*</code>를 사용하는 것은
+         읽는 사람에게 입력이 좀 다르게 다루어질 것이라고 알려주는 것이라구. 그러니 만약 <code>const T&amp;</code> 대신
+         <code>const T*</code>를 쓴다면 분명한 이유가 있어야 한다구; 그렇지 않은 경우에는 읽는 사람이 <code>const T*</code>를 쓴 
+         이유에 관한 있지도 않은 설명을 찾느라 혼란에 빠지게 될 수 있다구.
 
         </p>
       </DECISION>
@@ -1633,19 +1564,16 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Function Overloading">
+  <STYLEPOINT title="함수 오버로딩">
     <SUMMARY>
-      Use overloaded functions (including constructors) only if a
-      reader looking at a call site can get a good idea of what is
-      happening without having to first figure out exactly which
-      overload is being called.
+      읽는 사람이 호출한 부분을 봤을 때 굳이 오버로딩된 함수가 정확히 호출되었는지 찾아보지 않고도 무슨 일이
+      벌어졌는 지 더 쉽게 파악할 수 있는 경우에만 (생성자를 포함하여) 함수 오버로딩을 쓰라구. 
     </SUMMARY>
     <BODY>
       <DEFINITION>
         <p>
-          You may write a function that takes a
-          <code>const string&amp;</code> and overload it with another that
-          takes <code>const char*</code>.
+          <code>const string&amp;</code>를 취하는 함수를 쓰고 그것을 <code>const char*</code>를 취하는
+          다른 함수로 오버로드할 수 있지.
         </p>
         <CODE_SNIPPET>
           class MyClass {
@@ -1656,24 +1584,18 @@ Tashana Landray
         </CODE_SNIPPET>
       </DEFINITION>
       <PROS>
-        Overloading can make code more intuitive by allowing an
-        identically-named function to take different arguments.  It
-        may be necessary for templatized code, and it can be
-        convenient for Visitors.
+        오버로딩은 동일한 이름을 가진 함수가 다른 인자를 취하도록 허용해서 코드를 더 직관적으로 만들 수 있지.
+        템플릿화된 코드에서 필요할 수도 있고, Visitor에서 편리할 수 있지.
       </PROS>
       <CONS>
-        If a function is overloaded by the argument types alone, a
-        reader may have to understand C++'s complex matching rules in
-        order to tell what's going on.  Also many people are confused
-        by the semantics of inheritance if a derived class overrides
-        only some of the variants of a function.
+        만약 함수가 인자 타입으로만 오버로드되면 읽는 사람은 어떤 일이 벌어지는 지 알기 위해, C++의 복잡한
+        매치 규칙을 이해해야만 할 수 있지. 또한 하위 클래스가 함수의 변형 중 일부만 재정의하는 경우 상속 문법 때문에 
+        많은 사람들이 혼란에 빠지게 될 수 있지.
       </CONS>
       <DECISION>
-        If you want to overload a function, consider qualifying the
-        name with some information about the arguments, e.g.,
-        <code>AppendString()</code>, <code>AppendInt()</code> rather
-        than just <code>Append()</code>.
-        
+        만약 함수를 오버로드하기를 원한다면, 인자의 타입에 대한 정보를 이름에 넣어 한정하는 것을 고려해 보라구. 
+        예를 들면 <code>Append()</code>보다는 <code>AppendString()</code>이나 <code>AppendInt()</code>를 
+        쓰라구.
       </DECISION>
     </BODY>
   </STYLEPOINT>
