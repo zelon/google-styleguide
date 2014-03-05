@@ -1,12 +1,11 @@
+ 
+=======
 google-styleguide
 =================
 
-GitHub clone of SVN repo http://google-styleguide.googlecode.com/svn (cloned by http://svn2github.com/)
+이것은 구글 C++ 가이드 한글 번역 작업의 일부분이라구.
 
+아래 링크에서 그 결과물을 볼 수 있다구.
 
+http://jongwook.github.io/google-styleguide
 
-Guides
-======
-
- * C++ : http://zelon.github.io/google-styleguide/trunk/cppguide.xml
- 
