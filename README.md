@@ -1,5 +1,3 @@
- 
-=======
 google-styleguide
 =================
 
@@ -7,5 +5,5 @@ google-styleguide
 
 아래 링크에서 그 결과물을 볼 수 있다구.
 
-http://jongwook.github.io/google-styleguide
+http://jongwook.github.io/google-styleguide/trunk/cppguide.xml
 
