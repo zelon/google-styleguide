@@ -2417,109 +2417,91 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Preprocessor Macros">
+  <STYLEPOINT title="프리프로세서 매크로">
     <SUMMARY>
-      Be very cautious with macros.  Prefer inline functions, enums,
-      and <code>const</code> variables to macros.
+      매크로는 매우 주의해서 사용하라. 매크로보다는 인라인 함수, 열거형, 
+      <code>const</code> 변수를 사용하라.
     </SUMMARY>
     <BODY>
       <p>
-        Macros mean that the code you see is not the same as the code
-        the compiler sees.  This can introduce unexpected behavior,
-        especially since macros have global scope.
+        매크로는 프로그래머가 보는 코드와 컴파일러가 보는 코드를 다르게 만든다.
+        특히 전역으로 사용되었을때, 예상치 못한 결과를 초래할 수 있다.
       </p>
       <p>
-        Luckily, macros are not nearly as necessary in C++ as they are
-        in C.  Instead of using a macro to inline performance-critical
-        code, use an inline function.  Instead of using a macro to
-        store a constant, use a <code>const</code> variable.  Instead of
-        using a macro to "abbreviate" a long variable name, use a
-        reference.  Instead of using a macro to conditionally compile code
-        ... well, don't do that at all (except, of course, for the
-        <code>#define</code> guards to prevent double inclusion of
-        header files).  It makes testing much more difficult.
+        다행스럽게도 C++에서는 C와는 달리 매크로의 사용이 필수가 아니다. 
+        성능이 민감한 코드에는 매크로 대신 인라인 함수를 사용하라. 
+        상수를 저장하는 용도로 매크로 대신에 <code>const</code> 변수를 사용하라. 
+        긴 변수 이름을 축약하는 용도로 매크로 대신에 레퍼런스를 사용하라. 
+        조건부로 코드를 컴파일하는 용도로는 매크로 대신 … 어쨌든 매크로는 
+        사용하지 말라(예외적으로 헤더파일 이중 include를 막는 
+        <code>#define</code> 가드 용도로는 사용해도 됩니다). 테스트를 훨씬 어렵게 만든다.
       </p>
       <p>
-        Macros can do things these other techniques cannot, and you do
-        see them in the codebase, especially in the lower-level
-        libraries.  And some of their special features (like
-        stringifying, concatenation, and so forth) are not available
-        through the language proper.  But before using a macro,
-        consider carefully whether there's a non-macro way to achieve
-        the same result.
+        매크로는 다른 테크닉으로는 할 수 없는 것들을 가능케하고, 하부 레벨의 
+        라이브러리 코드베이스에서 종종 볼 수 있다.그리고 문자열 변환(stringfying), 
+        문자열 연결과 같은 고유한 기능이 있다. 하지만 매크로를 사용하기 
+        전에 매크로를 사용하지 않고도 같은 결과를 얻을 수 있는 다른 방법을 
+        신중하게 고려하라.
       </p>
       <p>
-        The following usage pattern will avoid many problems with
-        macros; if you use macros, follow it whenever possible:
+        매크로를 사용한다면 다음과 같은 사용 패턴은 피하라.
       </p>
       <ul>
-        <li> Don't define macros in a <code>.h</code> file.
+        <li> 헤더파일에 매크로를 정의하지 말라.
              </li>
-        <li> <code>#define</code> macros right before you use them,
-             and <code>#undef</code> them right after.
+        <li> 매크로를 사용하지 바로 전에 <code>#define</code>하고,
+             사용후에는 바로 <code>#undef</code> 하라.
              </li>
-        <li> Do not just <code>#undef</code> an existing macro before
-             replacing it with your own; instead, pick a name that's
-             likely to be unique.
+        <li> 기존에 존재하는 매크로를 대체하는 용도로 <code>#undef</code>를 
+             사용하지 말고, 다른 유일한 이름의 매크로를 사용하라.
              </li>
-        <li> Try not to use macros that expand to unbalanced C++
-             constructs, or at least document that behavior well.
+        <li> 불안정하게(unbalanced) C++ 생성자를 확장하는 용도로 
+             매크로를 사용하지 말고, 사용하게 된다면 적어도 문서화라도 하라.
              </li>
-        <li> Prefer not using <code>##</code> to generate function/class/variable
-             names.
+        <li> 함수/클래스/변수 이름을 생성하는 용도로 <code>##</code> 매크로를
+             사용하지 마라.
              </li>
       </ul>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="0 and nullptr/NULL">
+  <STYLEPOINT title="0과 nullptr/NULL">
   <SUMMARY>
-    Use <code>0</code> for integers, <code>0.0</code> for reals,
-    <code>nullptr</code> (or <code>NULL</code>) for pointers,
-    and <code>'\0'</code> for chars.
+    정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을,
+    포인터는 <code>nullptr</code> (혹은 <code>NULL</code>) 을,
+    char는 <code>'\0'</code> 을 사용하라.
   </SUMMARY>
   <BODY>
     <p>
-      Use <code>0</code> for integers and <code>0.0</code> for reals.
-      This is not controversial.
+      정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을 사용하는 것은 
+      명백하므로 논란이 없다.
     </p>
     <p>
-    
-    
-      For pointers (address values), there is a choice between <code>0</code>,
-      <code>NULL</code>, and <code>nullptr</code>.
-      For projects that allow C++11 features, use <code>nullptr</code>.
-      For C++03 projects, we prefer <code>NULL</code> because it looks like a
-      pointer.  In fact, some C++ compilers provide special definitions of
-      <code>NULL</code> which enable them to give useful warnings,
-      particularly in situations where <code>sizeof(NULL)</code> is not equal
-      to <code>sizeof(0)</code>.
-    
+      포인터(변수를 가리키는 용도)에는 <code>0</code>, <code>NULL</code>, 
+      <code>nullptr</code>을 선택적으로 사용할 수 있다. C++11을 허용하는 
+      프로젝트에서는 nullptr을 사용하라. C++03 프로젝트에는 NULL이 
+      포인터처럼 보이기 때문에 NULL을 권장한다. 사실 어떤 C++ 컴파일러는 
+      유용한 경고메세지를 보여주는 것을 가능케하는(예를 들면 sizeof(NULL)과 
+      sizeof(0)이 같지않은 상황) NULL에 대한 특별한 정의가 있다.
     </p>
     <p>
-      Use <code>'\0'</code> for chars.
-      This is the correct type and also makes code more readable.
+      char에는 '\0'을 사용하라. 알맞는 타입이고 코드 가독성도 향상된다.
     </p>
   </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="sizeof">
   <SUMMARY>
-    Prefer <code>sizeof(<var>varname</var>)</code> to
-    <code>sizeof(<var>type</var>)</code>.
+    <code>sizeof(<var>type</var>)</code>보다 <code>sizeof(<var>varname</var>)</code>
+    사용을 권장한다.
   </SUMMARY>
   <BODY>
     <p>
-      Use <code>sizeof(<var>varname</var>)</code>
-      when you take the size of a particular variable.
-      <code>sizeof(<var>varname</var>)</code> will update
-      appropriately if someone changes the variable type
-      either now or later.
-      You may use <code>sizeof(<var>type</var>)</code>
-      for code unrelated to any particular variable,
-      such as code that manages an external or internal
-      data format where a variable of an appropriate C++ type
-      is not convenient.
+      특정 변수의 사이즈가 필요할 때 <code>sizeof(<var>varname</var>)</code>을 
+      사용하세요. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
+      타입을 변경했을 때에도 잘 동작합니다. <code>sizeof(<var>type</var>)</code>은 
+      특정 변수의 사이즈와 관련 없는 곳(예를 들면 외부나 내부의 데이터 포맷을 
+      관리하는 것)에서 사용될 수 있다.
     </p>
     <p>
       <CODE_SNIPPET>
@@ -2531,7 +2513,7 @@ Tashana Landray
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
         if (raw_size &lt; sizeof(int)) {
-          LOG(ERROR) &lt;&lt; "compressed record not big enough for count: " &lt;&lt; raw_size;
+          LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작습니다: " &lt;&lt; raw_size;
           return false;
         }
       </CODE_SNIPPET>
