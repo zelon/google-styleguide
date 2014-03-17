@@ -2434,7 +2434,7 @@ Tashana Landray
         긴 변수 이름을 축약하는 용도로 매크로 대신에 레퍼런스를 사용하라. 
         조건부로 코드를 컴파일하는 용도로는 매크로 대신 … 어쨌든 매크로는 
         사용하지 말라(예외적으로 헤더파일 이중 include를 막는 
-        <code>#define</code> 가드 용도로는 사용해도 됩니다). 테스트를 훨씬 어렵게 만든다.
+        <code>#define</code> 가드 용도로는 사용해도 됨). 테스트를 훨씬 어렵게 만든다.
       </p>
       <p>
         매크로는 다른 테크닉으로는 할 수 없는 것들을 가능케하고, 하부 레벨의 
@@ -2523,17 +2523,15 @@ Tashana Landray
 
   <STYLEPOINT title="auto">
   <SUMMARY>
-    Use <code>auto</code> to avoid type names that are just clutter.
-    Continue to use manifest type declarations when it helps readability,
-    and never use <code>auto</code> for anything but local variables.
-    
+    타입이름을 사용하기 복잡한 곳에 <code>auto</code>를 사용하라. 
+    코드 가독성을 향상시켜주는 곳에는 명시적인 타입 선언을 사용하고, 
+    <code>auto</code>는 지역 변수에만 사용하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      In C++11, a variable whose type is given as <code>auto</code> will be given
-      a type that matches that of the expression used to initialize
-      it. You can use <code>auto</code> either to initialize a
-      variable by copying, or to bind a reference.
+      C++11에서는 <code>auto</code> 타입의 변수는 표현식에서 변수 
+      초기화에 사용된다. 복사를 통해 변수를 초기화 하거나 레퍼런스를 
+      생성하는데 <code>auto</code>를 사용할 수 있다.
         <CODE_SNIPPET>
           vector&lt;string&gt; v;
           ...
@@ -2543,71 +2541,65 @@ Tashana Landray
     </DEFINITION>
     <PROS>
       <p>
-        C++ type names can sometimes be long and cumbersome,
-        especially when they involve templates or namespaces. In a statement like
+        C++의 타입네임은 템플릿이나 네임스페이스와 연관되어 있을 때에는 
+        길고 복잡해진다. 예를 들면 아래 코드에서
         <CODE_SNIPPET>
           sparse_hash_map&lt;string, int&gt;::iterator iter = m.find(val);
         </CODE_SNIPPET>
-        the return type is hard to read, and obscures the primary
-        purpose of the statement. Changing it to
+        리턴 타입이 무엇인지, 구문의 목적이 무엇인지 알기가 어렵다. 
+        하지만 아래와 같이 변경하면
         <CODE_SNIPPET>
           auto iter = m.find(val);
         </CODE_SNIPPET>
-        makes it more readable.
+        가독성이 향상된다.
       </p>
       <p>
-        Without <code>auto</code> we are sometimes forced to write a
-        type name twice in the same expression, adding no value
-        for the reader, as in
+        <code>auto</code>가 없으면 한 구문에서 별 의미도 없이 
+        타입네임을 두번 써야 하는 경우도 있다.
         <CODE_SNIPPET>
           diagnostics::ErrorStatus* status = new diagnostics::ErrorStatus("xyz");
         </CODE_SNIPPET>
       </p>
       <p>
-        Using <code>auto</code> makes it easier to use intermediate
-        variables when appropriate, by reducing the burden of writing
-        their types explicitly.
+        <code>auto</code>를 사용하면 타입을 명시적으로 써야하는 부담을 덜고
+        적절한 변수를 바로 사용하는 것이 쉬워진다.
       </p>
     </PROS>
     <CONS>
-      <p>Sometimes code is clearer when types are manifest, especially when
-        a variable's initialization depends on things that were declared
-        far away. In an expression like
+      <p>어떤 변수의 초기화가 멀리 선언되어 있는 다른 변수와 관련되어 있을때에는 
+        명시적인 타입을 사용하는 것이 명확할 때가 있다. 아래 구문에서
         <CODE_SNIPPET>
           auto i = x.Lookup(key);
         </CODE_SNIPPET>
-        it may not be obvious what <code>i</code>'s type is, if <code>x</code>
-        was declared hundreds of lines earlier.
+        x가 선언된 부분이 코드에서 멀리 있으면, i의 타입이 무엇인지 알아내기가
+        쉽지 않다.
       </p>
 
-      <p>Programmers have to understand the difference between <code>auto</code>
-        and <code>const auto&amp;</code> or they'll get copies when
-        they didn't mean to.
+      <p>프로그래머가 <code>auto</code>와 <code>const auto&amp;</code>의 차이를 
+      잘 알지 못하면  원치 않게 복사된 값을 얻게 될 수 있다. 
       </p>
 
-      <p>The interaction between <code>auto</code> and C++11
-        brace-initialization can be confusing. The declarations
+      <p><code>auto</code>와 C++11 중괄호를 사용한 초기화(brace-initialization)의 
+        상호작용은 혼란스러울 수 있다. 아래 두 선언은 서로 다른 의미를 가진다.
         <CODE_SNIPPET>
-          auto x(3);  // Note: parentheses.
-          auto y{3};  // Note: curly braces.
+          auto x(3);  // Note: 소괄호
+          auto y{3};  // Note: 중괄호
         </CODE_SNIPPET>
-        mean different things — <code>x</code> is
-        an <code>int</code>, while <code>y</code> is
-        an <code>initializer_list</code>. The same applies to other
-        normally-invisible proxy types.
-        
+        <code>x</code>는 int이고, <code>y</code>는 초기화 목록(initializer_list)이다.
+        invisible proxy도 마찬가지이다.
       </p>
 
-      <p>If an <code>auto</code> variable is used as part of an
-        interface, e.g. as a constant in a header, then a programmer
-        might change its type while only intending to change its
-        value, leading to a more radical API change than intended.</p>
+      <p><code>auto</code> 변수가 인터페이스에 선언되어 있다면(예를 들어 헤더의 상수로), 
+        타입을 변경하는 것이 좋습니다.</p>
     </CONS>
     <DECISION>
-      <p><code>auto</code> is permitted, for local variables only.
-        Do not use <code>auto</code> for file-scope or namespace-scope
-        variables, or for class members. Never assign a braced initializer list
-        to an <code>auto</code>-typed variable.</p>
+      <p><code>auto</code>는 지역변수로만 사용해야 한다. 파일 범위나 네임스페이스 범위에서 
+      사용하면 안되고, 클래스 멤버로도 사용해서는 안된다. 
+      <code>auto</code>타입 변수에 중괄호를 사용한 초기화 구문을 사용해도 안된다.</p>
+      
+      <p><code>auto</code> 키워드를 리턴 타입과 연계된 함수 선언에서 사용하는 것은 
+      허용하지 않는다.</p>
+      
       <p>The <code>auto</code> keyword is also used in an unrelated
         C++11 feature: it's part of the syntax for a new kind of
         function declaration with a trailing return type. Function
@@ -2616,30 +2608,30 @@ Tashana Landray
   </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Brace Initialization">
+  <STYLEPOINT title="중괄호를 사용한 초기화">
   <SUMMARY>
-    You may use brace initialization. 
+    중괄호를 사용한 초기화(Brace Initialization)를 사용할 수 있다.
   </SUMMARY>
   <BODY>
-    <p>In C++03, aggregate types (arrays and structs with no constructor) could
-    be initialized using braces.
+    <p>C++03에서 aggregate타입(배열과 생성자 없는 구조체)은 중괄호를 
+    사용해서 초기화 될 수 있다. 
       <CODE_SNIPPET>
         struct Point { int x; int y; };
         Point p = {1, 2};
       </CODE_SNIPPET></p>
 
-    <p>In C++11, this syntax has been expanded for use with all other datatypes.
-    The brace initialization form is called <i>braced-init-list</i>. Here are
-    a few examples of its use.
+    <p>C++11에서는 이 문법이 모든 데이터타입으로 확장되었다. 
+    이런 중괄호를 사용한 초기화 형태를 <i>braced-init-list</i> 라고 부른다. 
+    아래에 몇가지 예제가 있다.
       <CODE_SNIPPET>
-        // Vector takes lists of elements.
+        // 벡터 초기화 Vector takes lists of elements.
         vector&lt;string&gt; v{"foo", "bar"};
 
         // The same, except this form cannot be used if the initializer_list
         // constructor is explicit. You may choose to use either form.
         vector&lt;string&gt; v = {"foo", "bar"};
 
-        // Maps take lists of pairs. Nested braced-init-lists work.
+        // 맵 초기화. 중첩된 braced-init-lists.
         map&lt;int, string&gt; m = {{1, "one"}, {2, "2"}};
 
         // braced-init-lists can be implicitly converted to return types.
@@ -2650,14 +2642,13 @@ Tashana Landray
         // Iterate over a braced-init-list.
         for (int i : {-1, -2, -3}) {}
 
-        // Call a function using a braced-init-list.
+        // braced-init-list를 사용하여 함수 호출
         void test_function2(vector&lt;int&gt; v) {}
         test_function2({1, 2, 3});
       </CODE_SNIPPET></p>
-
-    <p>User data types can also define constructors that take
-    <code>initializer_list</code>, which is automatically created from
-    <i>braced-init-list</i>:
+    
+    <p>사용자 정의 타입 또한 <i>braced-init-list</i> 로부터 자동 생성되는 
+    <code>initializer_list</code>를 받는 생성자를 정의할 수 있다:
       <CODE_SNIPPET>
         class MyType {
          public:
@@ -2670,8 +2661,8 @@ Tashana Landray
         MyType m{2, 3, 5, 7};
       </CODE_SNIPPET></p>
 
-    <p>Finally, brace initialization can also call ordinary constructors of
-    data types that do not have <code>initializer_list</code> constructors.
+    <p>마지막으로 중괄호를 사용한 초기화는 <code>initializer_list</code> 
+    생성자를 가지지 않는 일반적인 생성자를 호출 할 수 있다.
       <CODE_SNIPPET>
         double d{1.23};
         // Calls ordinary constructor as long as MyOtherType has no
@@ -2686,8 +2677,9 @@ Tashana Landray
         MyOtherType m{"b"};
       </CODE_SNIPPET></p>
 
-    <p>Never assign a <i>braced-init-list</i> to an auto local variable. In the
-    single element case, what this means can be confusing.
+    
+    <p><i>braced-init-list</i> 를 auto 지역 변수에 할당하지 마라. 
+    single element의 경우에 혼동스러울 수 있다.
       <BAD_CODE_SNIPPET>
         auto d = {1.23};        // d is an initializer_list&lt;double&gt;
       </BAD_CODE_SNIPPET>
