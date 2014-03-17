@@ -342,7 +342,7 @@ Tashana Landray
         include들은 이렇게 보일 수 있다:
       </p>
       <CODE_SNIPPET>
-        #include "foo/public/fooserver.h"  // Preferred location.
+        #include "foo/public/fooserver.h"  // 선호되는 위치
 
         #include &lt;sys/types.h&gt;
         #include &lt;unistd.h&gt;
@@ -361,7 +361,7 @@ Tashana Landray
       <CODE_SNIPPET>
         #include "foo/public/fooserver.h"
 
-        #include "base/port.h"  // For LANG_CXX11.
+        #include "base/port.h"  // LANG_CXX11를 위해
 
         #ifdef LANG_CXX11
         #include &lt;initializer_list&gt;
@@ -439,11 +439,11 @@ Tashana Landray
             <li> 런타임의 이름 충돌을 피하기 위해 <code>.cc</code> 파일에서 이름
                  없는 네임스페이스는 허용되며 심지어 권장된다:
                  <CODE_SNIPPET>
-                   namespace {                           // This is in a .cc file.
+                   namespace {                           // 이 부분은 .cc 파일에 있다.
 
-                   // The content of a namespace is not indented 들여쓰기 네임스페이스
-                   enum { kUnused, kEOF, kError };       // Commonly used tokens.
-                   bool AtEof() { return pos_ == kEOF; }  // Uses our namespace's EOF. 네임스페이스
+                   // 네임스페이스의 내용은 들여쓰기되지 않는다
+                   enum { kUnused, kEOF, kError };       // 공통으로 사용되는 토큰
+                   bool AtEof() { return pos_ == kEOF; }  // 우리의 네임스페이스의 EOF를 사용한다.
 
                    }  // namespace
                  </CODE_SNIPPET>
@@ -469,11 +469,11 @@ Tashana Landray
                  정의/선언, 다른 네임스페이스에 있는 클래스 전방 선언 아래부터 
                  전체 소스 파일을 감싼다:
                  <CODE_SNIPPET>
-                   // In the .h file
+                   // .h 파일의 내부
                    namespace mynamespace {
 
-                   // All declarations are within the namespace scope.선언 네임스페이스
-                   // Notice the lack of indentation.들여쓰기
+                   // 모든 선언들은 네임스페이스 범위 안에 있다.
+                   // 들여쓰기가 없다는 점을 주목하라.
                    class MyClass {
                     public:
                      ...
@@ -483,10 +483,10 @@ Tashana Landray
                    }  // namespace mynamespace
                  </CODE_SNIPPET>
                  <CODE_SNIPPET>
-                   // In the .cc file
+                   // .cc 파일의 내부
                    namespace mynamespace {
 
-                   // Definition of functions is within scope of the namespace. 네임스페이스
+                   // 함수의 정의는 네임스페이스 범위 안에 있다.
                    void MyClass::Foo() {
                      ...
                    }
@@ -502,12 +502,12 @@ Tashana Landray
 
                    DEFINE_bool(someflag, false, "dummy flag");
 
-                   class C;  // Forward declaration of class C in the global namespace.전방 선언 전역 네임스페이스
-                   namespace a { class A; }  // Forward declaration of a::A.전방 선언
+                   class C;  // 전역 네임스페이스 안의 클래스 C의 전방 선언
+                   namespace a { class A; }  // a::A의 전방 선언
 
                    namespace b {
 
-                   ...code for b...         // Code goes against the left margin.
+                   ...code for b...         // 왼쪽 들여쓰기 없는 코드
 
                    }  // namespace b
                  </CODE_SNIPPET>
@@ -523,7 +523,7 @@ Tashana Landray
             <li> 당신은 한 네임스페이스에 있는 모든 이름을 활용할 수 있게 하기
                  위해 <SYNTAX>using 지시자</SYNTAX>를 쓸 수 없다.
                  <BAD_CODE_SNIPPET>
-                   // Forbidden -- This pollutes the namespace. 네임스페이스
+                   // 금지 -- 네임스페이스를 더럽힌다.
                    using namespace foo;
                  </BAD_CODE_SNIPPET>
                  </li>
@@ -532,8 +532,8 @@ Tashana Landray
                  어느 곳에서나 사용할 수 있고, <code>.h</code> 파일의 함수와 
                  메서드와 클래스 안에서 사용할 수 있다.
                  <CODE_SNIPPET>
-                   // OK in .cc files.
-                   // Must be in a function, method or class in .h files. 메서드
+                   // .cc 파일에서는 OK.
+                   // .h 파일에서 함수나 메서드, 클래스 안에 있어야 한다.
                    using ::foo::bar;
                  </CODE_SNIPPET>
                  </li>
@@ -542,19 +542,18 @@ Tashana Landray
                  <code>.h</code> 파일을 감싸고 있는 이름 있는 네임스페이스 안의 
                  모든 곳과 허용되고, 함수나 메서드 안에서 허용된다.
                  <CODE_SNIPPET>
-                   // Shorten access to some commonly used names in .cc files.
+                   // .cc 파일에서 어떤 공통으로 사용되는 이름에 대한 축약된 접근
                    namespace fbz = ::foo::bar::baz;
 
-                   // Shorten access to some commonly used names (in a .h file).
+                   // (.h 파일에서) 어떤 공통으로 사용되는 이름에 대한 축약된 접근
                    namespace librarian {
-                   // The following alias is available to all files including 별칭
-                   // this header (in namespace librarian):헤더 네임스페이스
-                   // alias names should therefore be chosen consistently 별칭의 이름
-                   // within a project.
+                   // 아래의 별칭은 이 헤더를 include하는 모든 파일에서 (librarian 네임스페이스로)
+                   // 사용가능하다: 
+                   // 그러므로 별칭의 이름은 프로젝트 안에서 일관되게 선택되어야 한다.
                    namespace pd_s = ::pipeline_diagnostics::sidetable;
 
                    inline void my_inline_function() {
-                     // namespace alias local to a function (or method). 메서드 네임스페이스 별칭
+                     // 네임스페이스 별칭은 함수 (혹은 메서드) 안에 국한된다.
                      namespace fbz = ::foo::bar::baz;
                      ...
                    }
@@ -590,7 +589,7 @@ Tashana Landray
           class Foo {
 
            private:
-            // Bar is a member class, nested within Foo. 멤버
+            // Bar는 Foo 안에 중첩된 멤버 클래스이다.
             class Bar {
               ...
             };
@@ -675,18 +674,18 @@ Tashana Landray
       </p>
       <BAD_CODE_SNIPPET>
         int i;
-        i = f();      // Bad -- initialization separate from declaration.선언 초기화
+        i = f();      // 나쁨 -- 초기화가 선언이 분리되어 있다.
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
-        int j = g();  // Good -- declaration has initialization.선언 초기화
+        int j = g();  // 좋음 -- 선언이 초기화를 가지고 있다.
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
         vector&lt;int&gt; v;
-        v.push_back(1);  // Prefer initializing using brace initialization. 중괄호 초기화
+        v.push_back(1);  // 중괄호 초기화를 사용하여 초기화하는 것을 선호하라.
         v.push_back(2);
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
-        vector&lt;int&gt; v = {1, 2};  // Good -- v starts initialized.
+        vector&lt;int&gt; v = {1, 2};  // 좋음 -- v는 시작부터 초기화된다.
       </CODE_SNIPPET>
       <p>
         gcc가 <code>for (int i = 0; i&lt; 10; ++i)</code>를 올바르게 구현하고 
@@ -703,9 +702,9 @@ Tashana Landray
         때마다 호출되고 그 소멸자는 범위를 빠져나갈 때마다 호출된다.
       </p>
       <BAD_CODE_SNIPPET>
-        // Inefficient implementation: 구현
+        // 비효율적인 구현
         for (int i = 0; i &lt; 1000000; ++i) {
-          Foo f;  // My ctor and dtor get called 1000000 times each.
+          Foo f;  // 생성자와 소멸자는 각각 1000000회 호출된다.
           f.DoSomething(i);
         }
       </BAD_CODE_SNIPPET>
@@ -714,7 +713,7 @@ Tashana Landray
         성능에 좋을 수 있다:
       </p>
       <CODE_SNIPPET>
-        Foo f;  // My ctor and dtor get called once each.
+        Foo f;  // 생성자와 소멸자는 각각 한 번 호출된다.
         for (int i = 0; i &lt; 1000000; ++i) {
           f.DoSomething(i);
         }
@@ -992,8 +991,8 @@ Tashana Landray
           있다:
         </p>
         <CODE_SNIPPET>
-          // A macro to disallow the copy constructor and operator= functions 복사 생성자 매크로 연산자
-          // This should be used in the private: declarations for a class 선언
+          // 복사 생성자와 = 연산자 함수를 금지하는 매크로
+          // 이는 클래스의 private: 선언 부분 안에서 사용되어야 한다.
           #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
             TypeName(const TypeName&amp;);               \
             void operator=(const TypeName&amp;)
@@ -1054,7 +1053,7 @@ Tashana Landray
 
           class Derived : public Base {
           public:
-            using Base::Base;  // Base's constructors are redeclared here. 생성자
+            using Base::Base;  // Base의 생성자는 여기서 재선언된다.
           };
         </CODE_SNIPPET>
         <p>
