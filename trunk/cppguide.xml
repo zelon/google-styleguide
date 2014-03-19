@@ -2513,7 +2513,7 @@ Tashana Landray
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
         if (raw_size &lt; sizeof(int)) {
-          LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작습니다: " &lt;&lt; raw_size;
+          LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작다: " &lt;&lt; raw_size;
           return false;
         }
       </CODE_SNIPPET>
@@ -2690,53 +2690,49 @@ Tashana Landray
   </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Lambda expressions">
+  <STYLEPOINT title="람다 표현식">
     <SUMMARY>
-      Do not use lambda expressions, or the related <code>std::function</code>
-      or <code>std::bind</code> utilities.
+      람다 표현식이나 관련된 <code>std::function</code> 혹은
+      <code>std::bind</code> 유틸리티를 사용하지 마라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Lambda expressions are a concise way of creating anonymous function
-        objects. They're often useful when passing functions as arguments.
-        For example: <code>std::sort(v.begin(), v.end(),
-        [](string x, string y) { return x[1] &lt; y[1]; });</code> Lambdas were
-        introduced in C++11 along with a set of utilities for working with
-        function objects, such as the polymorphic wrapper
-        <code>std::function</code>.
+        람다 표현식으로 익명 함수 객체를 간결하게 생성할 수 있다.
+        함수의 인자로 사용될때 유용하다. 예를 들면
+        <code>
+          std::sort(v.begin(), v.end(),
+          [](string x, string y) { return x[1] &lt; y[1]; });
+        </code>
+        람다는 C++11에서 <code>std::function</code>과 같은 함수객체를 위한 
+        유틸리티와 함께 소개되었다.
       </DEFINITION>
       <PROS>
         <ul>
           <li>
-            Lambdas are much more concise than other ways of defining function
-            objects to be passed to STL algorithms, which can be a readability
-            improvement.
+            람다로 STL algorithms 의 인자로 전달되는 함수객체를 다른 방식보다 
+            훨씬 간결하게 만들 수 있고, 가독성도 향상된다.
           </li>
           <li>
-            Lambdas, <code>std::function</code>, and <code>std::bind</code>
-            can be used in combination as a general purpose callback
-            mechanism; they make it easy to write functions that take bound
-            functions as arguments.
+            람다, <code>std::function</code>, <code>std::bind</code>는 일반적인 
+            콜백 방식에 함께 사용될 수 있다. 함수를 인자로 쉽게 사용할 수 있게 해준다.
           </li>
         </ul>
       </PROS>
       <CONS>
         <ul>
           <li>
-            Variable capture in lambdas can be tricky, and might be a new
-            source of dangling-pointer bugs.
+            람다의 변수 캡쳐는 사용하기 까다로울 수 있고, 
+            dangling-pointer버그의 온상이 될 수 있다.
           </li>
           <li>
-            It's possible for use of lambdas to get out of hand; very long
-            nested anonymous functions can make code harder to understand.
+            매우 길게 중첩된 익명함수는 코드를 이해하기 어렵고 감당할 수 없게 만든다.
           </li>
           
         </ul>
       </CONS>
       <DECISION>
         <p>
-          Do not use lambda expressions, <code>std::function</code> or
-          <code>std::bind</code>.
+          람다 표현식, <code>std::function</code>, <code>std::bind</code>는 사용하지 마라.
         </p>
       </DECISION>
     </BODY>
@@ -2744,32 +2740,30 @@ Tashana Landray
 
   <STYLEPOINT title="Boost">
   <SUMMARY>
-    Use only approved libraries from the Boost library collection.
+    사용이 허가된 Boost 라이브러리만 사용하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      The <a href="http://www.boost.org/">Boost library collection</a> is
-      a popular collection of peer-reviewed, free, open-source C++ libraries.
+      <a href="http://www.boost.org/">Boost 라이브러리</a> 는 
+      프로그래머들 사이에서 검증되었고(peer-reviewed), 무료이고, 
+      오픈소스인 C++ 라이브러리 모음이다.
     </DEFINITION>
     <PROS>
-      Boost code is generally very high-quality, is widely portable, and fills
-      many important gaps in the C++ standard library, such as type traits,
-      better binders, and better smart pointers. It also provides an
-      implementation of the TR1 extension to the standard library.
+      Boost 코드는 일반적으로 매우 고품질이고, 이식성이 높고, 
+      type trait, binder, 스마트 포인터 같은 C++ 표준 라이브러리의 
+      부족함을 충족시킨다. 또한 TR1 표준 확장 라이브러리로 제공된다.
     </PROS>
     <CONS>
-      Some Boost libraries encourage coding practices which can hamper
-      readability, such as metaprogramming and other advanced template
-      techniques, and an excessively "functional" style of programming.
-      
+      일부 라이브러리는 메타프로그래밍이나 급진적인(advanced) 템플릿 
+      사용으로 가독성을 해치고 과도하게 함수형 프로그래밍 기법을 사용한다.
+
     </CONS>
     <DECISION>
       
       <div>
-        
-        In order to maintain a high level of readability for all contributors
-        who might read and maintain code, we only allow an approved subset of
-        Boost features.  Currently, the following libraries are permitted:
+        코드를 유지보수하는 모든 프로그래머들에게 높은 수준의 코드 
+        가독성을 제공하기 위해 허용된 Boost 라이브러리만 사용한다. 
+        현재 아래의 라이브러리만 사용이 허가된다.
         <ul>
           <li> <a href="http://www.boost.org/libs/utility/call_traits.htm">
                Call Traits</a> from <code>boost/call_traits.hpp</code>
@@ -2811,13 +2805,12 @@ Tashana Landray
                </li>
 
         </ul>
-        We are actively considering adding other Boost features to the list, so
-        this list may be expanded in the future.
+        다른 Boost 라이브러리도 허용 목록에 넣기 위해 활발하게 고려중이므로 
+        위의 목록은 더 추가될 수 있다.
       </div>
       <p>
-      The following libraries are permitted, but their use is discouraged
-      because they've been superseded by standard libraries in C++11:
-      <ul>
+        아래 라이브러리도 사용이 가능하지만, C++ 11 확장 라이브러리로 대체되었다.
+        <ul>
         <li> <a href="http://www.boost.org/libs/array/">
              Array</a> from <code>boost/array.hpp</code>: use
              <a href="http://en.cppreference.com/w/cpp/container/array">
@@ -2838,81 +2831,66 @@ Tashana Landray
 
   <STYLEPOINT title="C++11">
   <SUMMARY>
-    Use libraries and language extensions from C++11 (formerly
-    known as C++0x) when appropriate.
+    C++11(기존의 C++0x)를 적절한 곳에 사용하라. 
     
-    Consider portability to other environments before
-    using C++11 features in your project.
-    
+    프로젝트에 C++11의 기능을 사용하기 전에 다른 환경으로의 이식성을 고려하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      C++11 is the latest ISO C++ standard.
-      It contains
-      <a href="http://en.wikipedia.org/wiki/C%2B%2B11">significant
-      changes</a> both to the language and libraries.
-      
+      C++11은 최신의 ISO C++ 표준이다.
+      언어와 라이브러리의
+      <a href="http://en.wikipedia.org/wiki/C%2B%2B11">중요한 변경</a> 이
+      포함되어있다.
     </DEFINITION>
     <PROS>
-      C++11 has become the official standard, and eventually will
-      be supported by most C++ compilers.  It standardizes some common C++
-      extensions that we use already, allows shorthands for some operations,
-      and has some performance and safety improvements.
+      C++11은 공식적으로 표준이고, 결국 대부분의 C++ 컴파일러가
+      지원하게 될것이다. 우리가 이미 사용하고 있는 공통 C++ 확장을 표준화했고,
+      some operations의 약칭을 허용하며(allows shorthands for some operations), 
+      성능과 안정성의 향상을 가져왔다.
     </PROS>
     <CONS>
       <p>
-        The C++11 standard is substantially more complex than its predecessor
-        (1,300 pages versus 800 pages), and is
-        unfamiliar to many developers.  The long-term effects of some
-        features on code readability and maintenance are unknown.  We cannot
-        predict when its various features will be implemented uniformly by
+        C++11 표준은 이전 표준에 비해 상당히 복잡하고(1,300 페이지 vs 800 페이지),
+        많은 개발자들에게 생소하다. 몇가지 기능에 대한 가독성과 유지보수에 대한 
+        장기적인 효과도 미지수이다. C++11의 다양한 기능이 툴에 언제 구현될것인지 
+        예측할 수 없다. 특히, 강제적으로 예전 버전의 툴을 사용하고 있는 프로젝트.
+        We cannot predict when its various features will be implemented uniformly by
         tools that may be of interest, particularly in the case of projects
         that are forced to use older versions of tools.
       </p>
       <p>
-        As with <a href="#Boost">Boost</a>, some C++11 extensions encourage
-        coding practices that hamper readability—for example by removing
-        checked redundancy (such as type names) that may be helpful to readers,
-        or by encouraging template metaprogramming.  Other extensions
-        duplicate functionality available through existing
-        mechanisms, which may lead to
-        confusion and conversion costs.
+        <a href="#Boost">Boost</a> 중에서 어떤 C++11 확장은 코드 가독성을 해치는 
+        코드를 만든다. 예를 들면 코드를 읽는 사람에게 유용할 수 있는 
+        checked redundancy(타입네임 같은)를 제거함으로써 혹은 템플릿 메타프로그래밍을 
+        장려함으로써. 어떤 확장은 기존 라이브러리가 제공하는 기능을 중복 제공해서
+        혼란과 변환 비용을 야기한다.
       </p>
       
     </CONS>
     <DECISION>
       <p>
-       C++11 features may be used unless specified otherwise. In addition to
-       what's described in the rest of the style guide, the following C++11
-       features may not be used:
+       아래 명시된 기능외에는 사용해도 된다. 이 문서의 다른 부분에서 추가적으로
+       사용이 금지된 기능을 언급할 수도 있다.
       </p>
       <ul>
         <li>
           Functions with trailing return types, e.g. writing
           <code>auto foo() -&gt; int;</code> instead of
-          <code>int foo();</code>, because of a desire to preserve
-          stylistic consistency with the many existing function
-          declarations.
-        </li>
-        
-        
-        
-        
-        
-        <li>
-          Compile-time rational numbers (<code>&lt;ratio&gt;</code>),
-          because of concerns that it's tied to a more template-heavy
-          interface style.
+          <code>int foo();</code>, 왜냐하면 기존의 많은 함수 선언과 
+          일관성을 유지하고 싶기 때문에.
         </li>
         <li>
-          The <code>&lt;cfenv&gt;</code> and <code>&lt;fenv.h&gt;</code>
-          headers, because many compilers do not support those
-          features reliably.
+          컴파일타임 rational numbers (<code>&lt;ratio&gt;</code>),
+          왜냐하면 비대한 템플릿 인터페이스 스타일과 엮일수 있는 우려 때문에.
+        </li>
+        <li>
+          <code>&lt;cfenv&gt;</code> 와 <code>&lt;fenv.h&gt;</code>
+          헤더, 왜냐하면 많은 컴파일러가 안정적으로 지원하지 않기때문에.
         </li>
         
         <li>
-          Lambda expressions, or the related <code>std::function</code> or
-          <code>std::bind</code> utilities.
+          람다 표현식과 혹은 그와 관련된<code>std::function</code>, 
+          <code>std::bind</code> 유틸리티.
         </li>
       </ul>
     </DECISION>
@@ -2921,66 +2899,54 @@ Tashana Landray
 
 </CATEGORY>
 
-<CATEGORY title="Naming">
+<CATEGORY title="네이밍">
   <p>
-    The most important consistency rules are those that govern
-    naming. The style of a name immediately informs us what sort of
-    thing the named entity is: a type, a variable, a function, a
-    constant, a macro, etc., without requiring us to search for the
-    declaration of that entity. The pattern-matching engine in our
-    brains relies a great deal on these naming rules.
-    
+    가장 중요한 일관성 규칙은 이름짓는 방법을 통제하는 것이다. 
+    이름의 스타일은 entity의 선언을 찾지 않아도 해당 entity가 타입인지, 변수인지,
+    함수인지, 상수인지, 혹은 매크로인지 바로 알 수 있게 한다. 우리 머리속의
+    패턴매칭 엔진은 이러한 네이밍 규칙에 상당히 의존한다.
   </p>
   <p>
-    Naming rules are pretty arbitrary, but
-    
-    we feel that consistency is more important than individual preferences
-    in this area, so regardless of whether you find them sensible or not,
-    the rules are the rules.
+    이름 짓는 규칙은 상당히 모호하지만, 일관성이 각각의 선호도보다 중요하다.
+    합리적이라 느끼던지 그렇지 않던지 규칙은 지켜져야 한다.
   </p>
 
-  <STYLEPOINT title="General Naming Rules">
+  <STYLEPOINT title="일반 네이밍 규칙">
     <SUMMARY>
-      Function names, variable names, and filenames should be
-      descriptive; eschew abbreviation.
+      함수이름, 변수이름, 파일이름은 약자를 피하고 상세하게(descriptive) 지어야한다.
     </SUMMARY>
     <BODY>
       <p>
-        Give as descriptive a name as possible, within reason. Do
-        not worry about saving horizontal space as it is far more
-        important to make your code immediately understandable by a
-        new reader. Do not use abbreviations that are ambiguous or
-        unfamiliar to readers outside your project, and do not
-        abbreviate by deleting letters within a word.
+        가능하면 상세한 이름을 사용하라. 짧은 이름보다 신입이 보기에도 
+        한번에 이해가 가능하게 만드는 것이 더 중요하다.
+        프로젝트에 관계되지 않은 독자가 보기에 익숙하지 않은 약자를 사용하지 말고,
+        중간 글자를 지워서 축약하면 안된다.
       </p>
       <CODE_SNIPPET>
-        int price_count_reader;    // No abbreviation.
-        int num_errors;            // "num" is a widespread convention.
-        int num_dns_connections;   // Most people know what "DNS" stands for.
+        int price_count_reader;    // 축약없음.
+        int num_errors;            // "num"은 누구나 이해가능.
+        int num_dns_connections;   // "DNS"가 무슨뜻인지 다 안다.
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
-        int n;                     // Meaningless.
-        int nerr;                  // Ambiguous abbreviation.
-        int n_comp_conns;          // Ambiguous abbreviation.
-        int wgc_connections;       // Only your group knows what this stands for.
-        int pc_reader;             // Lots of things can be abbreviated "pc".
-        int cstmr_id;              // Deletes internal letters.
+        int n;                     // 의미없음.
+        int nerr;                  // 모호한 축약.
+        int n_comp_conns;          // 모호한 축약.
+        int wgc_connections;       // 팀 내부사람들만 아는 약어.
+        int pc_reader;             // "pc"는 다양한 의미가 있다.
+        int cstmr_id;              // 중간 단어를 지웠음.
       </BAD_CODE_SNIPPET>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="File Names">
+  <STYLEPOINT title="파일 이름">
     <SUMMARY>
-      Filenames should be all lowercase and can include underscores
-      (<code>_</code>) or dashes (<code>-</code>).  Follow the
-      convention that your
-      
-      project
-      uses. If there is no consistent local pattern to follow, prefer "_".
+      파일이름은 모두 소문자이어야 하고, 언더스코어 (<code>_</code>) 
+      혹은 대쉬 (<code>-</code>)를 포함할 수 있다. 반드시 언더스코어를 
+      사용할 필요는 없고, 프로젝트에서 사용하는 관례를 따른다.
     </SUMMARY>
     <BODY>
       <p>
-        Examples of acceptable file names:
+        사용가능한 파일이름:
       </p>
       <p>
         <code>
@@ -2991,28 +2957,22 @@ Tashana Landray
         </code>
       </p>
       <p>
-        C++ files should end in <code>.cc</code> and header files
-        should end in <code>.h</code>.
+        C++ 파일은 <code>.cc</code>으로 끝나고, 헤더 파일은
+        <code>.h</code>로 끝난다.
       </p>
       <p>
-        Do not use filenames that already exist
-        in <code>/usr/include</code>, such as <code>db.h</code>.
+        <code>db.h</code>와 같이 <code>/usr/include</code>에 존재하는 
+        파일이름은 사용금지.
       </p>
       <p>
-        In general, make your filenames very specific.  For example,
-        use <code>http_server_logs.h</code> rather
-        than <code>logs.h</code>.  A very common case is to have a
-        pair of files called, e.g., <code>foo_bar.h</code>
-        and <code>foo_bar.cc</code>, defining a class
-        called <code>FooBar</code>.
+        일반적으로 상세하게 짓는다. 예를 들면 <code>http_server_logs.h</code>가
+        <code>logs.h</code>보다 좋다. <code>FooBar</code> 클래스를 위한 파일이름은
+        <code>foo_bar.h</code>, <code>foo_bar.cc</code>.
       </p>
       <p>
-        Inline functions must be in a <code>.h</code> file. If your
-        inline functions are very short, they should go directly into your
-        <code>.h</code> file. However, if your inline functions
-        include a lot of code, they may go into a third file that
-        ends in <code>-inl.h</code>.  In a class with a lot of inline
-        code, your class could have three files:
+        인라인 함수는 <code>.h</code>에 있어야 한다. 인라인 함수의 코드가 
+        짧으면 <code>.h</code> 안에 들어가고, 길다면 <code>-inl.h</code>로 
+        가야한다. 클래스안에 많은 인라인 코드가 있다면 3개의 파일로 분리한다.
       </p>
       <CODE_SNIPPET>
         url_table.h      // The class declaration.
@@ -3020,7 +2980,7 @@ Tashana Landray
         url_table-inl.h  // Inline functions that include lots of code.
       </CODE_SNIPPET>
       <p>
-        See also the section <a href="#The_-inl.h_Files">-inl.h Files</a>
+        <a href="#The_-inl.h_Files">-inl.h Files</a> 섹션 참조.
       </p>
     </BODY>
   </STYLEPOINT>
