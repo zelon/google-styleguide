@@ -2298,7 +2298,7 @@ Tashana Landray
             64비트와 32비트에서 완전한 이식성을 가지지 않는다. 
             C99은 portable한 포맷 지정자를 정의한다. 하지만 MSVC 7.1에서 
             이 중 몇가지가 동작하지 않고 표준중에서 몇가지가 빠졌다. 
-            그래서 몇가지 경우에 우리가 ugly version을 정의했다.
+            그래서 몇가지 경우에 ugly version을 정의했다.
             (in the style of the
             standard include file <code>inttypes.h</code>):
           </p>
@@ -2498,8 +2498,8 @@ Tashana Landray
   <BODY>
     <p>
       특정 변수의 사이즈가 필요할 때 <code>sizeof(<var>varname</var>)</code>을 
-      사용하세요. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
-      타입을 변경했을 때에도 잘 동작합니다. <code>sizeof(<var>type</var>)</code>은 
+      사용하라. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
+      타입을 변경했을 때에도 문제가 없다. <code>sizeof(<var>type</var>)</code>은 
       특정 변수의 사이즈와 관련 없는 곳(예를 들면 외부나 내부의 데이터 포맷을 
       관리하는 것)에서 사용될 수 있다.
     </p>
@@ -2547,11 +2547,10 @@ Tashana Landray
           sparse_hash_map&lt;string, int&gt;::iterator iter = m.find(val);
         </CODE_SNIPPET>
         리턴 타입이 무엇인지, 구문의 목적이 무엇인지 알기가 어렵다. 
-        하지만 아래와 같이 변경하면
+        하지만 아래와 같이 변경하면 가독성이 향상된다.
         <CODE_SNIPPET>
           auto iter = m.find(val);
         </CODE_SNIPPET>
-        가독성이 향상된다.
       </p>
       <p>
         <code>auto</code>가 없으면 한 구문에서 별 의미도 없이 
@@ -2624,22 +2623,21 @@ Tashana Landray
     이런 중괄호를 사용한 초기화 형태를 <i>braced-init-list</i> 라고 부른다. 
     아래에 몇가지 예제가 있다.
       <CODE_SNIPPET>
-        // 벡터 초기화 Vector takes lists of elements.
+        // element 목록을 받는 벡터 초기화.
         vector&lt;string&gt; v{"foo", "bar"};
 
-        // The same, except this form cannot be used if the initializer_list
-        // constructor is explicit. You may choose to use either form.
+        // initializer_list 생성자가 explicit 한 경우를 제외하고 사용가능
         vector&lt;string&gt; v = {"foo", "bar"};
 
-        // 맵 초기화. 중첩된 braced-init-lists.
+        // 중첩된 braced-init-lists를 사용한 맵 초기화.
         map&lt;int, string&gt; m = {{1, "one"}, {2, "2"}};
 
-        // braced-init-lists can be implicitly converted to return types.
+        // braced-init-lists는 암묵적으로 리턴타입으로 변환될 수 있다.
         vector&lt;int&gt; test_function() {
           return {1, 2, 3};
         }
 
-        // Iterate over a braced-init-list.
+        // braced-init-list를 순환.
         for (int i : {-1, -2, -3}) {}
 
         // braced-init-list를 사용하여 함수 호출
@@ -2665,15 +2663,15 @@ Tashana Landray
     생성자를 가지지 않는 일반적인 생성자를 호출 할 수 있다.
       <CODE_SNIPPET>
         double d{1.23};
-        // Calls ordinary constructor as long as MyOtherType has no
-        // initializer_list constructor.
+        // MyOtherType가 initializer_list 생성자를 
+        // 가지지 않는다면 일반적인 생성자를 호출
         class MyOtherType {
          public:
           explicit MyOtherType(string);
           MyOtherType(int, string);
         };
         MyOtherType m = {1, "b"};
-        // If the constructor is explicit, you can't use the "= {}" form.
+        // 생성자가 explicit하다면 "= {}" 사용불가
         MyOtherType m{"b"};
       </CODE_SNIPPET></p>
 
@@ -2681,10 +2679,10 @@ Tashana Landray
     <p><i>braced-init-list</i> 를 auto 지역 변수에 할당하지 마라. 
     single element의 경우에 혼동스러울 수 있다.
       <BAD_CODE_SNIPPET>
-        auto d = {1.23};        // d is an initializer_list&lt;double&gt;
+        auto d = {1.23};        // d는 initializer_list&lt;double&gt;이다
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
-        auto d = double{1.23};  // Good -- d is a double, not an initializer_list.
+        auto d = double{1.23};  // Good -- d는 initializer_list가 아니라 double.
       </CODE_SNIPPET>
     </p>
   </BODY>
