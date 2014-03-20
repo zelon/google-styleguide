@@ -4028,7 +4028,8 @@ Tashana Landray
 
   <STYLEPOINT title="함수 호출">
     <SUMMARY>
-      자리가 충분한 경우 한 줄에 쓰고, 그렇지 않은 경우 괄호 안의 인자들을 줄바꿈한다.
+      자리가 충분한 경우 한 줄에 쓰고, 그렇지 않은 경우 괄호 안의 인자들을 
+	  줄바꿈한다.
     </SUMMARY>
     <BODY>
       <p>
@@ -4038,7 +4039,8 @@ Tashana Landray
         bool retval = DoSomething(argument1, argument2, argument3);
       </CODE_SNIPPET>
       <p>
-        인자들이 모두 한 줄에 들어갈 자리가 없다면 여러 줄로 나누어 쓰되 이어지는 줄은 첫 번째 인자와 같은 열에 오도록 한다.
+        인자들이 모두 한 줄에 들어갈 자리가 없다면 여러 줄로 나누어 쓰되 
+		이어지는 줄은 첫 번째 인자와 같은 열에 오도록 한다.
         여는 괄호 다음과 닫는 괄호 앞에는 스페이스를 추가하지 않는다.
       </p>
       <CODE_SNIPPET>
@@ -4046,7 +4048,8 @@ Tashana Landray
                                   argument2, argument3);
       </CODE_SNIPPET>
       <p>
-        함수의 인자가 많은 경우 가독성을 위해 인자마다 한 줄씩 쓰는 것을 고려하라
+        함수의 인자가 많은 경우 가독성을 위해 인자마다 한 줄씩 쓰는 것을 
+		고려하라
       </p>
       <CODE_SNIPPET>
         bool retval = DoSomething(argument1,
@@ -4070,7 +4073,8 @@ Tashana Landray
           }
       </CODE_SNIPPET>
       <p>
-        특히 이 방식은 함수 시그너쳐가 길어서 최대 <a href="#Line_Length">줄 길이</a>에 맞출 수 없을 때 사용하는 것이 좋다.
+        특히 이 방식은 함수 시그너쳐가 길어서 최대 <a href="#Line_Length">줄 
+		길이</a>에 맞출 수 없을 때 사용하는 것이 좋다.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -4082,8 +4086,8 @@ Tashana Landray
     <BODY>
       <p>
         중괄호 리스트가 어떤 이름(타입이나 변수 이름)에 이어져서 사용되는 경우
-        <code>{}</code>가 그 이름을 가진 함수를 호출하는 괄호인 것처럼 작성한다.
-        만약 그러한 이름이 없으면 길이가 0인 이름이 있다고 가정한다.
+        <code>{}</code>가 그 이름을 가진 함수를 호출하는 괄호인 것처럼 
+		작성한다. 만약 그러한 이름이 없으면 길이가 0인 이름이 있다고 가정한다.
       </p>
       <CODE_SNIPPET>
         // 중괄호 초기화 리스트를 한 줄에 사용한 예
@@ -4117,7 +4121,8 @@ Tashana Landray
 
   <STYLEPOINT title="조건문">
     <SUMMARY>
-      괄호 안에서는 스페이스를 사용하지 않은 것을 권장한다. <code>else</code> 키워드는 새 줄에서 사용한다. 
+      괄호 안에서는 스페이스를 사용하지 않은 것을 권장한다. <code>else</code> 
+	  키워드는 새 줄에서 사용한다. 
     </SUMMARY>
     <BODY>
       <p>
@@ -4125,10 +4130,12 @@ Tashana Landray
         첫번째는 괄호 사이에 스페이스를 넣는 것이고 두번째는 넣지 않는 것이다.
       </p>
       <p>
-        가장 흔한 형식은 스페이스를 쓰지 않는 것이다. 두 가지 모두 괜찮으나, <em>일관적이어야 한다.</em>
-        어떤 파일을 수정하고 있다면 그 파일에 이미 사용되고 있는 포맷을 사용하라.
-        새로운 코드를 작성하고 있다면 해당 디렉토리나 프로젝트의 다른 파일에서 사용하고 있는 포맷을 사용하라.
-        이미 사용되고 있는 포맷을 알 수 없고 개인적인 선호도 없는 경우 스페이스를 넣지 말라.
+        가장 흔한 형식은 스페이스를 쓰지 않는 것이다. 두 가지 모두 괜찮으나, 
+		<em>일관적이어야 한다.</em> 어떤 파일을 수정하고 있다면 그 파일에 이미
+		사용되고 있는 포맷을 사용하라. 새로운 코드를 작성하고 있다면 해당 
+		디렉토리나 프로젝트의 다른 파일에서 사용하고 있는 포맷을 사용하라.
+        이미 사용되고 있는 포맷을 알 수 없고 개인적인 선호도 없는 경우 
+		스페이스를 넣지 말라.
       </p>
       <CODE_SNIPPET>
         if (condition) {  // 괄호 안에 스페이스 없음
@@ -4150,8 +4157,9 @@ Tashana Landray
         }
       </CODE_SNIPPET>
       <p>
-        모든 경우에 <code>if</code>와 여는 괄호 사이에는 스페이스 하나가 있어야 한다.
-        중괄호를 사용하는 조건문의 경우 닫는 괄호와 중괄호 사이에도 스페이스 하나를 사용해야 한다. 
+        모든 경우에 <code>if</code>와 여는 괄호 사이에는 스페이스 하나가 
+		있어야 한다. 중괄호를 사용하는 조건문의 경우 닫는 괄호와 중괄호 
+		사이에도 스페이스 하나를 사용해야 한다. 
       </p>
       <BAD_CODE_SNIPPET>
         if(condition)     // 나쁨 - IF 뒤에 스페이스가 없음
@@ -4163,7 +4171,8 @@ Tashana Landray
       </CODE_SNIPPET>
     <p>
       짧은 조건문은 가독성을 향상시키는 경우 한 줄에 작성될 수 있다.
-    조건문의 길이가 짧고 <code>else</code>를 사용하지 않는 경우에만 이 방식을 사용할 수 있다.
+    조건문의 길이가 짧고 <code>else</code>를 사용하지 않는 경우에만 이 방식을
+	사용할 수 있다.
       </p>
       <CODE_SNIPPET>
         if (x == kFoo) return new Foo();
@@ -4173,16 +4182,16 @@ Tashana Landray
     <code>else</code>가 있으면 이 방식을 사용할 수 없다.
       </p>
     <BAD_CODE_SNIPPET>
-    // 안됨 - ELSE 구문이 있는데도 IF 문을 한 줄에 사용했음
-        // Not allowed - IF statement on one line when there is an ELSE clause
+        // 안됨 - ELSE 구문이 있는데도 IF 문을 한 줄에 사용했음
         if (x) DoThis();
         else DoThat();
       </BAD_CODE_SNIPPET>
     <p>
-    일반적으로 한 줄짜리 구문의 경우 중괄호를 꼭 사용하지 않아도 되며, 선호하는 경우 사용하여도 된다.
-    복잡한 조건이나 구문들로 이루어진 조건문과 반복문의 경우 중괄호가 있을 때 가독성이 더 좋을 수 있다.
-    어떤 프로젝트들은 <code>if</code> 문에 항상 중괄호를 사용할 것을 요구하기도 한다.
-      </p>
+      일반적으로 한 줄짜리 구문의 경우 중괄호를 꼭 사용하지 않아도 되며, 
+	  선호하는 경우 사용하여도 된다. 복잡한 조건이나 구문들로 이루어진 조건문과
+	  반복문의 경우 중괄호가 있을 때 가독성이 더 좋을 수 있다. 어떤 프로젝트는
+	  <code>if</code> 문에 항상 중괄호를 사용할 것을 요구하기도 한다.
+    </p>
       <CODE_SNIPPET>
         if (condition)
           DoSomething();  // 스페이스 2개 들여쓰기
@@ -4192,7 +4201,8 @@ Tashana Landray
         }
       </CODE_SNIPPET>
     <p>
-      하지만 만약 <code>if</code>-<code>else</code> 문 중 한 쪽이 중괄호를 사용하고 있다면 다른 쪽도 반드시 사용해야 한다.
+      하지만 만약 <code>if</code>-<code>else</code> 문 중 한 쪽이 중괄호를
+	  사용하고 있다면 다른 쪽도 반드시 사용해야 한다.
       </p>
       <BAD_CODE_SNIPPET>
         // 안됨 - IF에는 중괄호가 있지만 ELSE에는 없음
@@ -4209,7 +4219,7 @@ Tashana Landray
         }
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
-        // 어느 한 쪽에 중괄호를 사용하였으면 IF 와 ELSE 모두 중괄호가 있어야 함
+        // 한 쪽에 중괄호를 사용하였으면 IF 와 ELSE 모두 중괄호가 있어야 함
         if (condition) {
           foo;
         } else {
@@ -4221,18 +4231,21 @@ Tashana Landray
 
   <STYLEPOINT title="반복문과 switch 문">
     <SUMMARY>
-      switch 문은 블록마다 중괄호를 사용할 수 있다. 단순하지 않게 이어지는 case 문들은 주석을 달아야 한다.
-      비어 있는 반복문은 <code>{}</code> 또는 <code>continue</code>를 사용해야 한다.
+      switch 문은 블록마다 중괄호를 사용할 수 있다. 단순하지 않게 이어지는 
+	  case 문들은 주석을 달아야 한다. 비어 있는 반복문은 <code>{}</code> 또는
+	  <code>continue</code>를 사용해야 한다.
     </SUMMARY>
     <BODY>
       <p>
-        <code>switch</code>문의 <code>case</code> 블록은 선호에 따라 중괄호를 사용할 수도 있고 그렇지 않을 수 있다.
-        중괄호를 사용하는 경우엔 아래와 같은 위치에 사용해야 한다.
+        <code>switch</code>문의 <code>case</code> 블록은 선호에 따라 중괄호를 
+		사용할 수도 있고 그렇지 않을 수 있다. 중괄호를 사용하는 경우엔 아래와
+		같은 위치에 사용해야 한다.
       </p>
       <p>
-        열거형 값에 대한 조건이 아닌 경우, switch 문은 항상 <code>default</code> case 를 갖는 것이 좋다.
-        (열거형의 경우 처리하지 않은 값에 대해 컴파일러가 경고할 것이다.)
-        만약 default case 가 실행되지 말아야 할 경우 간단히 <code>assert</code>하라:
+        열거형 값에 대한 조건이 아닌 경우, switch 문은 항상 
+		<code>default</code> case 를 갖는 것이 좋다. (열거형의 경우 처리하지 
+		않은 값에 대해 컴파일러가 경고할 것이다.) 만약 default case 가 
+		실행되지 말아야 할 경우 간단히 <code>assert</code>하라:
       </p>
       
       <CODE_SNIPPET>
@@ -4253,7 +4266,8 @@ Tashana Landray
       
       
       <p>
-        비어 있는 루프는 세미콜론 하나가 아닌 <code>{}</code> 또는 <code>continue</code>를 사용하는 것이 좋다.
+        비어 있는 루프는 세미콜론 하나가 아닌 <code>{}</code> 또는 
+		<code>continue</code>를 사용하는 것이 좋다.
       </p>
       <CODE_SNIPPET>
         while (condition) {
@@ -4291,11 +4305,13 @@ Tashana Landray
 		  <li> 멤버에 접근할 때 사용하는 마침표나 화살표 좌우
 			  에는 스페이스를 사용하지 않는다.
              </li>
-        <li> 포인터 연산자 <code>*</code>나 <code>&amp;</code> 뒤에는 스페이스를 사용하지 않는다.
+        <li> 포인터 연산자 <code>*</code>나 <code>&amp;</code> 뒤에는 
+		      스페이스를 사용하지 않는다.
              </li>
       </ul>
       <p>
-        포인터 변수나 인자를 선언할 때 *를 타입에 붙여서 써도 되고, 변수 이름에 붙여서 써도 된다.
+        포인터 변수나 인자를 선언할 때 *를 타입에 붙여서 써도 되고, 
+		변수 이름에 붙여서 써도 된다.
       </p>
       <CODE_SNIPPET>
         // 앞쪽에 스페이스가 있으므로 괜찮음
@@ -4303,7 +4319,7 @@ Tashana Landray
         const string &amp;str;
 
         // 뒤쪽에 스페이스가 있으므로 괜찮음
-        char* c;    // 하지만 다음과 같이 할 것을 유의: "char* c, *d, *e, ...;"!
+        char* c; // 하지만 다음과 같이 할 것을 유의: "char* c, *d, *e, ...;"!
         const string&amp; str;
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
@@ -4311,14 +4327,16 @@ Tashana Landray
         const string &amp; str;  // 나쁨 - &amp; 양쪽에 스페이스가 있음
       </BAD_CODE_SNIPPET>
       <p>
-        이것은 하나의 파일 안에서 일관성 있게 작성되어야 한다. 그러므로 파일을 수정하는 경우 그 파일이 사용하는 스타일을 사용하라.
+        이것은 하나의 파일 안에서 일관성 있게 작성되어야 한다. 그러므로 파일을
+		수정하는 경우 그 파일이 사용하는 스타일을 사용하라.
       </p>
     </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="불린 표현식">
     <SUMMARY>
-      <a href="#Line_Length">정해진 줄 길이</a>보다 긴 불린 표현식을 사용해야 할 때에는 줄바꿈을 일관성있게 해야 한다.
+      <a href="#Line_Length">정해진 줄 길이</a>보다 긴 불린 표현식을 사용해야
+	  할 때에는 줄바꿈을 일관성있게 해야 한다.
     </SUMMARY>
     <BODY>
       <p>
@@ -4332,11 +4350,13 @@ Tashana Landray
         }
       </CODE_SNIPPET>
       <p>
-        이 예시에서 줄바꿈한 경우 <code>&amp;&amp;</code> 연산자가 모두 줄의 마지막에 있었음에 주목하라.
-        이 방식은 구글의 코드에서 일반적이나, 모든 연산자가 줄의 시작 부분에 오도록 줄바꿈하는 것도 허용된다.
-        가독성을 높이는 것에 도움이 될 경우 추가적인 괄호를 적절히 사용하여도 좋다.
+        이 예시에서 줄바꿈한 경우 <code>&amp;&amp;</code> 연산자가 모두 줄의 
+		마지막에 있었음에 주목하라. 이 방식은 구글의 코드에서 일반적이나, 모든
+		연산자가 줄의 시작 부분에 오도록 줄바꿈하는 것도 허용된다. 가독성을 
+		높이는 것에 도움이 될 경우 추가적인 괄호를 적절히 사용하여도 좋다.
         또한 <code>and</code>나 <code>compl</code>과 같은 단어로 된 연산자보다
-        <code>&amp;&amp;</code>와 <code>~</code>와 같은 기호 연산자를 사용하는 것이 좋다.
+        <code>&amp;&amp;</code>와 <code>~</code>와 같은 기호 연산자를 사용하는
+		것이 좋다.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -4347,12 +4367,13 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <code>return expr;</code>에서의 괄호는 <code>x = expr;</code> 에서 필요할 때에만 사용한다.
+        <code>return expr;</code>에서의 괄호는 <code>x = expr;</code> 에서 
+		필요할 때에만 사용한다.
       </p>
       <CODE_SNIPPET>
         return result;                  // 괄호 사용이 필요없는 간단한 경우
-        return (some_long_condition &amp;&amp;  // 복잡한 표현식의 가독성을 높일 수 있다면
-                another_condition);     //     괄호의 사용이 허용된다.
+        return (some_long_condition &amp;&amp;  // 복잡한 표현식의 가독성을
+                another_condition);     // 높일 수 있다면 괄호의 사용이 허용됨
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
         return (value);                // var = (value) 라고 쓰는 경우는 없다.
@@ -4369,7 +4390,8 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <code>=</code>, <code>()</code>, <code>{}</code> 를 적절히 선택할 수 있다. 다음 경우가 모두 허용된다.
+        <code>=</code>, <code>()</code>, <code>{}</code> 를 적절히 선택할 수
+		있다. 다음 경우가 모두 허용된다.
       </p>
       <CODE_SNIPPET>
         int x = 3;
@@ -4380,16 +4402,19 @@ Tashana Landray
         string name{"Some Name"};
       </CODE_SNIPPET>
       <p>
-        <code>initializer_list</code> 생성자가 있는 타입에서 <code>{}</code>를 사용할 때는 주의해야 한다. 
-        <code>{}</code> 문법은 항상 <code>initializer_list</code> 생성자로 가는 우선순위가 있다.
-        <code>initializer_list</code>가 아닌 생성자를 사용하고자 하는 경우 <code>()</code>를 사용하라.
+        <code>initializer_list</code> 생성자가 있는 타입에서 <code>{}</code>를
+		사용할 때는 주의해야 한다. <code>{}</code> 문법은 항상 
+		<code>initializer_list</code> 생성자로 가는 우선순위가 있다.
+        <code>initializer_list</code>가 아닌 생성자를 사용하고자 하는 경우
+		<code>()</code>를 사용하라.
       </p>
       <CODE_SNIPPET>
         vector&lt;int&gt; v(100, 1);  // 100개의 1을 포함하는 벡터
         vector&lt;int&gt; v{100, 1};  // 100, 1의 두 원소가 있는 벡터
       </CODE_SNIPPET>
       <p>
-        또한 중괄호 형식은 정밀도를 낮추는 타입 캐스트를 막아주므로 특정 프로그래밍 에러를 미연에 방지할 수 있다.
+        또한 중괄호 형식은 정밀도를 낮추는 타입 캐스트를 막아주므로 특정 
+		프로그래밍 에러를 미연에 방지할 수 있다.
       </p>
       <CODE_SNIPPET>
         int pi(3.14);  // 좋음 -- pi == 3.
@@ -4400,18 +4425,20 @@ Tashana Landray
 
   <STYLEPOINT title="전처리기 지시자">
     <SUMMARY>
-      전처리기 지시자 시작 부분에 사용되는 # 기호는 항상 그 줄의 처음에 있어야 한다.
+      전처리기 지시자 시작 부분에 사용되는 # 기호는 항상 그 줄의 처음에 
+	  있어야 한다.
     </SUMMARY>
     <BODY>
       <p>
-        전처리기 지시자가 들여쓰기된 코드의 내부에 있을 때에도 줄의 처음부터 시작해야 한다.
+        전처리기 지시자가 들여쓰기된 코드의 내부에 있을 때에도 줄의 처음부터
+		시작해야 한다.
       </p>
       <CODE_SNIPPET>
         // 좋음 - 지시자가 줄의 처음부터 시작하는 예
           if (lopsided_score) {
-        #if DISASTER_PENDING      // 좋음 -- 줄의 처음부터 시작함
+        #if DISASTER_PENDING  // 좋음 -- 줄의 처음부터 시작함
             DropEverything();
-        # if NOTIFY               // # 다음의 스페이스는 허용되지만 필수는 아니다.
+        # if NOTIFY           // # 다음의 스페이스는 허용되지만 필수는 아니다.
             NotifyClient();
         # endif
         #endif
@@ -4432,11 +4459,13 @@ Tashana Landray
 
   <STYLEPOINT title="클래스 포맷">
     <SUMMARY>
-      <code>public</code>, <code>protected</code>, <code>private</code> 순서로 각각 스페이스 하나씩 들여쓰기하여 클래스 본문을 구성한다.
+      <code>public</code>, <code>protected</code>, <code>private</code> 순서로
+	  각각 스페이스 하나씩 들여쓰기하여 클래스 본문을 구성한다.
     </SUMMARY>
     <BODY>
       <p>
-        기본적인 포맷은 다음과 같다(주석 제외; 주석에 대해서는 <a href="#Class_Comments">클래스 주석</a> 참조):
+        기본적인 포맷은 다음과 같다(주석 제외; 주석에 대해서는 
+		<a href="#Class_Comments">클래스 주석</a> 참조):
       </p>
       <CODE_SNIPPET>
         class MyClass : public OtherClass {
@@ -4464,18 +4493,23 @@ Tashana Landray
         주목할 점들:
       </p>
       <ul>
-        <li> 줄 길이 제한에 위배되지 않는 한 상위 클래스 이름은 하위 클래스 이름과 같은 줄에 있어야 한다.
+        <li> 줄 길이 제한에 위배되지 않는 한 상위 클래스 이름은 하위 클래스
+		이름과 같은 줄에 있어야 한다.
              </li>
-        <li> <code>public:</code>, <code>protected:</code>, <code>private:</code> 키워드는 스페이스 하나로 들여쓰기한다.
+        <li> <code>public:</code>, <code>protected:</code>,
+		     <code>private:</code> 키워드는 스페이스 하나로 들여쓰기한다.
              </li>
-        <li> 첫 번째로 사용되는 경우를 제외하고는 이들 키워드의 이전에 비어 있는 줄을 삽입한다.
-             작은 클래스의 경우 이 규칙은 필수사항이 아니다.       
+        <li> 첫 번째로 사용되는 경우를 제외하고는 이들 키워드의 이전에 빈 줄을
+		     삽입한다. 작은 클래스의 경우 이 규칙은 필수사항이 아니다.
              </li>
         <li> 이들 키워드 이후에는 빈 줄을 삽입하지 않는다.
              </li>
-        <li> <code>public</code> 부분이 처음으로 와야 하고, 그 다음으로 <code>protected</code> 부분이, 마지막으로 <code>private</code> 부분을 작성한다.
+        <li> <code>public</code> 부분이 처음으로 와야 하고, 그 다음으로
+		     <code>protected</code> 부분이, 마지막으로 <code>private</code> 
+			 부분을 작성한다.
              </li>
-        <li> 이들 각각의 내부에서 사용되는 선언문의 순서에 관해서는 <a HREF="#Declaration_Order">선언 순서</a>를 참조한다.
+        <li> 이들 각각의 내부에서 사용되는 선언문의 순서에 관해서는 
+		     <a HREF="#Declaration_Order">선언 순서</a>를 참조한다.
              </li>
       </ul>
     </BODY>
@@ -4483,7 +4517,8 @@ Tashana Landray
 
   <STYLEPOINT title="생성자 초기화 리스트">
     <SUMMARY>
-      생성자 초기화 리스트는 모두 한 줄에 쓰거나, 스페이스 4개로 들여쓰기하여 각각 다음 줄에 작성할 수 있다.
+      생성자 초기화 리스트는 모두 한 줄에 쓰거나, 스페이스 4개로 들여쓰기하여
+	  각각 다음 줄에 작성할 수 있다.
     </SUMMARY>
     <BODY>
       <p>
@@ -4497,7 +4532,8 @@ Tashana Landray
         or
       </p>
       <CODE_SNIPPET>
-        // 여러 줄에 써야 할 경우 스페이스 4개로 들여쓰기하고 : 기호를 초기화 리스트의 첫 번째 줄에 쓴다.
+        // 여러 줄에 써야 할 경우 스페이스 4개로 들여쓰기하고
+		// : 기호를 초기화 리스트의 첫 번째 줄에 쓴다.
         MyClass::MyClass(int var)
             : some_var_(var),             // 스페이스 4개 들여쓰기
               some_other_var_(var + 1) {  // 줄맞춤
@@ -4515,7 +4551,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <a href="#Namespaces">네임스페이스</a>는 들여쓰기를 증가시키지 않는다. 
+        <a href="#Namespaces">네임스페이스</a>는 들여쓰기를 증가시키지 않는다.
       </p>
       <CODE_SNIPPET>
         namespace {
@@ -4551,7 +4587,8 @@ Tashana Landray
 
   <STYLEPOINT title="가로 공백">
     <SUMMARY>
-      가로 공백을 사용하는 것은 경우에 따라 다르다. 줄 끝에는 공백 문자를 사용하지 않는다.
+      가로 공백을 사용하는 것은 경우에 따라 다르다. 줄 끝에는 공백 문자를 
+	  사용하지 않는다.
     </SUMMARY>
     <BODY>
       <SUBSECTION title="일반 사항">
@@ -4559,20 +4596,22 @@ Tashana Landray
         void f(bool b) {  // 여는 중괄호 앞에는 항상 스페이스가 있어야 함
           ...
         int i = 0;  // 세미콜론 앞에는 대개 스페이스가 없음
-        int x[] = { 0 };  // 중괄호 초기화 리스트 내부의 스페이스는 선택사항이다.
+        int x[] = { 0 };  // 중괄호 초기화 리스트 내부의 스페이스는 선택사항
         int x[] = {0};    // 사용할 경우엔 양 쪽에 모두 사용해야 한다!
         // 상속과 초기화 리스트의 콜론 전후에는 스페이스를 사용한다.
         class Foo : public Bar {
          public:
           // 인라인 함수 구현에는 중괄호와 구현체 사이에 스페이스를 사용한다.
-          Foo(int b) : Bar(), baz_(b) {}  // 빈 중괄호 사이에는 스페이스를 사용하지 않음
+          Foo(int b) : Bar(), baz_(b) {}  // 빈 중괄호 사이에는 스페이스 없음
           void Reset() { baz_ = 0; }  // 중괄호와 구현체를 구분하는 스페이스
           ...
         </CODE_SNIPPET>
         <p>
-          줄 끝에 공백문자를 사용하면 같은 파일을 수정, 머지하거나 줄 끝의 공백문자를 삭제하는 다른 사람들이 할 일이 늘어난다.
-          그러므로 줄 끝에는 공백문자를 사용하지 말라. 
-          이미 해당 줄을 수정하고 있다면 삭제하고, 그렇지 않다면 별도의 정리 작업을 통해서 삭제하라. (가능하면 다른 사람이 그 파일을 사용하고 있지 않을 때)
+          줄 끝에 공백문자를 사용하면 같은 파일을 수정, 머지하거나 줄 끝의 
+		  공백문자를 삭제하는 다른 사람들이 할 일이 늘어난다. 그러므로 줄 
+		  끝에는 공백문자를 사용하지 말라. 이미 해당 줄을 수정하고 있다면
+		  삭제하고, 그렇지 않다면 별도의 정리 작업을 통해서 삭제하라. 
+		  (가능하면 다른 사람이 그 파일을 사용하고 있지 않을 때)
         </p>
       </SUBSECTION>
       <SUBSECTION title="반복문과 조건문">
@@ -4583,13 +4622,14 @@ Tashana Landray
         while (test) {}   // 대개 괄호 사이에는 스페이스 없음
         switch (i) {
         for (int i = 0; i &lt; 5; ++i) {
-        switch ( i ) {    // 반복문과 조건문의 괄호 사이에는 스페이스가 있을 수 있지만
-        if ( test ) {     // 드문 경우이다. 일관성 있게 사용하라
+        switch ( i ) {    // 반복문과 조건문의 괄호 사이에는 스페이스가 있어도
+        if ( test ) {     // 되지만 드문 경우이다. 일관성 있게 사용하라
         for ( int i = 0; i &lt; 5; ++i ) {
-        for ( ; i &lt; 5 ; ++i) {  // for 반복문은 항상 세미콜론 다음에 스페이스를 사용하며
-          ...                   // 세미콜론 이전에 스페이스를 사용할 수도 있다.
-        for (auto x : counts) {  // Range-based for 반복문은 항상 
-          ...                    // : 전후에 스페이스를 사용한다.
+        for ( ; i &lt; 5 ; ++i) { // for 반복문은 항상 세미콜론 다음에 
+          ...                     // 스페이스를 사용하며 세미콜론 이전에
+                                  //스페이스를 사용할 수도 있다.
+        for (auto x : counts) {   // Range-based for 반복문은 항상 
+          ...                     // : 전후에 스페이스를 사용한다.
         }
         switch (i) {
           case 1:         // 스위치 문의 case 에서는 : 전에 스페이스가 없음
@@ -4605,21 +4645,21 @@ Tashana Landray
         ++x;                // 스페이스를 사용하지 않는다.
         if (x &amp;&amp; !y)
           ...
-        v = w * x + y / z;  // 이진 연산자는 대개 좌우에 스페이스를 사용하지만
-        v = w*x + y/z;      // 각 항마다 스페이스를 사용하지 않는 것도 허용한다
-        v = w * (x + z);    // 괄호 사이에는 스페이스가 없는 것이 좋다.
+        v = w * x + y / z; // 이진 연산자는 대개 좌우에 스페이스를 사용하지만
+        v = w*x + y/z;     // 각 항마다 스페이스를 사용하지 않는 것도 허용한다
+        v = w * (x + z);   // 괄호 사이에는 스페이스가 없는 것이 좋다.
         </CODE_SNIPPET>
       </SUBSECTION>
       <SUBSECTION title="템플릿과 캐스트">
         <CODE_SNIPPET>
-        vector&lt;string&gt; x;           // 꺾쇠(&lt;와 &gt;) 사이와 &lt; 이전,
-        y = static_cast&lt;char*&gt;(x);  // 캐스트의 &gt;( 사이에는 
-                                    // 스페이스를 사용하지 않는다.
-        vector&lt;char *&gt; x;           // 타입과 포인터 사이의 스페이스는 허용되지만
-                                    // 일관성이 있어야 한다.
-        set&lt;list&lt;string&gt;&gt; x;        // C++11 코드에서 허용됨
-        set&lt;list&lt;string&gt; &gt; x;       // C++03 은 &gt; &gt;를 사용해야 한다.
-        set&lt; list&lt;string&gt; &gt; x;      // 대칭을 위해 선택적으로
+        vector&lt;string&gt; x;          // 꺾쇠(&lt;와 &gt;) 사이와 &lt; 이전,
+        y = static_cast&lt;char*&gt;(x); // 캐스트의 &gt;( 사이에는 
+                                         // 스페이스를 사용하지 않는다.
+        vector&lt;char *&gt; x;          // 타입과 포인터 사이의 스페이스는 
+                                         // 허용되지만 일관성이 있어야 한다.
+        set&lt;list&lt;string&gt;&gt; x;   // C++11 코드에서 허용됨
+        set&lt;list&lt;string&gt; &gt; x;  // C++03 은 &gt; &gt;를 써야 함
+        set&lt; list&lt;string&gt; &gt; x; // 대칭을 위해 선택적으로
                                     // &lt; &lt;에도 스페이스를 사용할 수 있다.
         </CODE_SNIPPET>
       </SUBSECTION>
@@ -4650,7 +4690,8 @@ Tashana Landray
         빈 줄 사용이 유용할 수 있는 몇 가지 기본 규칙:
       </p>
       <ul>
-        <li> 함수의 시작이나 끝에 사용하는 빈 줄은 가독성에 거의 도움을 주지 않는다.
+        <li> 함수의 시작이나 끝에 사용하는 빈 줄은 가독성에 거의 도움을
+		     주지 않는다.
              </li>
         <li> if-else 체인의 내부에 있는 빈 줄은 가독성에 도움을 줄 수 있다.
              </li>
@@ -4661,21 +4702,24 @@ Tashana Landray
 
 <CATEGORY title="규칙의 예외사항">
   <p>
-    지금까지 설명한 코딩 컨벤션은 강제적이지만 모든 좋은 규칙처럼 이것에는 예외사항이 있으며, 그 예외사항을 여기에서 다룬다.
+    지금까지 설명한 코딩 컨벤션은 강제적이지만 모든 좋은 규칙처럼 이것에는 
+	예외사항이 있으며, 그 예외사항을 여기에서 다룬다.
   </p>
 
   
 
   <STYLEPOINT title="규칙을 지키지 않는 기존 코드">
     <SUMMARY>
-      이 스타일 가이드를 따르지 않는 코드를 다룰 때에는 규칙을 지키지 않을 수 있다.
+      이 스타일 가이드를 따르지 않는 코드를 다룰 때에는 규칙을 지키지 않을 수 
+	  있다.
     </SUMMARY>
     <BODY>
       <p>
         이 가이드가 아닌 다른 규칙에 따라 작성된 코드를 수정하는 경우엔
         이 규칙이 아닌 그 코드의 컨벤션에 따라 일관성있게 코드를 작성해야 한다.
-        어떻게 작성해야 할 지 명확하지 않은 경우 그 코드의 원작자나 현재 담당자에게 문의하라.
-        <em>일관성</em>은 파일 내의 일관성도 포함한다는 것을 기억하라.
+        어떻게 작성해야 할 지 명확하지 않은 경우 그 코드의 원작자나 현재
+		담당자에게 문의하라. <em>일관성</em>은 파일 내의 일관성도 포함한다는
+		것을 기억하라.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -4691,68 +4735,65 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        윈도우 스타일의 코드에 익숙해져 있다면 가이드라인의 몇몇 부분을 복습하는 것이 유익하다.
+        윈도우 스타일의 코드에 익숙해져 있다면 가이드라인의 몇몇 부분을 
+		복습하는 것이 유익하다.
       </p>
       <ul>
-        <li> 헝가리안 표기법을 사용하지 않는다. (예를 들어 정수를 <code>iNum</code>로 이름짓기)
-             소스 파일의 <code>.cc</code> 확장자를 포함하여 구글의 작명 컨벤션을 사용해야 한다.
+        <li> 헝가리안 표기법을 사용하지 않는다. (예를 들어 정수를 
+		     <code>iNum</code>로 이름짓기) 소스 파일의 <code>.cc</code> 
+			 확장자를 포함하여 구글의 작명 컨벤션을 사용해야 한다.
              </li>
-        <li> 윈도우는 <code>DWORD</code>, <code>HANDLE</code>등과 같은 그들만의 타입 동의어를 정의한다.
-             이것들을 윈도우 API 함수를 호출할 때 사용하는 것은 전혀 문제가 없고 사용이 권장된다.       
-             하지만 가능한 실제 C++ 타입과 가장 가까운 것을 사용하도록 한다. 예를 들면,
-             <code>LPCTSTR</code>보다 <code>const TCHAR *</code>를 사용하는 것이 좋다.
+        <li> 윈도우는 <code>DWORD</code>, <code>HANDLE</code>등과 같은
+		     그들만의 타입 동의어를 정의한다. 이것들을 윈도우 API 함수를
+			 호출할 때 사용하는 것은 전혀 문제가 없고 사용이 권장된다.       
+             하지만 가능한 실제 C++ 타입과 가장 가까운 것을 사용하도록 한다.
+			 예를 들면, <code>LPCTSTR</code>보다 <code>const TCHAR *</code>를
+			 사용하는 것이 좋다.
              </li>
-        <li> When compiling with Microsoft Visual C++, set the
-             compiler to warning level 3 or higher, and treat all
-             warnings as errors.
+        <li> Microsoft Visual C++에서 컴파일할 때는 컴파일러의 경고 레벨을
+		     3 이상으로 설정하고, 모든 경고를 에러로 처리하라.
              </li>
-        <li> Do not use <code>#pragma once</code>; instead use the
-             standard Google include guards.  The path in the include
-             guards should be relative to the top of your project
-             tree.
+        <li> <code>#pragma once</code>를 사용하지 말고, 구글의 표준 인클루드
+		     가드를 사용하라. 인클루드 가드에 사용되는 경로는 프로젝트 트리를
+			 기준으로 하는 상대경로를 사용하라.
              </li>
-        <li> In fact, do not use any nonstandard extensions, like
-             <code>#pragma</code> and <code>__declspec</code>, unless you
-             absolutely must.  Using <code>__declspec(dllimport)</code> and
-             <code>__declspec(dllexport)</code> is allowed; however, you
-             must use them through macros such as <code>DLLIMPORT</code>
-             and <code>DLLEXPORT</code>, so that someone can easily disable
-             the extensions if they share the code.
+        <li> 절대적으로 필요한 경우가 아니라면, <code>#pragma</code>나 
+		     <code>__declspec</code> 같은 비표준 확장의 사용을 지양하라.
+			 <code>__declspec(dllimport)</code>와 
+			 <code>__declspec(dllexport)</code>의 사용은 허용된다. 
+			 하지만 코드를 공유할 때 손쉽게 비활성화할 수 있도록 
+			 <code>DLLIMPORT</code>와 </code>DLLEXPORT</code>와 같은 
+			 매크로를 통해 사용해야 한다.
              </li>
       </ul>
       <p>
-        However, there are just a few rules that we occasionally need
-        to break on Windows:
+	    하지만 윈도우에서 규칙을 지키지 않아도 되는 것도 몇몇 있다.
       </p>
       <ul>
-        <li> Normally we <a HREF="#Multiple_Inheritance">forbid
-             the use of multiple implementation inheritance</a>; however,
-             it is required when using COM and some ATL/WTL
-             classes. You may use multiple implementation inheritance
-             to implement COM or ATL/WTL classes and interfaces.
+        <li> 일반적으로 <a HREF="#Multiple_Inheritance">다중 상속의 사용은
+		     금지되지만</a>, COM이나 일부 ATL/WTL 클래스를 사용할 때는 이것이
+			 꼭 필요하다. COM이나 ATL/WTL 클래스와 인터페이스에는 다중 구현
+			 상속을 사용할 수 있다.
              </li>
-        <li> Although you should not use exceptions in your own code,
-             they are used extensively in the ATL and some STLs,
-             including the one that comes with Visual C++. When using
-             the ATL, you should define <code>_ATL_NO_EXCEPTIONS</code> to
-             disable exceptions. You should investigate whether you can
-             also disable exceptions in your STL, but if not, it is OK to
-             turn on exceptions in the compiler. (Note that this is
-             only to get the STL to compile. You should still not
-             write exception handling code yourself.)
+        <li> 직접 작성한 코드에는 예외를 사용하지 않는 것이 좋으나,
+		     Visual C++이 제공하는 것을 포함해 ATL과 일부 STL에는 예외가
+			 광범위하게 사용된다. ATL을 사용할 때에는 
+			 <code>_ATL_NO_EXCEPTIONS</code>를 정의하여 예외를 비활성화할 수
+			 있다. STL에서도 예외를 비활성화할 수 있는 옵션이 있는지 알아보고
+			 가능하면 비활성화하는 것이 좋다. 그렇지 않은 경우 컴파일러의 예외
+			 옵션을 켜 두는 것은 허용한다. (하지만 이것은 오로지 STL이
+			 컴파일되도록 하기 위함이고, 여전히 예외 처리 코드는 작성하지 
+			 않아야 한다.)
              </li>
-        <li> The usual way of working with precompiled headers is to
-             include a header file at the top of each source file,
-             typically with a name like <code>StdAfx.h</code> or
-             <code>precompile.h</code>. To make your code easier to share
-             with other projects, avoid including this file explicitly
-             (except in <code>precompile.cc</code>), and use the
-             <code>/FI</code> compiler option to include the file
-             automatically.
+        <li> 미리 컴파일된 헤더를 사용하는 일반적인 방법은 모든 소스 파일의
+		     첫 줄에 <code>Stdafx.h</code>나 <code>precompile.h</code>를 
+			 인클루드하는 것이다. 다른 프로젝트와의 코드를 쉽게 공유할 수
+			 있도록 (<code>precompile.cc</code>)를 제외하고는 이 파일을 
+			 명시적으로 인클루드하는 것을 피하고 <code>/Fl</code> 컴파일러
+			 옵션을 통해 자동으로 인클루드되도록 하라.
              </li>
-        <li> Resource headers, which are usually named
-             <code>resource.h</code> and contain only macros, do not need
-             to conform to these style guidelines.
+        <li> 대개 <code>resources.h</code>라는 이름이 붙는 리소스 헤더들은
+		     매크로만을 포함하므로 이 스타일 가이드라인의 제약을 받지 않는다.
              </li>
       </ul>
     </BODY>
@@ -4766,9 +4807,9 @@ Tashana Landray
     상식을 사용하고 <em>일관성</em>있게 작성하라.
   </p>
   <p>
-    코드를 수정하는 경우 몇 분 정도 주변의 코드를 살펴보고 그것의 스타일을 판단하라.
-    그 코드가 <code>if</code>문 주변에 스페이스를 사용한다면 당신도 그래야 한다.
-    만약 그 코드의 주석들이 작은 박스와 별표들을 사용한다면 
+    코드를 수정하는 경우 몇 분 정도 주변의 코드를 살펴보고 그것의 스타일을
+	판단하라. 그 코드가 <code>if</code>문 주변에 스페이스를 사용한다면 
+	당신도 그래야 한다. 만약 그 코드의 주석들이 작은 박스와 별표들을 사용한다면
     당신의 코드도 작은 박스와 별표를 사용해야 한다.
   </p>
   <p>
@@ -4782,8 +4823,8 @@ Tashana Landray
   </p>
   
   <p>
-    그러면 코드를 쓰는 방법에 대해서 충분히 쓴 것 같다. 코드 자체가 더 재미있을 것이다. 
-    즐거운 코딩!
+    그러면 코드를 쓰는 방법에 대해서 충분히 쓴 것 같다. 코드 자체가 더 재미있을 
+	것이다. 즐거운 코딩!
   </p>
 </PARTING_WORDS>
 
