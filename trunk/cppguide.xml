@@ -2444,34 +2444,33 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="64-bit Portability">
+  <STYLEPOINT title="64비트 이식성">
     <SUMMARY>
-      Code should be 64-bit and 32-bit friendly.  Bear in mind problems of
-      printing, comparisons, and structure alignment.
+      코드는 64비트와 32비트 친화적이어야 한다. 출력, 비교, 
+      구조체 정렬(alignment)시 발생하는 문제점에 유의하라.
     </SUMMARY>
     <BODY>
       <ul>
         <li>
           <p>
-            <code>printf()</code> specifiers for some types are
-            not cleanly portable between 32-bit and 64-bit
-            systems. C99 defines some portable format
-            specifiers. Unfortunately, MSVC 7.1 does not
-            understand some of these specifiers and the
-            standard is missing a few, so we have to define our
-            own ugly versions in some cases (in the style of the
+            <code>printf()</code> 포맷 지정자 중에서 몇가지 타입은 
+            64비트와 32비트에서 완전한 이식성을 가지지 않는다. 
+            C99은 portable한 포맷 지정자를 정의한다. 하지만 MSVC 7.1에서 
+            이 중 몇가지가 동작하지 않고 표준중에서 몇가지가 빠졌다. 
+            그래서 몇가지 경우에 ugly version을 정의했다.
+            (in the style of the
             standard include file <code>inttypes.h</code>):
           </p>
           <CODE_SNIPPET>
-            // printf macros for size_t, in the style of inttypes.h
+            // inttypes.h 에서 size_t를 위한 printf 매크로
             #ifdef _LP64
             #define __PRIS_PREFIX "z"
             #else
             #define __PRIS_PREFIX
             #endif
 
-            // Use these macros after a % in a printf format string
-            // to get correct 32/64 bit behavior, like this:
+            // 32/64비트에서 잘 동작하게 하려면 printf 포맷 문자열에서
+            // 아래 매크로를 % 뒤에 사용하라. 예를 들면
             // size_t size = records.size();
             // printf("%"PRIuS"\n", size);
 
@@ -2533,48 +2532,36 @@ Tashana Landray
             </TBODY>
           </table>
           <p>
-            Note that the <code>PRI*</code> macros expand to independent
-            strings which are concatenated by the compiler. Hence
-            if you are using a non-constant format string, you
-            need to insert the value of the macro into the format,
-            rather than the name. It is still possible, as usual,
-            to include length specifiers, etc., after the
-            <code>%</code> when using the <code>PRI*</code>
-            macros. So, e.g.  <code>printf("x = %30"PRIuS"\n",
-            x)</code> would expand on 32-bit Linux to
-            <code>printf("x = %30" "u" "\n", x)</code>, which the
-            compiler will treat as <code>printf("x = %30u\n",
-            x)</code>.
+            <code>PRI*</code> 매크로는 컴파일러가 연결한 독립 문자열을 
+            확장한다. 비상수 포맷 문자열을 사용한다면 이름을 넣는 것보다는 
+            매크로 값을 포맷에 넣는 것이 좋다. 일반적으로 <code>PRI*</code> 
+            매크로를 사용할 때, <code>%</code>뒤에 길이 지정자 등을 넣는 것은 
+            여전히 가능하다. 예를 들면 <code>printf("x = %30"PRIuS"\n", x)</code>
+            는 32비트 리눅스에서 <code>printf("x = %30" "u" "\n", x)</code>으로 
+            확장될 것이고, 컴파일러는 <code>printf("x = %30u\n", x)</code>로 
+            간주할 것이다.
           </p>
           
           </li>
 
-        <li> Remember that <code>sizeof(void *)</code> !=
-             <code>sizeof(int)</code>.  Use <code>intptr_t</code> if
-             you want a pointer-sized integer.
+        <li> <code>sizeof(void *)</code> != <code>sizeof(int)</code> 라는 것을 기억하라.
+             pointer-sized 정수가 필요하면 <code>intptr_t</code>를 사용하라.
              </li>
 
-        <li> You may need to be careful with structure alignments,
-             particularly for structures being stored on disk. Any
-             class/structure with a
-             
-             <code>int64_t</code>/<code>uint64_t</code>
-             member will by default end up being 8-byte aligned on a 64-bit
-             system. If you have such structures being shared on disk
-             between 32-bit and 64-bit code, you will need to ensure
-             that they are packed the same on both architectures.
-             
-             Most compilers offer a way to alter
-             structure alignment.  For gcc, you can use
-             <code>__attribute__((packed))</code>.  MSVC offers
-             <code>#pragma pack()</code> and
-             <code>__declspec(align())</code>.
+        <li> 구조체 정렬을 다루는데 주의해야 한다. 특히 구조체가 디스크에 저장될 때 
+             더욱 주의가 필요하다. <code>int64_t</code>/<code>uint64_t</code> 멤버를 
+             가진 클래스와 구조체는 64비트 시스템에서 기본으로 8바이트 정렬된다.
+             32비트와 64비트에서 디스크에 공유되는 구조체는 두 시스템에서 
+             모두 같은 방식으로 패킹되어야 한다. 대부분의 컴파일러는 구조체 정렬을 
+             변경하는 방법을 제공한다. gcc에서는 <code>__attribute__((packed))</code>
+             를 사용할 수 있고, MSVC에서는 <code>#pragma pack()</code>과 
+             <code>__declspec(align())</code>을 사용할 수 있다.
              </li>
 
         <li>
              
-             Use the <code>LL</code> or <code>ULL</code> suffixes as
-             needed to create 64-bit constants.  For example:
+             64비트 상수 초기화에는 <code>LL</code> 이나 <code>ULL</code> 
+             접미사를 사용하라. 예를 들면
              
              <CODE_SNIPPET>
              int64_t my_value = 0x123456789LL;
@@ -2582,118 +2569,98 @@ Tashana Landray
              </CODE_SNIPPET>
              </li>
 
-        <li> If you really need different code on 32-bit and 64-bit
-             systems, use <code>#ifdef _LP64</code> to choose between
-             the code variants. (But please avoid this if
-             possible, and keep any such changes localized.)
+        <li> 굳이 32비트와 64비트에서 다른 코드가 필요하다면 <code>#ifdef _LP64</code>
+             를 사용하라(가능하면 사용하지 않는 것이 최선이지만).
              </li>
       </ul>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Preprocessor Macros">
+  <STYLEPOINT title="프리프로세서 매크로">
     <SUMMARY>
-      Be very cautious with macros.  Prefer inline functions, enums,
-      and <code>const</code> variables to macros.
+      매크로는 매우 주의해서 사용하라. 매크로보다는 인라인 함수, 열거형, 
+      <code>const</code> 변수를 사용하라.
     </SUMMARY>
     <BODY>
       <p>
-        Macros mean that the code you see is not the same as the code
-        the compiler sees.  This can introduce unexpected behavior,
-        especially since macros have global scope.
+        매크로는 프로그래머가 보는 코드와 컴파일러가 보는 코드를 다르게 만든다.
+        특히 전역으로 사용되었을때, 예상치 못한 결과를 초래할 수 있다.
       </p>
       <p>
-        Luckily, macros are not nearly as necessary in C++ as they are
-        in C.  Instead of using a macro to inline performance-critical
-        code, use an inline function.  Instead of using a macro to
-        store a constant, use a <code>const</code> variable.  Instead of
-        using a macro to "abbreviate" a long variable name, use a
-        reference.  Instead of using a macro to conditionally compile code
-        ... well, don't do that at all (except, of course, for the
-        <code>#define</code> guards to prevent double inclusion of
-        header files).  It makes testing much more difficult.
+        다행스럽게도 C++에서는 C와는 달리 매크로의 사용이 필수가 아니다. 
+        성능이 민감한 코드에는 매크로 대신 인라인 함수를 사용하라. 
+        상수를 저장하는 용도로 매크로 대신에 <code>const</code> 변수를 사용하라. 
+        긴 변수 이름을 축약하는 용도로 매크로 대신에 레퍼런스를 사용하라. 
+        조건부로 코드를 컴파일하는 용도로는 매크로 대신 … 어쨌든 매크로는 
+        사용하지 말라(예외적으로 헤더파일 이중 include를 막는 
+        <code>#define</code> 가드 용도로는 사용해도 됨). 테스트를 훨씬 어렵게 만든다.
       </p>
       <p>
-        Macros can do things these other techniques cannot, and you do
-        see them in the codebase, especially in the lower-level
-        libraries.  And some of their special features (like
-        stringifying, concatenation, and so forth) are not available
-        through the language proper.  But before using a macro,
-        consider carefully whether there's a non-macro way to achieve
-        the same result.
+        매크로는 다른 테크닉으로는 할 수 없는 것들을 가능케하고, 하부 레벨의 
+        라이브러리 코드베이스에서 종종 볼 수 있다.그리고 문자열 변환(stringfying), 
+        문자열 연결과 같은 고유한 기능이 있다. 하지만 매크로를 사용하기 
+        전에 매크로를 사용하지 않고도 같은 결과를 얻을 수 있는 다른 방법을 
+        신중하게 고려하라.
       </p>
       <p>
-        The following usage pattern will avoid many problems with
-        macros; if you use macros, follow it whenever possible:
+        매크로를 사용한다면 다음과 같은 사용 패턴은 피하라.
       </p>
       <ul>
-        <li> Don't define macros in a <code>.h</code> file.
+        <li> 헤더파일에 매크로를 정의하지 말라.
              </li>
-        <li> <code>#define</code> macros right before you use them,
-             and <code>#undef</code> them right after.
+        <li> 매크로를 사용하지 바로 전에 <code>#define</code>하고,
+             사용후에는 바로 <code>#undef</code> 하라.
              </li>
-        <li> Do not just <code>#undef</code> an existing macro before
-             replacing it with your own; instead, pick a name that's
-             likely to be unique.
+        <li> 기존에 존재하는 매크로를 대체하는 용도로 <code>#undef</code>를 
+             사용하지 말고, 다른 유일한 이름의 매크로를 사용하라.
              </li>
-        <li> Try not to use macros that expand to unbalanced C++
-             constructs, or at least document that behavior well.
+        <li> 불안정하게(unbalanced) C++ 생성자를 확장하는 용도로 
+             매크로를 사용하지 말고, 사용하게 된다면 적어도 문서화라도 하라.
              </li>
-        <li> Prefer not using <code>##</code> to generate function/class/variable
-             names.
+        <li> 함수/클래스/변수 이름을 생성하는 용도로 <code>##</code> 매크로를
+             사용하지 마라.
              </li>
       </ul>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="0 and nullptr/NULL">
+  <STYLEPOINT title="0과 nullptr/NULL">
   <SUMMARY>
-    Use <code>0</code> for integers, <code>0.0</code> for reals,
-    <code>nullptr</code> (or <code>NULL</code>) for pointers,
-    and <code>'\0'</code> for chars.
+    정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을,
+    포인터는 <code>nullptr</code> (혹은 <code>NULL</code>) 을,
+    char는 <code>'\0'</code> 을 사용하라.
   </SUMMARY>
   <BODY>
     <p>
-      Use <code>0</code> for integers and <code>0.0</code> for reals.
-      This is not controversial.
+      정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을 사용하는 것은 
+      명백하므로 논란이 없다.
     </p>
     <p>
-    
-    
-      For pointers (address values), there is a choice between <code>0</code>,
-      <code>NULL</code>, and <code>nullptr</code>.
-      For projects that allow C++11 features, use <code>nullptr</code>.
-      For C++03 projects, we prefer <code>NULL</code> because it looks like a
-      pointer.  In fact, some C++ compilers provide special definitions of
-      <code>NULL</code> which enable them to give useful warnings,
-      particularly in situations where <code>sizeof(NULL)</code> is not equal
-      to <code>sizeof(0)</code>.
-    
+      포인터(변수를 가리키는 용도)에는 <code>0</code>, <code>NULL</code>, 
+      <code>nullptr</code>을 선택적으로 사용할 수 있다. C++11을 허용하는 
+      프로젝트에서는 nullptr을 사용하라. C++03 프로젝트에는 NULL이 
+      포인터처럼 보이기 때문에 NULL을 권장한다. 사실 어떤 C++ 컴파일러는 
+      유용한 경고메세지를 보여주는 것을 가능케하는(예를 들면 sizeof(NULL)과 
+      sizeof(0)이 같지않은 상황) NULL에 대한 특별한 정의가 있다.
     </p>
     <p>
-      Use <code>'\0'</code> for chars.
-      This is the correct type and also makes code more readable.
+      char에는 '\0'을 사용하라. 알맞는 타입이고 코드 가독성도 향상된다.
     </p>
   </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="sizeof">
   <SUMMARY>
-    Prefer <code>sizeof(<var>varname</var>)</code> to
-    <code>sizeof(<var>type</var>)</code>.
+    <code>sizeof(<var>type</var>)</code>보다 <code>sizeof(<var>varname</var>)</code>
+    사용을 권장한다.
   </SUMMARY>
   <BODY>
     <p>
-      Use <code>sizeof(<var>varname</var>)</code>
-      when you take the size of a particular variable.
-      <code>sizeof(<var>varname</var>)</code> will update
-      appropriately if someone changes the variable type
-      either now or later.
-      You may use <code>sizeof(<var>type</var>)</code>
-      for code unrelated to any particular variable,
-      such as code that manages an external or internal
-      data format where a variable of an appropriate C++ type
-      is not convenient.
+      특정 변수의 사이즈가 필요할 때 <code>sizeof(<var>varname</var>)</code>을 
+      사용하라. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
+      타입을 변경했을 때에도 문제가 없다. <code>sizeof(<var>type</var>)</code>은 
+      특정 변수의 사이즈와 관련 없는 곳(예를 들면 외부나 내부의 데이터 포맷을 
+      관리하는 것)에서 사용될 수 있다.
     </p>
     <p>
       <CODE_SNIPPET>
@@ -2705,7 +2672,7 @@ Tashana Landray
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
         if (raw_size &lt; sizeof(int)) {
-          LOG(ERROR) &lt;&lt; "compressed record not big enough for count: " &lt;&lt; raw_size;
+          LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작다: " &lt;&lt; raw_size;
           return false;
         }
       </CODE_SNIPPET>
@@ -2715,17 +2682,15 @@ Tashana Landray
 
   <STYLEPOINT title="auto">
   <SUMMARY>
-    Use <code>auto</code> to avoid type names that are just clutter.
-    Continue to use manifest type declarations when it helps readability,
-    and never use <code>auto</code> for anything but local variables.
-    
+    타입이름을 사용하기 복잡한 곳에 <code>auto</code>를 사용하라. 
+    코드 가독성을 향상시켜주는 곳에는 명시적인 타입 선언을 사용하고, 
+    <code>auto</code>는 지역 변수에만 사용하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      In C++11, a variable whose type is given as <code>auto</code> will be given
-      a type that matches that of the expression used to initialize
-      it. You can use <code>auto</code> either to initialize a
-      variable by copying, or to bind a reference.
+      C++11에서는 <code>auto</code> 타입의 변수는 표현식에서 변수 
+      초기화에 사용된다. 복사를 통해 변수를 초기화 하거나 레퍼런스를 
+      생성하는데 <code>auto</code>를 사용할 수 있다.
         <CODE_SNIPPET>
           vector&lt;string&gt; v;
           ...
@@ -2735,71 +2700,64 @@ Tashana Landray
     </DEFINITION>
     <PROS>
       <p>
-        C++ type names can sometimes be long and cumbersome,
-        especially when they involve templates or namespaces. In a statement like
+        C++의 타입네임은 템플릿이나 네임스페이스와 연관되어 있을 때에는 
+        길고 복잡해진다. 예를 들면 아래 코드에서
         <CODE_SNIPPET>
           sparse_hash_map&lt;string, int&gt;::iterator iter = m.find(val);
         </CODE_SNIPPET>
-        the return type is hard to read, and obscures the primary
-        purpose of the statement. Changing it to
+        리턴 타입이 무엇인지, 구문의 목적이 무엇인지 알기가 어렵다. 
+        하지만 아래와 같이 변경하면 가독성이 향상된다.
         <CODE_SNIPPET>
           auto iter = m.find(val);
         </CODE_SNIPPET>
-        makes it more readable.
       </p>
       <p>
-        Without <code>auto</code> we are sometimes forced to write a
-        type name twice in the same expression, adding no value
-        for the reader, as in
+        <code>auto</code>가 없으면 한 구문에서 별 의미도 없이 
+        타입네임을 두번 써야 하는 경우도 있다.
         <CODE_SNIPPET>
           diagnostics::ErrorStatus* status = new diagnostics::ErrorStatus("xyz");
         </CODE_SNIPPET>
       </p>
       <p>
-        Using <code>auto</code> makes it easier to use intermediate
-        variables when appropriate, by reducing the burden of writing
-        their types explicitly.
+        <code>auto</code>를 사용하면 타입을 명시적으로 써야하는 부담을 덜고
+        적절한 변수를 바로 사용하는 것이 쉬워진다.
       </p>
     </PROS>
     <CONS>
-      <p>Sometimes code is clearer when types are manifest, especially when
-        a variable's initialization depends on things that were declared
-        far away. In an expression like
+      <p>어떤 변수의 초기화가 멀리 선언되어 있는 다른 변수와 관련되어 있을때에는 
+        명시적인 타입을 사용하는 것이 명확할 때가 있다. 아래 구문에서
         <CODE_SNIPPET>
           auto i = x.Lookup(key);
         </CODE_SNIPPET>
-        it may not be obvious what <code>i</code>'s type is, if <code>x</code>
-        was declared hundreds of lines earlier.
+        x가 선언된 부분이 코드에서 멀리 있으면, i의 타입이 무엇인지 알아내기가
+        쉽지 않다.
       </p>
 
-      <p>Programmers have to understand the difference between <code>auto</code>
-        and <code>const auto&amp;</code> or they'll get copies when
-        they didn't mean to.
+      <p>프로그래머가 <code>auto</code>와 <code>const auto&amp;</code>의 차이를 
+      잘 알지 못하면  원치 않게 복사된 값을 얻게 될 수 있다. 
       </p>
 
-      <p>The interaction between <code>auto</code> and C++11
-        brace-initialization can be confusing. The declarations
+      <p><code>auto</code>와 C++11 중괄호를 사용한 초기화(brace-initialization)의 
+        상호작용은 혼란스러울 수 있다. 아래 두 선언은 서로 다른 의미를 가진다.
         <CODE_SNIPPET>
-          auto x(3);  // Note: parentheses.
-          auto y{3};  // Note: curly braces.
+          auto x(3);  // Note: 소괄호
+          auto y{3};  // Note: 중괄호
         </CODE_SNIPPET>
-        mean different things — <code>x</code> is
-        an <code>int</code>, while <code>y</code> is
-        an <code>initializer_list</code>. The same applies to other
-        normally-invisible proxy types.
-        
+        <code>x</code>는 int이고, <code>y</code>는 초기화 목록(initializer_list)이다.
+        invisible proxy도 마찬가지이다.
       </p>
 
-      <p>If an <code>auto</code> variable is used as part of an
-        interface, e.g. as a constant in a header, then a programmer
-        might change its type while only intending to change its
-        value, leading to a more radical API change than intended.</p>
+      <p><code>auto</code> 변수가 인터페이스에 선언되어 있다면(예를 들어 헤더의 상수로), 
+        타입을 변경하는 것이 좋습니다.</p>
     </CONS>
     <DECISION>
-      <p><code>auto</code> is permitted, for local variables only.
-        Do not use <code>auto</code> for file-scope or namespace-scope
-        variables, or for class members. Never assign a braced initializer list
-        to an <code>auto</code>-typed variable.</p>
+      <p><code>auto</code>는 지역변수로만 사용해야 한다. 파일 범위나 네임스페이스 범위에서 
+      사용하면 안되고, 클래스 멤버로도 사용해서는 안된다. 
+      <code>auto</code>타입 변수에 중괄호를 사용한 초기화 구문을 사용해도 안된다.</p>
+      
+      <p><code>auto</code> 키워드를 리턴 타입과 연계된 함수 선언에서 사용하는 것은 
+      허용하지 않는다.</p>
+      
       <p>The <code>auto</code> keyword is also used in an unrelated
         C++11 feature: it's part of the syntax for a new kind of
         function declaration with a trailing return type. Function
@@ -2808,48 +2766,46 @@ Tashana Landray
   </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Brace Initialization">
+  <STYLEPOINT title="중괄호를 사용한 초기화">
   <SUMMARY>
-    You may use brace initialization. 
+    중괄호를 사용한 초기화(Brace Initialization)를 사용할 수 있다.
   </SUMMARY>
   <BODY>
-    <p>In C++03, aggregate types (arrays and structs with no constructor) could
-    be initialized using braces.
+    <p>C++03에서 aggregate타입(배열과 생성자 없는 구조체)은 중괄호를 
+    사용해서 초기화 될 수 있다. 
       <CODE_SNIPPET>
         struct Point { int x; int y; };
         Point p = {1, 2};
       </CODE_SNIPPET></p>
 
-    <p>In C++11, this syntax has been expanded for use with all other datatypes.
-    The brace initialization form is called <i>braced-init-list</i>. Here are
-    a few examples of its use.
+    <p>C++11에서는 이 문법이 모든 데이터타입으로 확장되었다. 
+    이런 중괄호를 사용한 초기화 형태를 <i>braced-init-list</i> 라고 부른다. 
+    아래에 몇가지 예제가 있다.
       <CODE_SNIPPET>
-        // Vector takes lists of elements.
+        // element 목록을 받는 벡터 초기화.
         vector&lt;string&gt; v{"foo", "bar"};
 
-        // The same, except this form cannot be used if the initializer_list
-        // constructor is explicit. You may choose to use either form.
+        // initializer_list 생성자가 explicit 한 경우를 제외하고 사용가능
         vector&lt;string&gt; v = {"foo", "bar"};
 
-        // Maps take lists of pairs. Nested braced-init-lists work.
+        // 중첩된 braced-init-lists를 사용한 맵 초기화.
         map&lt;int, string&gt; m = {{1, "one"}, {2, "2"}};
 
-        // braced-init-lists can be implicitly converted to return types.
+        // braced-init-lists는 암묵적으로 리턴타입으로 변환될 수 있다.
         vector&lt;int&gt; test_function() {
           return {1, 2, 3};
         }
 
-        // Iterate over a braced-init-list.
+        // braced-init-list를 순환.
         for (int i : {-1, -2, -3}) {}
 
-        // Call a function using a braced-init-list.
+        // braced-init-list를 사용하여 함수 호출
         void test_function2(vector&lt;int&gt; v) {}
         test_function2({1, 2, 3});
       </CODE_SNIPPET></p>
-
-    <p>User data types can also define constructors that take
-    <code>initializer_list</code>, which is automatically created from
-    <i>braced-init-list</i>:
+    
+    <p>사용자 정의 타입 또한 <i>braced-init-list</i> 로부터 자동 생성되는 
+    <code>initializer_list</code>를 받는 생성자를 정의할 수 있다:
       <CODE_SNIPPET>
         class MyType {
          public:
@@ -2862,81 +2818,78 @@ Tashana Landray
         MyType m{2, 3, 5, 7};
       </CODE_SNIPPET></p>
 
-    <p>Finally, brace initialization can also call ordinary constructors of
-    data types that do not have <code>initializer_list</code> constructors.
+    <p>마지막으로 중괄호를 사용한 초기화는 <code>initializer_list</code> 
+    생성자를 가지지 않는 일반적인 생성자를 호출 할 수 있다.
       <CODE_SNIPPET>
         double d{1.23};
-        // Calls ordinary constructor as long as MyOtherType has no
-        // initializer_list constructor.
+        // MyOtherType가 initializer_list 생성자를 
+        // 가지지 않는다면 일반적인 생성자를 호출
         class MyOtherType {
          public:
           explicit MyOtherType(string);
           MyOtherType(int, string);
         };
         MyOtherType m = {1, "b"};
-        // If the constructor is explicit, you can't use the "= {}" form.
+        // 생성자가 explicit하다면 "= {}" 사용불가
         MyOtherType m{"b"};
       </CODE_SNIPPET></p>
 
-    <p>Never assign a <i>braced-init-list</i> to an auto local variable. In the
-    single element case, what this means can be confusing.
+    
+    <p><i>braced-init-list</i> 를 auto 지역 변수에 할당하지 마라. 
+    single element의 경우에 혼동스러울 수 있다.
       <BAD_CODE_SNIPPET>
-        auto d = {1.23};        // d is an initializer_list&lt;double&gt;
+        auto d = {1.23};        // d는 initializer_list&lt;double&gt;이다
       </BAD_CODE_SNIPPET>
       <CODE_SNIPPET>
-        auto d = double{1.23};  // Good -- d is a double, not an initializer_list.
+        auto d = double{1.23};  // Good -- d는 initializer_list가 아니라 double.
       </CODE_SNIPPET>
     </p>
   </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Lambda expressions">
+  <STYLEPOINT title="람다 표현식">
     <SUMMARY>
-      Do not use lambda expressions, or the related <code>std::function</code>
-      or <code>std::bind</code> utilities.
+      람다 표현식이나 관련된 <code>std::function</code> 혹은
+      <code>std::bind</code> 유틸리티를 사용하지 마라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        Lambda expressions are a concise way of creating anonymous function
-        objects. They're often useful when passing functions as arguments.
-        For example: <code>std::sort(v.begin(), v.end(),
-        [](string x, string y) { return x[1] &lt; y[1]; });</code> Lambdas were
-        introduced in C++11 along with a set of utilities for working with
-        function objects, such as the polymorphic wrapper
-        <code>std::function</code>.
+        람다 표현식으로 익명 함수 객체를 간결하게 생성할 수 있다.
+        함수의 인자로 사용될때 유용하다. 예를 들면
+        <code>
+          std::sort(v.begin(), v.end(),
+          [](string x, string y) { return x[1] &lt; y[1]; });
+        </code>
+        람다는 C++11에서 <code>std::function</code>과 같은 함수객체를 위한 
+        유틸리티와 함께 소개되었다.
       </DEFINITION>
       <PROS>
         <ul>
           <li>
-            Lambdas are much more concise than other ways of defining function
-            objects to be passed to STL algorithms, which can be a readability
-            improvement.
+            람다로 STL algorithms 의 인자로 전달되는 함수객체를 다른 방식보다 
+            훨씬 간결하게 만들 수 있고, 가독성도 향상된다.
           </li>
           <li>
-            Lambdas, <code>std::function</code>, and <code>std::bind</code>
-            can be used in combination as a general purpose callback
-            mechanism; they make it easy to write functions that take bound
-            functions as arguments.
+            람다, <code>std::function</code>, <code>std::bind</code>는 일반적인 
+            콜백 방식에 함께 사용될 수 있다. 함수를 인자로 쉽게 사용할 수 있게 해준다.
           </li>
         </ul>
       </PROS>
       <CONS>
         <ul>
           <li>
-            Variable capture in lambdas can be tricky, and might be a new
-            source of dangling-pointer bugs.
+            람다의 변수 캡쳐는 사용하기 까다로울 수 있고, 
+            dangling-pointer버그의 온상이 될 수 있다.
           </li>
           <li>
-            It's possible for use of lambdas to get out of hand; very long
-            nested anonymous functions can make code harder to understand.
+            매우 길게 중첩된 익명함수는 코드를 이해하기 어렵고 감당할 수 없게 만든다.
           </li>
           
         </ul>
       </CONS>
       <DECISION>
         <p>
-          Do not use lambda expressions, <code>std::function</code> or
-          <code>std::bind</code>.
+          람다 표현식, <code>std::function</code>, <code>std::bind</code>는 사용하지 마라.
         </p>
       </DECISION>
     </BODY>
@@ -2944,32 +2897,30 @@ Tashana Landray
 
   <STYLEPOINT title="Boost">
   <SUMMARY>
-    Use only approved libraries from the Boost library collection.
+    사용이 허가된 Boost 라이브러리만 사용하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      The <a href="http://www.boost.org/">Boost library collection</a> is
-      a popular collection of peer-reviewed, free, open-source C++ libraries.
+      <a href="http://www.boost.org/">Boost 라이브러리</a> 는 
+      프로그래머들 사이에서 검증되었고(peer-reviewed), 무료이고, 
+      오픈소스인 C++ 라이브러리 모음이다.
     </DEFINITION>
     <PROS>
-      Boost code is generally very high-quality, is widely portable, and fills
-      many important gaps in the C++ standard library, such as type traits,
-      better binders, and better smart pointers. It also provides an
-      implementation of the TR1 extension to the standard library.
+      Boost 코드는 일반적으로 매우 고품질이고, 이식성이 높고, 
+      type trait, binder, 스마트 포인터 같은 C++ 표준 라이브러리의 
+      부족함을 충족시킨다. 또한 TR1 표준 확장 라이브러리로 제공된다.
     </PROS>
     <CONS>
-      Some Boost libraries encourage coding practices which can hamper
-      readability, such as metaprogramming and other advanced template
-      techniques, and an excessively "functional" style of programming.
-      
+      일부 라이브러리는 메타프로그래밍이나 급진적인(advanced) 템플릿 
+      사용으로 가독성을 해치고 과도하게 함수형 프로그래밍 기법을 사용한다.
+
     </CONS>
     <DECISION>
       
       <div>
-        
-        In order to maintain a high level of readability for all contributors
-        who might read and maintain code, we only allow an approved subset of
-        Boost features.  Currently, the following libraries are permitted:
+        코드를 유지보수하는 모든 프로그래머들에게 높은 수준의 코드 
+        가독성을 제공하기 위해 허용된 Boost 라이브러리만 사용한다. 
+        현재 아래의 라이브러리만 사용이 허가된다.
         <ul>
           <li> <a href="http://www.boost.org/libs/utility/call_traits.htm">
                Call Traits</a> from <code>boost/call_traits.hpp</code>
@@ -3011,13 +2962,12 @@ Tashana Landray
                </li>
 
         </ul>
-        We are actively considering adding other Boost features to the list, so
-        this list may be expanded in the future.
+        다른 Boost 라이브러리도 허용 목록에 넣기 위해 활발하게 고려중이므로 
+        위의 목록은 더 추가될 수 있다.
       </div>
       <p>
-      The following libraries are permitted, but their use is discouraged
-      because they've been superseded by standard libraries in C++11:
-      <ul>
+        아래 라이브러리도 사용이 가능하지만, C++ 11 확장 라이브러리로 대체되었다.
+        <ul>
         <li> <a href="http://www.boost.org/libs/array/">
              Array</a> from <code>boost/array.hpp</code>: use
              <a href="http://en.cppreference.com/w/cpp/container/array">
@@ -3038,81 +2988,66 @@ Tashana Landray
 
   <STYLEPOINT title="C++11">
   <SUMMARY>
-    Use libraries and language extensions from C++11 (formerly
-    known as C++0x) when appropriate.
+    C++11(기존의 C++0x)를 적절한 곳에 사용하라. 
     
-    Consider portability to other environments before
-    using C++11 features in your project.
-    
+    프로젝트에 C++11의 기능을 사용하기 전에 다른 환경으로의 이식성을 고려하라.
   </SUMMARY>
   <BODY>
     <DEFINITION>
-      C++11 is the latest ISO C++ standard.
-      It contains
-      <a href="http://en.wikipedia.org/wiki/C%2B%2B11">significant
-      changes</a> both to the language and libraries.
-      
+      C++11은 최신의 ISO C++ 표준이다.
+      언어와 라이브러리의
+      <a href="http://en.wikipedia.org/wiki/C%2B%2B11">중요한 변경</a> 이
+      포함되어있다.
     </DEFINITION>
     <PROS>
-      C++11 has become the official standard, and eventually will
-      be supported by most C++ compilers.  It standardizes some common C++
-      extensions that we use already, allows shorthands for some operations,
-      and has some performance and safety improvements.
+      C++11은 공식적으로 표준이고, 결국 대부분의 C++ 컴파일러가
+      지원하게 될것이다. 우리가 이미 사용하고 있는 공통 C++ 확장을 표준화했고,
+      some operations의 약칭을 허용하며(allows shorthands for some operations), 
+      성능과 안정성의 향상을 가져왔다.
     </PROS>
     <CONS>
       <p>
-        The C++11 standard is substantially more complex than its predecessor
-        (1,300 pages versus 800 pages), and is
-        unfamiliar to many developers.  The long-term effects of some
-        features on code readability and maintenance are unknown.  We cannot
-        predict when its various features will be implemented uniformly by
+        C++11 표준은 이전 표준에 비해 상당히 복잡하고(1,300 페이지 vs 800 페이지),
+        많은 개발자들에게 생소하다. 몇가지 기능에 대한 가독성과 유지보수에 대한 
+        장기적인 효과도 미지수이다. C++11의 다양한 기능이 툴에 언제 구현될것인지 
+        예측할 수 없다. 특히, 강제적으로 예전 버전의 툴을 사용하고 있는 프로젝트.
+        We cannot predict when its various features will be implemented uniformly by
         tools that may be of interest, particularly in the case of projects
         that are forced to use older versions of tools.
       </p>
       <p>
-        As with <a href="#Boost">Boost</a>, some C++11 extensions encourage
-        coding practices that hamper readability—for example by removing
-        checked redundancy (such as type names) that may be helpful to readers,
-        or by encouraging template metaprogramming.  Other extensions
-        duplicate functionality available through existing
-        mechanisms, which may lead to
-        confusion and conversion costs.
+        <a href="#Boost">Boost</a> 중에서 어떤 C++11 확장은 코드 가독성을 해치는 
+        코드를 만든다. 예를 들면 코드를 읽는 사람에게 유용할 수 있는 
+        checked redundancy(타입네임 같은)를 제거함으로써 혹은 템플릿 메타프로그래밍을 
+        장려함으로써. 어떤 확장은 기존 라이브러리가 제공하는 기능을 중복 제공해서
+        혼란과 변환 비용을 야기한다.
       </p>
       
     </CONS>
     <DECISION>
       <p>
-       C++11 features may be used unless specified otherwise. In addition to
-       what's described in the rest of the style guide, the following C++11
-       features may not be used:
+       아래 명시된 기능외에는 사용해도 된다. 이 문서의 다른 부분에서 추가적으로
+       사용이 금지된 기능을 언급할 수도 있다.
       </p>
       <ul>
         <li>
           Functions with trailing return types, e.g. writing
           <code>auto foo() -&gt; int;</code> instead of
-          <code>int foo();</code>, because of a desire to preserve
-          stylistic consistency with the many existing function
-          declarations.
-        </li>
-        
-        
-        
-        
-        
-        <li>
-          Compile-time rational numbers (<code>&lt;ratio&gt;</code>),
-          because of concerns that it's tied to a more template-heavy
-          interface style.
+          <code>int foo();</code>, 왜냐하면 기존의 많은 함수 선언과 
+          일관성을 유지하고 싶기 때문에.
         </li>
         <li>
-          The <code>&lt;cfenv&gt;</code> and <code>&lt;fenv.h&gt;</code>
-          headers, because many compilers do not support those
-          features reliably.
+          컴파일타임 rational numbers (<code>&lt;ratio&gt;</code>),
+          왜냐하면 비대한 템플릿 인터페이스 스타일과 엮일수 있는 우려 때문에.
+        </li>
+        <li>
+          <code>&lt;cfenv&gt;</code> 와 <code>&lt;fenv.h&gt;</code>
+          헤더, 왜냐하면 많은 컴파일러가 안정적으로 지원하지 않기때문에.
         </li>
         
         <li>
-          Lambda expressions, or the related <code>std::function</code> or
-          <code>std::bind</code> utilities.
+          람다 표현식과 혹은 그와 관련된<code>std::function</code>, 
+          <code>std::bind</code> 유틸리티.
         </li>
       </ul>
     </DECISION>
@@ -3121,66 +3056,54 @@ Tashana Landray
 
 </CATEGORY>
 
-<CATEGORY title="Naming">
+<CATEGORY title="네이밍">
   <p>
-    The most important consistency rules are those that govern
-    naming. The style of a name immediately informs us what sort of
-    thing the named entity is: a type, a variable, a function, a
-    constant, a macro, etc., without requiring us to search for the
-    declaration of that entity. The pattern-matching engine in our
-    brains relies a great deal on these naming rules.
-    
+    가장 중요한 일관성 규칙은 이름짓는 방법을 통제하는 것이다. 
+    이름의 스타일은 entity의 선언을 찾지 않아도 해당 entity가 타입인지, 변수인지,
+    함수인지, 상수인지, 혹은 매크로인지 바로 알 수 있게 한다. 우리 머리속의
+    패턴매칭 엔진은 이러한 네이밍 규칙에 상당히 의존한다.
   </p>
   <p>
-    Naming rules are pretty arbitrary, but
-    
-    we feel that consistency is more important than individual preferences
-    in this area, so regardless of whether you find them sensible or not,
-    the rules are the rules.
+    이름 짓는 규칙은 상당히 모호하지만, 일관성이 각각의 선호도보다 중요하다.
+    합리적이라 느끼던지 그렇지 않던지 규칙은 지켜져야 한다.
   </p>
 
-  <STYLEPOINT title="General Naming Rules">
+  <STYLEPOINT title="일반 네이밍 규칙">
     <SUMMARY>
-      Function names, variable names, and filenames should be
-      descriptive; eschew abbreviation.
+      함수이름, 변수이름, 파일이름은 약자를 피하고 상세하게(descriptive) 지어야한다.
     </SUMMARY>
     <BODY>
       <p>
-        Give as descriptive a name as possible, within reason. Do
-        not worry about saving horizontal space as it is far more
-        important to make your code immediately understandable by a
-        new reader. Do not use abbreviations that are ambiguous or
-        unfamiliar to readers outside your project, and do not
-        abbreviate by deleting letters within a word.
+        가능하면 상세한 이름을 사용하라. 짧은 이름보다 신입이 보기에도 
+        한번에 이해가 가능하게 만드는 것이 더 중요하다.
+        프로젝트에 관계되지 않은 사람이 보기에 익숙하지 않은 약자를 사용하지 말고,
+        중간 글자를 지워서 축약해도 안된다.
       </p>
       <CODE_SNIPPET>
-        int price_count_reader;    // No abbreviation.
-        int num_errors;            // "num" is a widespread convention.
-        int num_dns_connections;   // Most people know what "DNS" stands for.
+        int price_count_reader;    // 축약없음.
+        int num_errors;            // "num"은 누구나 이해가능.
+        int num_dns_connections;   // "DNS"도 누구나 이해가능.
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
-        int n;                     // Meaningless.
-        int nerr;                  // Ambiguous abbreviation.
-        int n_comp_conns;          // Ambiguous abbreviation.
-        int wgc_connections;       // Only your group knows what this stands for.
-        int pc_reader;             // Lots of things can be abbreviated "pc".
-        int cstmr_id;              // Deletes internal letters.
+        int n;                     // 의미없음.
+        int nerr;                  // 모호한 축약.
+        int n_comp_conns;          // 모호한 축약.
+        int wgc_connections;       // 팀 내부사람들만 아는 약어.
+        int pc_reader;             // "pc"는 다양한 의미가 있다.
+        int cstmr_id;              // 중간 단어를 지웠음.
       </BAD_CODE_SNIPPET>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="File Names">
+  <STYLEPOINT title="파일 이름">
     <SUMMARY>
-      Filenames should be all lowercase and can include underscores
-      (<code>_</code>) or dashes (<code>-</code>).  Follow the
-      convention that your
-      
-      project
-      uses. If there is no consistent local pattern to follow, prefer "_".
+      파일이름은 모두 소문자이어야 하고, 언더스코어 (<code>_</code>) 
+      혹은 대쉬 (<code>-</code>)를 포함할 수 있다. 반드시 언더스코어를 
+      사용할 필요는 없고, 프로젝트에서 사용하는 관례를 따른다.
     </SUMMARY>
     <BODY>
       <p>
-        Examples of acceptable file names:
+        사용가능한 파일이름:
       </p>
       <p>
         <code>
@@ -3191,28 +3114,22 @@ Tashana Landray
         </code>
       </p>
       <p>
-        C++ files should end in <code>.cc</code> and header files
-        should end in <code>.h</code>.
+        C++ 파일은 <code>.cc</code>으로 끝나고, 헤더 파일은
+        <code>.h</code>로 끝난다.
       </p>
       <p>
-        Do not use filenames that already exist
-        in <code>/usr/include</code>, such as <code>db.h</code>.
+        <code>db.h</code>와 같이 <code>/usr/include</code>에 존재하는 
+        파일이름은 사용금지.
       </p>
       <p>
-        In general, make your filenames very specific.  For example,
-        use <code>http_server_logs.h</code> rather
-        than <code>logs.h</code>.  A very common case is to have a
-        pair of files called, e.g., <code>foo_bar.h</code>
-        and <code>foo_bar.cc</code>, defining a class
-        called <code>FooBar</code>.
+        일반적으로 상세하게 짓는다. 예를 들면 <code>http_server_logs.h</code>가
+        <code>logs.h</code>보다 좋다. <code>FooBar</code> 클래스를 위한 파일이름은
+        <code>foo_bar.h</code>, <code>foo_bar.cc</code>.
       </p>
       <p>
-        Inline functions must be in a <code>.h</code> file. If your
-        inline functions are very short, they should go directly into your
-        <code>.h</code> file. However, if your inline functions
-        include a lot of code, they may go into a third file that
-        ends in <code>-inl.h</code>.  In a class with a lot of inline
-        code, your class could have three files:
+        인라인 함수는 <code>.h</code>에 있어야 한다. 인라인 함수의 코드가 
+        짧으면 <code>.h</code> 안에 들어가고, 길다면 <code>-inl.h</code>로 
+        가야한다. 클래스안에 많은 인라인 코드가 있다면 3개의 파일로 분리한다.
       </p>
       <CODE_SNIPPET>
         url_table.h      // The class declaration.
@@ -3220,7 +3137,7 @@ Tashana Landray
         url_table-inl.h  // Inline functions that include lots of code.
       </CODE_SNIPPET>
       <p>
-        See also the section <a href="#The_-inl.h_Files">-inl.h Files</a>
+        <a href="#The_-inl.h_Files">-inl.h Files</a> 섹션 참조.
       </p>
     </BODY>
   </STYLEPOINT>
