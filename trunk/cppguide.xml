@@ -4821,7 +4821,7 @@ Tashana Landray
              <code>__declspec(dllimport)</code>와 
              <code>__declspec(dllexport)</code>의 사용은 허용된다. 
              하지만 코드를 공유할 때 손쉽게 비활성화할 수 있도록 
-             <code>DLLIMPORT</code>와 </code>DLLEXPORT</code>와 같은 
+             <code>DLLIMPORT</code>와 <code>DLLEXPORT</code>와 같은 
              매크로를 통해 사용해야 한다.
              </li>
       </ul>
