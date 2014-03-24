@@ -3466,14 +3466,14 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Class Comments">
+  <STYLEPOINT title="클래스 주석">
     <SUMMARY>
-      Every class definition should have an accompanying comment that
-      describes what it is for and how it should be used.
+      모든 클래스 정의는 그것이 무엇이고 어떻게 사용하는 지 설명하는, 클래스에 
+      수반하는 주석을 가져야 한다.
     </SUMMARY>
     <BODY>
       <CODE_SNIPPET>
-        // Iterates over the contents of a GargantuanTable.  Sample usage:
+        // GargantuanTable의 내용을 이터레이트한다.  용례:
         //    GargantuanTableIterator* iter = table-&gt;NewIterator();
         //    for (iter-&gt;Seek("foo"); !iter-&gt;done(); iter-&gt;Next()) {
         //      process(iter-&gt;key(), iter-&gt;value());
@@ -3484,176 +3484,162 @@ Tashana Landray
         };
       </CODE_SNIPPET>
       <p>
-        If you have already described a class in detail in the
-        comments at the top of your file feel free to simply state
-        "See comment at top of file for a complete description", but
-        be sure to have some sort of comment.
+        당신이 파일 상단의 주석에서 세부 사항이 설명된 클래스를 가지고 있는 
+        경우, "전체 설명을 보기 위해서 파일 상단을 보라"고 부담 없이 적어라.
+        단 어떤 종류의 주석을 반드시 가져야 한다.
       </p>
       <p>
-        Document the synchronization assumptions the class makes, if
-        any.  If an instance of the class can be accessed by multiple
-        threads, take extra care to document the rules and invariants
-        surrounding multithreaded use.
+        클래스가 가정하고 있는 동기화 가정이 있는 경우 그것을 설명하라. 만약 
+        클래스의 인스턴스가 여러 개의 스레드에서 접근될 수 있는 경우, 멀티 
+        스레드 사용을 둘러싼 규칙과 변하지 않는 사항을 설명하는 데 특별히 
+        주의를 기울이라.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Function Comments">
+  <STYLEPOINT title="함수 주석">
     <SUMMARY>
-      Declaration comments describe use of the function; comments at
-      the definition of a function describe operation.
+      선언 주석은 함수의 사용을 설명한다; 함수 정의의 주석은 함수의 동작을 
+      설명한다.
     </SUMMARY>
     <BODY>
-      <SUBSECTION title="Function Declarations">
+      <SUBSECTION title="함수 선언">
         <p>
-          Every function declaration should have comments immediately
-          preceding it that describe what the function does and how to
-          use it.  These comments should be descriptive ("Opens the
-          file") rather than imperative ("Open the file"); the comment
-          describes the function, it does not tell the function what
-          to do.  In general, these comments do not describe how the
-          function performs its task.  Instead, that should be left to
-          comments in the function definition.
+          모든 함수 선언은 그 함수가 무엇이고 어떻게 사용하는지 설명하는, 바로 
+          직전에 위치한 주석을 가져야 한다. 이 주석은 명령문("파일을 열어라")이 
+          아니라 설명문("파일을 연다")이어야 한다; 주석은 함수를 설명하지만, 
+          함수가 무엇을 하는지는 말하지 않는다. 보통 이 주석은 함수가 어떻게 그 
+          작업을 수행하는지 설명하지 않는다. 대신 이 내용은 함수 정의의 주석에게
+          넘겨져야 한다.
         </p>
         <p>
-          Types of things to mention in comments at the function
-          declaration:
+          함수 선언의 주석에서 언급되어야 하는 것들의 유형은:
         </p>
         <ul>
-          <li> What the inputs and outputs are.
+          <li> 입력은 무엇이고 출력은 무엇인지.
                </li>
-          <li> For class member functions:  whether the object
-               remembers reference arguments beyond the
-               duration of the method call, and whether it will
-               free them or not.
+          <li> 클래스 멤버 함수의 경우: 객체가 레퍼런스 인자를 메서드 호출이 
+               끝난 후에도 기억하는지, 객체가 레퍼런스 인자를 해제하는지,
+               해제하지 않는지. 
                </li>
-          <li> If the function allocates memory that the caller
-               must free.
+          <li> 함수가 메모리를 할당하는 경우, 호출자가 해제해야 하는지.
                </li>
-          <li> Whether any of the arguments can be a null pointer.
+          <li> 인자 중 어떤 것이 null 포인터일 수 있는지.
                </li>
-          <li> If there are any performance implications of how a
-               function is used.
+          <li> 함수가 사용에 있어 어떤 성능 상의 영향이 있는 경우.
                </li>
-          <li> If the function is re-entrant.  What are its
-               synchronization assumptions?
+          <li> re-entrant한 함수의 경우 동기화에 대한 가정이 무엇인가?
                </li>
         </ul>
         <p>
-          Here is an example:
+          예제는 아래와 같다:
         </p>
         <CODE_SNIPPET>
-          // Returns an iterator for this table.  It is the client's
-          // responsibility to delete the iterator when it is done with it,
-          // and it must not use the iterator once the GargantuanTable object
-          // on which the iterator was created has been deleted.
+          // 이 테이블에 대한 이터레이터를 반환한다. 사용이 끝난 후 이터레이터를
+          // 삭제하는 것은 클라이언트의 책임이며, 이터레이터가 만들어진 
+          // GargantuanTable 객체가 삭제된 후 이터레이터를 사용하면 안 된다.
           //
-          // The iterator is initially positioned at the beginning of the table.
+          // 이터레이터는 최초에 테이블의 시작에 위치한다.
           //
-          // This method is equivalent to:
+          // 이 메서는 아래와 동일하다:
           //    Iterator* iter = table-&gt;NewIterator();
           //    iter-&gt;Seek("");
           //    return iter;
-          // If you are going to immediately seek to another place in the
-          // returned iterator, it will be faster to use NewIterator()
-          // and avoid the extra seek.
+          // 반환된 이터레이터와 다른 장소를 즉시 찾고자 하는 경우, 
+          // NewIterator()를 사용하면 더 빠르고 추가로 검색이 일어나지 않는다. 
           Iterator* GetIterator() const;
         </CODE_SNIPPET>
         <p>
-          However, do not be unnecessarily verbose or state the
-          completely obvious.  Notice below that it is not necessary
-          to say "returns false otherwise" because this is implied.
+          하지만 필요 이상으로 자세하거나 완벽하게 명백하도록 서술하지 말라. 
+          아래에서 "그렇지 않은 경우 false를 반환한다"고 말하는 것은 이미 함축된
+          것이기에 불필요하다는 점에 주목하라.
         </p>
         <CODE_SNIPPET>
-          // Returns true if the table cannot hold any more entries.
+          // 테이블이 더 이상 엔트리를 가질 수 없을 때 true를 반환한다.
           bool IsTableFull();
         </CODE_SNIPPET>
         <p>
-          When commenting constructors and destructors, remember that
-          the person reading your code knows what constructors and
-          destructors are for, so comments that just say something like
-          "destroys this object" are not useful.  Document what
-          constructors do with their arguments (for example, if they
-          take ownership of pointers), and what cleanup the destructor
-          does.  If this is trivial, just skip the comment.  It is
-          quite common for destructors not to have a header comment.
+          생성자와 소멸자에 주석을 달 때, 당신의 코드를 읽는 사람은 생성자와 
+          소멸자가 무엇을 위한 것인지 알고 있음을 기억하라. 그러므로 단지 "이 
+          객체를 소멸시킨다" 따위의 것을 쓰는 것은 쓸모가 없다. 생성자가 그의 
+          인자로 무엇을 하는지 설명하고 (예를 들면 그들이 포인터의 소유권을 
+          가지는 경우), 소멸자가 무엇을 해제하는 지 설명하라. 설명이 사소한 경우
+          그냥 주석을 생략하라. 소멸자가 선행하는 주석을 가지지 않는 경우는 
+          상당히 흔하다. 
         </p>
       </SUBSECTION>
 
-      <SUBSECTION title="Function Definitions">
+      <SUBSECTION title="함수 정의">
         <p>
-          If there is anything tricky about how a function does its
-          job, the function definition should have an explanatory
-          comment. For example, in the definition comment you might
-          describe any coding tricks you use, give an overview of the
-          steps you go through, or explain why you chose to implement
-          the function in the way you did rather than using a viable
-          alternative.  For instance, you might mention why it must
-          acquire a lock for the first half of the function but why it
-          is not needed for the second half.
+          함수가 작업을 수행하는 방법 상 까다로운 부분이 있는 경우, 함수 정의가 
+          설명하는 주석을 가져야 한다. 예를 들면, 당신이 사용하는 코딩 비결을 
+          설명하거나, 당신이 통과하고 있는 단계에 대한 개요를 제시하거나, 왜 
+          가능한 다른 대안을 사용하지 않고 당신이 한 방식으로 함수를 구현했는지 
+          함수 정의에서 설명할 수 있다. 예를 들면 함수의 전반부에 lock을
+          획득하는 이유와 후반부에서 lock이 필요없는 이유를 언급할 수 있다.
         </p>
         <p>
-          Note you should <em>not</em> just repeat the comments given
-          with the function declaration, in the <code>.h</code> file or
-          wherever.  It's okay to recapitulate briefly what the function
-          does, but the focus of the comments should be on how it does it.
+          <code>.h</code> 파일이나 혹은 어딘가에 있을, 함수 선언의 주석을 단지 
+          반복하지 <em>않아야</em> 하는 데 주목하라. 함수가 무엇을 하는지 
+          요약하여 요점을 되풀이하는 것은 문제없으나, 주석의 요점은 함수가 
+          그것을 어떻게 하느냐의 방법이어야 한다.
         </p>
       </SUBSECTION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Variable Comments">
+  <STYLEPOINT title="변수 주석">
     <SUMMARY>
-      In general the actual name of the variable should be descriptive
-      enough to give a good idea of what the variable is used for.  In
-      certain cases, more comments are required.
+      일반적으로 변수의 실제 이름은 그 변수가 무엇을 위한 것인지 알아채기 쉽도록
+      설명적이어야 한다. 어떤 경우에는 더 많은 주석이 필요하다. 
     </SUMMARY>
     <BODY>
-      <SUBSECTION title="Class Data Members">
+      <SUBSECTION title="클래스 데이터 멤버">
         <p>
-          Each class data member (also called an instance variable or
-          member variable) should have a comment describing what it is
-          used for.  If the variable can take sentinel values with
-          special meanings, such as a null pointer or -1, document this.
-          For example:
+          (인스탄스 변수나 멤버 변수라고도 불리는) 각각의 클래스 데이터 멤버는 
+          그것이 무엇을 위한 것인지 설명하는 주석을 가져야 한다. 만약 변수가 
+          null 포인터나 -1과 같은, 특별한 의미를 가지는 표식 값을 가질 수 있는
+          경우 이를 설명해야 한다.
+          예를 들면: 
         </p>
         <CODE_SNIPPET>
           private:
-           // Keeps track of the total number of entries in the table.
-           // Used to ensure we do not go over the limit. -1 means
-           // that we don't yet know how many entries the table has.
+           // 테이블에 있는 엔트리의 총 개수를 기록한다. 
+           // 한계를 넘지 않도록 보장하는 데 사용된다. -1은 테이블에 얼마나 많은 
+           // 엔트리가 들어있는지 아직 알지 못하는 경우를 의미한다.
            int num_total_entries_;
         </CODE_SNIPPET>
       </SUBSECTION>
 
-      <SUBSECTION title="Global Variables">
+      <SUBSECTION title="전역 변수">
         <p>
-          As with data members, all global variables should have a
-          comment describing what they are and what they are used for.
-          For example:
+          데이터 멤버와 마찬가지로, 모든 전역 변수는 그것이 무엇이며 어디에 
+          사용되는지 설명하는 주석을 가져야 한다.
+          예를 들면:
         </p>
         <CODE_SNIPPET>
-          // The total number of tests cases that we run through in this regression test.
+          // 이 회귀 테스트에서 통과한 테스트 케이스의 총 개수
           const int kNumTestCases = 6;
         </CODE_SNIPPET>
       </SUBSECTION>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Implementation Comments">
+  <STYLEPOINT title="구현 주석">
     <SUMMARY>
-      In your implementation you should have comments in tricky,
-      non-obvious, interesting, or important parts of your code.
+      당신의 구현에서 까다롭거나, 명백하지 않거나, 흥미롭거나, 중요한 부분은 
+      주석을 가져야 한다. 
     </SUMMARY>
     <BODY>
-      <SUBSECTION title="Class Data Members">
+      <SUBSECTION title="클래스 데이터 멤버">
         <p>
-          Tricky or complicated code blocks should have comments
-          before them. Example:
+          까다롭거나 복잡한 코드 부분은 그들 앞에 주석을 가져야 한다. 예를 들면:
         </p>
         <CODE_SNIPPET>
-          // Divide result by two, taking into account that x
-          // contains the carry from the add.
+          // 덧셈에서 생긴 carry를 고려하여 결과를 2로 나눈다.
+          // (역자 주: 큰 숫자를 2로 나누는 알고리즘으로 나눗셈을 비트 연산으로 
+          // 처리하되 나눠지지 않는 큰 숫자의 나머지를 carry로 보아 다음 
+          // 나눗셈에 해당하는 비트 연산으로 전달하는 코드다.)
           for (int i = 0; i &lt; result-&gt;size(); i++) {
             x = (x &lt;&lt; 8) + (*result)[i];
             (*result)[i] = x &gt;&gt; 1;
@@ -3661,62 +3647,60 @@ Tashana Landray
           }
         </CODE_SNIPPET>
       </SUBSECTION>
-      <SUBSECTION title="Line Comments">
+      <SUBSECTION title="줄 주석">
         <p>
-          Also, lines that are non-obvious should get a comment at the
-          end of the line. These end-of-line comments should be
-          separated from the code by 2 spaces.  Example:
+          또한 명백하지 않은 부분도 줄 끝에 주석을 가져야 한다. 이러한 줄 끝 
+          주석은 2 스페이스 문자로 코드에서 분리되어야 한다. 예:  
         </p>
         <CODE_SNIPPET>
-          // If we have enough memory, mmap the data portion too.
+          // 충분한 메모리가 있는 경우, 데이터 부분도 mmap으로 처리한다.
           mmap_budget = max&lt;int64&gt;(0, mmap_budget - index_-&gt;length());
           if (mmap_budget &gt;= data_size_ &amp;&amp; !MmapData(mmap_chunk_bytes, mlock))
-            return;  // Error already logged.
+            return;  // 오류는 이미 로그에 기록되었다.
         </CODE_SNIPPET>
         <p>
-          Note that there are both comments that describe what the
-          code is doing, and comments that mention that an error has
-          already been logged when the function returns.
+          코드가 무엇을 하고 있는지 설명하는 주석과 함수가 리턴할 때 오류가 이미
+          로그에 기록되었음을 언급하는 주석이 모두 있음에 주목하라.
         </p>
         <p>
-          If you have several comments on subsequent lines, it can
-          often be more readable to line them up:
+          다음 줄에 여러 주석이 있는 경우, 종종 이들을 일렬로 세우는 것이 더 
+          읽기 쉬울 수 있다: 
         </p>
         <CODE_SNIPPET>
-          DoSomething();                  // Comment here so the comments line up.
-          DoSomethingElseThatIsLonger();  // Comment here so there are two spaces between
-                                          // the code and the comment.
-          { // One space before comment when opening a new scope is allowed,
-            // thus the comment lines up with the following comments and code.
-            DoSomethingElse();  // Two spaces before line comments normally.
+          DoSomething();                  // 주석을 일렬로 세우기 위해 여기에 주석을 둔다.
+          DoSomethingElseThatIsLonger();  // 코드와 주석 사이에 두 스페이스가 있기 때문에
+                                          // 여기에 주석을 둔다.
+          { // 새 범위가 시작될 경우 주석 앞에 스페이스를 하나 두는 것이 허용되고,
+            // 이에 따라 따라오는 주석과 코드에 일렬로 세워진다.
+            DoSomethingElse();  // 줄 주석의 앞에는 보통 두 개의 스페이스
           }
-          DoSomething(); /* For trailing block comments, one space is fine. */
+          DoSomething(); /* 뒤따르는 블럭 주석에는 하나의 스페이스면 충분하다. */
         </CODE_SNIPPET>
       </SUBSECTION>
       <SUBSECTION title="nullptr/NULL, true/false, 1, 2, 3...">
         <p>
-          When you pass in a null pointer, boolean, or literal integer
-          values to functions, you should consider adding a comment about
-          what they are, or make your code self-documenting by using
-          constants. For example, compare:
+          null 포인터나 불리언 혹은 문자로 된 숫자 값을 함수에 전달할 때, 당신은
+          그것들이 무엇인지 에 관해 주석을 추가하는 것을 고려하거나, 상수를 
+          사용하여 당신의 코드가 스스로 설명될 수 있게 만들어야 한다. 예를 
+          들자면 아래를 비교해보라: 
         </p>
         <BAD_CODE_SNIPPET>
           bool success = CalculateSomething(interesting_value,
                                             10,
                                             false,
-                                            NULL);  // What are these arguments??
+                                            NULL);  // 이 인자들은 무엇일까?
         </BAD_CODE_SNIPPET>
         <p>
-          versus:
+          대:
         </p>
         <CODE_SNIPPET>
           bool success = CalculateSomething(interesting_value,
-                                            10,     // Default base value.
-                                            false,  // Not the first time we're calling this.
-                                            NULL);  // No callback.
+                                            10,     // 디폴트 기본값.
+                                            false,  // 호출이 최초가 아님.
+                                            NULL);  // 콜백 없음.
         </CODE_SNIPPET>
         <p>
-          Or alternatively, constants or self-describing variables:
+          그렇지 않다면, 스스로 설명할 수 있는 변수나 상수들:
         </p>
         <CODE_SNIPPET>
           const int kDefaultBaseValue = 10;
@@ -3729,17 +3713,15 @@ Tashana Landray
         </CODE_SNIPPET>
       </SUBSECTION>
 
-      <SUBSECTION title="Don'ts">
+      <SUBSECTION title="하지 말 것">
         <p>
-          Note that you should <em>never</em> describe the code
-          itself. Assume that the person reading the code knows C++
-          better than you do, even though he or she does not know what
-          you are trying to do:
+          <em>절대로</em> 코드 그 자체를 설명하지 말아야 한다는 데 주목하라.
+          코드를 읽는 사람이 당신이 하려고 하는 것을 모름에도 불구하고 당신보다
+          C++을 더 잘 알고 있다고 가정하라:
         </p>
         <BAD_CODE_SNIPPET>
-           // Now go through the b array and make sure that if i occurs,
-           // the next element is i+1.
-           ...        // Geez.  What a useless comment.
+           // 이제 b 배열을 통과하는데 만약 i가 있다면 다음 요소는 i+1임이 확실하다.
+           ...        // 이런, 이 얼마나 쓸데없는 주석인가.
         </BAD_CODE_SNIPPET>
       </SUBSECTION>
     </BODY>
