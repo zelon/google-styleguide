@@ -3727,98 +3727,83 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Punctuation, Spelling and Grammar">
+  <STYLEPOINT title="구두점, 철자, 문법">
     <SUMMARY>
-      Pay attention to punctuation, spelling, and grammar; it is
-      easier to read well-written comments than badly written ones.
+      구두점, 철자, 문법에 주의하여 쓰라. 구두점, 철자, 문법이 제대로 
+      사용된 주석이 이해하기 쉽다.
     </SUMMARY>
     <BODY>
       <p>
-        Comments should be as readable as narrative text, with proper
-        capitalization and punctuation. In many cases, complete sentences are
-        more readable than sentence fragments. Shorter comments, such as
-        comments at the end of a line of code, can sometimes be less formal, but
-        you should be consistent with your style.
+        주석은 일반적인 문장과 마찬가지로 읽기가 쉬워야하고, 적절한 대소문자와
+        구두점이 사용되어야 한다. 대부분의 경우 완전한 문장이 파편화된 문장에 비해 
+        이해하기가 쉽다. 코드 라인의 끝에 사용되는 주석은 격식을 갖추지 
+        못할 수도 있지만 일관성은 있어야 한다.
       </p>
       <p>
-        Although it can be frustrating to have a code reviewer point
-        out that you are using a comma when you should be using a
-        semicolon, it is very important that source code maintain a
-        high level of clarity and readability.  Proper punctuation,
-        spelling, and grammar help with that goal.
+        코드 리뷰어가 당신이 세미콜론을 사용해야 할 자리에 콤마를 사용했다고
+        지적하는 현실에 좌절할 수도 있지만, 소스코드는 높은 수준의 명확함과 
+        가독성을 유지해야 한다. 올바른 구두점, 철자, 문법의 사용은 
+        그 목표를 달성하는데 도움을 준다.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="TODO Comments">
+  <STYLEPOINT title="TODO 주석">
     <SUMMARY>
-      Use <code>TODO</code> comments for code that is temporary, a
-      short-term solution, or good-enough but not perfect.
+      <code>TODO</code> 주석은 임시적이고, 단기적인 혹은 완벽하지는 
+      않지만 적당한 해결책이다.
     </SUMMARY>
     <BODY>
       <p>
-        <code>TODO</code>s should include the string <code>TODO</code> in
-        all caps, followed by the
-        
-        name, e-mail address, or other
-        identifier
-        of the person who can best provide context about the problem
-        referenced by the <code>TODO</code>.  A colon is optional.  The main
-        purpose is to have a consistent <code>TODO</code> format that can be
-        searched to find the person who can provide more details upon request.
-        A <code>TODO</code> is not a commitment that the person referenced
-        will fix the problem.  Thus when you create a <code>TODO</code>, it is
-        almost always your
-        
-        name
-        that is given.
+        <code>TODO</code> 주석은 <code>TODO</code>를 모두 대문자 문자열로
+        시작해야 하며, 이름, 이메일 혹은 다른 종류의 작성자를 판별할 수 있는
+        방법을 제공하여 문제점을 문의 할 수 있도록 해야 한다. 콜론은 선택적으로 
+        사용할 수 있다. 일관성 있는 <code>TODO</code> 포맷을 사용하는 목적은 
+        올바른 상황 설명을 해줄 수 있는 사람을 찾기 위함이다. <code>TODO</code> 
+        주석은 작성자가 그 문제를 고친다는 약속은 아니다. 그러므로 
+        <code>TODO</code> 주석에 언제나 이름을 남겨라.
       </p>
       
       <CODE_SNIPPET>
-        // TODO(kl@gmail.com): Use a "*" here for concatenation operator.
+        // TODO(kl@gmail.com): 연결 연산자를 위해 "*"를 사용하라.
         // TODO(Zeke) change this to use relations.
       </CODE_SNIPPET>
       <p>
-        If your <code>TODO</code> is of the form "At a future date do
-        something" make sure that you either include a very specific
-        date ("Fix by November 2005") or a very specific event
-        ("Remove this code when all clients can handle XML responses.").
+        <code>TODO</code> 주석의 형태가 "미래에 무엇을 한다"라면, 
+        상세한 날짜(2005년 11월까지 수정되어야 함)를 남기거나,
+        상세한 이벤트(모든 클라이언트가 XML응답을 할 수 있게 되면 삭제)를 남겨라.
       </p>
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="Deprecation Comments">
+  <STYLEPOINT title="Deprecation 주석">
     <SUMMARY>
-      Mark deprecated interface points with <code>DEPRECATED</code> comments.
+      deprecated된 인터페이스는 <code>DEPRECATED</code> 주석으로 표시해둔다.
     </SUMMARY>
     <BODY>
       <p>
-      You can mark an interface as deprecated by writing a comment containing
-      the word <code>DEPRECATED</code> in all caps.  The comment goes either
-      before the declaration of the interface or on the same line as the
-      declaration.
+      <code>DEPRECATED</code> 를 모두 대문자로 쓴 주석을 사용하여 
+      deprecated된 인터페이스를 표시할 수 있다. 주석은 인터페이스가 선언된 
+      윗 라인이나 같은 라인에 쓰면 된다.
       </p>
       
       <p>
-      After the word <code>DEPRECATED</code>, write your name, e-mail address,
-      or other identifier in parentheses.
+      <code>DEPRECATED</code> 뒤에 이름, 이메일 혹은 다른 식별자를 괄호 안에 쓴다.
       </p>
       <p>
-      A deprecation comment must include simple, clear directions for people to
-      fix their callsites.  In C++, you can implement a deprecated function as
-      an inline function that calls the new interface point.
+      DEPRECATED 주석은 호출측의 문제점을 수정할 수 있도록 간결하고 명확하게 
+      작성하여야 한다. C++에서는 DEPRECATED 함수를 새로운 인터페이스를 호출하도록
+      인라인 함수로 구현할 수 있다.
       </p>
       <p>
-      Marking an interface point <code>DEPRECATED</code> will not magically
-      cause any callsites to change.  If you want people to actually stop using
-      the deprecated facility, you will have to fix the callsites yourself or
-      recruit a crew to help you.
+      <code>DEPRECATED</code> 주석을 표시한다고 해서 호출측의 문제가 자동으로 
+      수정되는 것은 아니다. 호출측의 코드를 직접 수정하거나 다른 사람을 
+      시켜서 deprecated 인터페이스를 사용하지 않도록 조치를 취해야 한다.
       </p>
       <p>
-      New code should not contain calls to deprecated interface points.  Use
-      the new interface point instead.  If you cannot understand the
-      directions, find the person who created the deprecation and ask them for
-      help using the new interface point.
+      새로 작성한 코드는 deprecated 인터페이스를 사용하지 말고, 새로운 인터페이스를 
+      사용해야 한다. deprecated된 인터페이스를 대체할 인터페이스를 모를 경우에는 
+      deprecation를 작성한 사람에게 새로운 인터페이스를 문의해서 사용해야 한다.
       </p>
       
     </BODY>
@@ -3828,23 +3813,17 @@ Tashana Landray
 
 <CATEGORY title="Formatting">
   <p>
-    Coding style and formatting are pretty arbitrary, but a
-    
-    project
-    is much easier to follow if everyone uses the same style. Individuals
-    may not agree with every aspect of the formatting rules, and some of
-    the rules may take some getting used to, but it is important that all
-    
-    project contributors
-    follow the style rules so that
-    
-    they
-    can all read and understand everyone's code easily.
+    코딩 스타일과 포매팅은 제멋대로인 경우가 많지만, 모두가 통일된 
+    스타일을 쓰면 프로젝트를 파악하기가 훨씬 쉬워진다. 개개인이 모든 
+    포매팅 규칙을 다 동의하기는 어렵고, 어떤 규칙은 익숙해지는데 
+    시간이 걸리지만, 프로젝트의 구성원들이 규칙을 따라서 다른 사람의 코드를
+    쉽게 이해하도록 하는 것은 중요하다.
   </p>
   
   <p>
-    To help you format code correctly, we've created a <A HREF="http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el">settings
-    file for emacs</A>.
+    코드를 형식에 맞게 작성하는 것을 돕기 위해 
+    <A HREF="http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el">emacs 설정파일</A>
+    을 만들었다.
   </p>
 
   <STYLEPOINT title="줄 길이">
