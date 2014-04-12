@@ -1827,7 +1827,7 @@ Tashana Landray
 
   <STYLEPOINT title="Friends">
     <SUMMARY>
-      <code>friend</code> 클래스와 함수들을 적절하게 사용한다.
+      합당한 선에서 <code>friend</code> 클래스와 함수들을 사용한다.
     </SUMMARY>
     <BODY>
       <p>
@@ -1905,7 +1905,7 @@ Tashana Landray
               컴파일 시간(아마도 작겠지만)과 주소 공간의 부담을 증가시킨다.</li>
 
           <li>예외사용이 가능하다면, 개발자는 적절치 않은 예외를 던지거나,
-              안전하지 않은 복구를 하게될 수 도 있다. 예를 들어, 유효하지 않은 사용자
+              안전하지 않은 복구를 하게될 수도 있다. 예를 들어, 유효하지 않은 사용자
               입력은 예외를 발생시키지 않아야 한다. 이런 제약조건을 추가하다보면
               이 문서가 더 길어질 것이다.</li>
         </ul>
@@ -2107,7 +2107,8 @@ Tashana Landray
       </PROS>
       <CONS>
         스트림은 <code>pread()</code> 같은 기능적인 동작을 만들기를 어렵게 한다.
-        **(특히 일반적인 문자열 관용 포맷 <code>%.*s</code>같은) 어떤 포맷팅은 <code>printf</code>같은 기법없이 스트림을 효과적으로 사용하는 것이 불가능하다면 어렵다.
+        특히, <code>%.*s</code>와 같은 문자열 포매팅은 <code>printf</code>와
+        비슷한 교묘한 방법(hack)없이 스트림으로 효과적으로 처리하기가 불가능하거나 어렵다.
         스트림은 국제화에 유용한 (<code>%1s</code> 지시자 같은) 연산자 재정렬을 지원하지 않는다.
       </CONS>
       <DECISION>
@@ -2163,9 +2164,9 @@ Tashana Landray
           </CODE_SNIPPET>
           <p>
             추가적인 논쟁이 계속 나올 수 있다.
-            ("적절한 래퍼(wrapper)로 더 나아지지 않을까"라고 논의할 수 있지만,
-            하나의 형태(scheme)에만 가능하다면, 또 다른 것에는 여전히
-            가능하지 않은 것이 아닌가? 또한, 목표는 다른 사람이 배워야할 장치들을
+            ("적절한 래퍼(wrapper)로 더 나아지지 않을까"라고 반문할 수 있지만,
+            그것이 하나의 선택지에 참(true)이라면, 또 다른 선택지에서는 과연 거짓일까?)
+            또한, 목표는 다른 사람이 배워야 할 문법을
             추가하는 것이 아니라 언어를 더 작게 만드는 것임을 기억해라.)
           </p>
           <p>
@@ -2189,11 +2190,6 @@ Tashana Landray
         감소되고 (<code>--i</code> 나 <code>i--</code>) 나서
         표현식의 값이 사용되지 않을 때, 전위 증가 (감소) 혹은 후위 증가 (감소)
         가 반드시 결정되어야 한다.
-        When a variable is incremented (<code>++i</code> or
-        <code>i++</code>) or decremented (<code>--i</code> or
-        <code>i--</code>) and the value of the expression is not used,
-        one must decide whether to preincrement (decrement) or
-        postincrement (decrement).
       </DEFINITION>
       <PROS>
         리턴값이 무시될 때, "접두 형태" (<code>++i</code>) 는 절대 "접미 형태"
@@ -2207,8 +2203,8 @@ Tashana Landray
       <CONS>
         특히 <code>for</code> 에서처럼, 표현값이 쓰이지 않을 때 C 에서의
         전통적인 개발에서 후위 증가를 사용했다.
-        누군가 영어의 경우 "주어"(<code>i</code>)가 "동사"(<code>++</code>)보다
-        먼저 나오기 때문에 후위 증가가 읽기 편하다는 것을 발견했다.
+        영어와 같이 주어(<code>i</code>)가 동사(<code>++</code>)보다 먼저
+        나오기 때문에 후위 증가가 읽기 편하다는 사람도 있다.
       </CONS>
       <DECISION>
         간단한 스칼라 (비-객체) 값들에서는 하나의 형식을 선호할 이유가
@@ -2285,11 +2281,10 @@ Tashana Landray
           그들은 보다 일관적이기 때문에 이것이 더 읽기 쉽다고 주장한다.
           이것은 <code>const</code> 가 항상 기술하는 객체를 따르는
           규칙을 유지한다.
-          그러나, 이 일관성 주장은, <code>const</code> 표현식 대부분은
-          단지 하나의 <code>const</code>를 가지고, **밑에 있는 값에
-          적용되기 때문에, 거의 깊게 중첩되지 않는 포인터 표현식을 가지는
-          코드에는 적용되지 않는다.
-          이런 경우들에, 유지할 일관성은 없다.
+          그러나 이 일관성 주장은, 간혹 볼 수 있는 깊게 충첩된 포인터 표현식에 
+          적용되지 않는다. <code>const</code> 표현식 대부분은 단 하나의
+          <const>const</const>를 가지며, 상수 속성이 중첩의 바로 밑 단계에
+          적용되기 때문이다. 이런 경우들에, 유지할 일관성은 없다.
           "형용사"(<code>const</code>) 가 "명사" (<code>int</code>)보다
           앞에 있는 것이 영어를 따르기 때문에 <code>const</code>를
           먼저 위치하는 것은 아마 좀 더 가독성있을 것이다.
@@ -2520,13 +2515,13 @@ Tashana Landray
             </TBODY>
           </table>
           <p>
-            <code>PRI*</code> 매크로는 컴파일러가 연결한 독립 문자열을 
-            확장한다. 비상수 포맷 문자열을 사용한다면 이름을 넣는 것보다는 
-            매크로 값을 포맷에 넣는 것이 좋다. 일반적으로 <code>PRI*</code> 
-            매크로를 사용할 때, <code>%</code>뒤에 길이 지정자 등을 넣는 것은 
+            <code>PRI*</code> 매크로는 컴파일러가 연결해주는 개별 문자열들로
+            확장된다. 비상수 포맷 문자열을 사용한다면 매크로 값을 이름에 넣는 것보다
+            포맷에 넣는 것이 좋다. 일반적으로 <code>PRI*</code>
+            매크로를 사용할 때, <code>%</code>뒤에 길이 지정자 등을 넣는 것은
             여전히 가능하다. 예를 들면 <code>printf("x = %30"PRIuS"\n", x)</code>
-            는 32비트 리눅스에서 <code>printf("x = %30" "u" "\n", x)</code>으로 
-            확장될 것이고, 컴파일러는 <code>printf("x = %30u\n", x)</code>로 
+            는 32비트 리눅스에서 <code>printf("x = %30" "u" "\n", x)</code>으로
+            확장될 것이고, 컴파일러는 <code>printf("x = %30u\n", x)</code>로
             간주할 것이다.
           </p>
           
@@ -2567,12 +2562,13 @@ Tashana Landray
   <STYLEPOINT title="프리프로세서 매크로">
     <SUMMARY>
       매크로는 매우 주의해서 사용하라. 매크로보다는 인라인 함수, 열거형, 
-      <code>const</code> 변수를 사용하라.
+      <code>const</code> 변수를 선호하라.
     </SUMMARY>
     <BODY>
       <p>
         매크로는 프로그래머가 보는 코드와 컴파일러가 보는 코드를 다르게 만든다.
-        특히 전역으로 사용되었을때, 예상치 못한 결과를 초래할 수 있다.
+        특히, 매크로는 전역 범위(scope)를 가지기 때문에,
+        예상치 못한 결과를 초래할 수 있다.
       </p>
       <p>
         다행스럽게도 C++에서는 C와는 달리 매크로의 사용이 필수가 아니다. 
@@ -2737,7 +2733,8 @@ Tashana Landray
       </p>
 
       <p><code>auto</code> 변수가 인터페이스에 선언되어 있다면(예를 들어 헤더의 상수로), 
-        타입을 변경하는 것이 좋습니다.</p>
+        프로그래머가 그 값을 바꾸려 했는데 타입이 바뀌어 버리면서 API가 근본적으로
+        변해버릴 수 있다.</p>
     </CONS>
     <DECISION>
       <p><code>auto</code>는 지역변수로만 사용해야 한다. 파일 범위나 네임스페이스 범위에서 
@@ -2747,11 +2744,6 @@ Tashana Landray
       <p><code>auto</code> 키워드는 C++11 의 기능 중 하나인
       "후속 리턴타입(trailing return types)"의 문법에 사용된다. 후속 리턴타입은 
       사용을 허용하지 않는다.</p>
-      
-      <p>The <code>auto</code> keyword is also used in an unrelated
-        C++11 feature: it's part of the syntax for a new kind of
-        function declaration with a trailing return type. Function
-        declarations with trailing return types are not permitted.</p>
     </DECISION>
   </BODY>
   </STYLEPOINT>
@@ -2991,7 +2983,7 @@ Tashana Landray
     <PROS>
       C++11은 공식적으로 표준이고, 결국 대부분의 C++ 컴파일러가
       지원하게 될것이다. 우리가 이미 사용하고 있는 공통 C++ 확장을 표준화했고,
-      some operations의 약칭을 허용하며(allows shorthands for some operations), 
+      일부 연산의 약칭(shorthands)을 허용하며,
       성능과 안정성의 향상을 가져왔다.
     </PROS>
     <CONS>
