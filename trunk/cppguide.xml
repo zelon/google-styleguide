@@ -1850,7 +1850,7 @@ Tashana Landray
       <PROS>
         <ul>
           <li>예외를 통해, 어플리케이션의 고수준 코드는 깊게 중첩된 함수의
-            일어나기 힘든 실패를 다루는 법을 크드를 더럽히거나 에러코드를 기록하지
+            일어나기 힘든 실패를 다루는 법을 코드를 더럽히거나 에러코드를 기록하지
             않고도 결정할 수 있다.</li>
 
           <li>예외는 대부분의 다른 현대 언어들에서 사용된다.
@@ -2054,7 +2054,7 @@ Tashana Landray
         C 형변환의 문제점은 연산이 모호하다는 것이다. 
         가끔은 (<code>(int)3.5</code>와 같은) <em>conversion</em> 을 하고
         가끔은 (<code>(int)"hello"</code>와 같은) <em>cast</em> 을 한다.
-        C++ 형변환는 이것을 방지한다. 게다가 C++ 형변환는 검색하기도
+        C++ 형변환은 이것을 방지한다. 게다가 C++ 형변환은 검색하기도
         좋다.
       </PROS>
       <CONS>
@@ -2181,7 +2181,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        변수의 값이 증가하거나(<code>++i</code> 또는 <code>i++</code>i)
+        변수의 값이 증가하거나(<code>++i</code> 또는 <code>i++</code>)
         감소하며(<code>--i</code> 또는 <code>i--</code>), 표현식의 결과값이 
         쓰이지 않는다면, 전위 증가(감소)와 후위 증가(감소) 중에 택해야 한다.
       </DEFINITION>
