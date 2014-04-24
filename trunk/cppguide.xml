@@ -73,7 +73,7 @@ Tashana Landray
     구글에서 개발된 오픈 소스 프로젝트는 이 가이드의 요구사항을 따른다.
   </p>
   <p>
-    이 가이드는 C++ 튜토리얼이 아니다: 우리는 독자가 이 언어에 친숙하다고 
+    이 가이드는 C++ 튜토리얼이 아니다. 우리는 독자가 이 언어에 친숙하다고 
     가정한다.
   </p>
 </CATEGORY>
@@ -105,7 +105,7 @@ Tashana Landray
         유일성을 보장하기 위해 <code>#define</code> 가드는 프로젝트의 소스 
         트리의 절대 경로에 기반해야 한다. 예를 들어 프로젝트에
         <code>foo/src/bar/baz.h</code> 파일이 있다면 <code>foo</code>는 
-        아래와 같은 가드를 가져야 한다:
+        아래와 같은 가드를 가져야 한다.
       </p>
       <CODE_SNIPPET>
          #ifndef FOO_BAR_BAZ_H_
@@ -150,7 +150,7 @@ Tashana Landray
           <code>#include</code>하는 것보다 장황해질 수 있다.</li>
           <li>함수나 템플릿의 전방 선언은 헤더의 주인이 자신의 API에 다른 
           경우에는 호환되는 변경조차 하지 못하게 만들 수 있다. 예를 들어 인자 
-          타입을 더 넓은 타입으로 바꾼다거나, 템플릿 인자에 디폴트 값 등을 
+          타입을 더 넓은 타입으로 바꾼다거나, 디폴트 값이 있는 템플릿 인자를 
           추가하는 것 등이 그렇다.</li>
           <li><code>std::</code> 네임스페이스의 기호를 전방 선언하면 보통 
           예상할 수 없는 결과를 유발한다.</li>
@@ -174,7 +174,7 @@ Tashana Landray
           포인터로 대체하지 말라.</li>
         </ul>
         항상 당신이 필요한 선언 또는 정의를 실제로 제공하는 파일을 
-        <code>#include</code>하라; 직접 포함되지 않은 헤더에서 과도적으로 
+        <code>#include</code>하라. 직접 포함되지 않은 헤더에서 과도적으로 
         가져온 기호에 의존하지 말라. 하나의 예외로 <code>myfile.cc</code> 
         파일은 그에 상응하는 <code>myfile.h</code> 헤더에 있는 
         <code>#include</code>와 전방 선언에 의존할 수 있다.
@@ -212,13 +212,13 @@ Tashana Landray
           부르기 때문에 보이는 것보다 종종 길다.
         </p>
         <p>
-          또 하나의 괜찮은 판단방법이 있다: 반복문이나 switch 문이 있는 함수
+          또 하나의 괜찮은 판단방법이 있다. 반복문이나 switch 문이 있는 함수
           (보통의 경우 절대 수행되지 않는 반복문이나 switch 문인 경우를 
           제외하고)를 인라인하는 것은 보통 효과적이지 않다.
         </p>
         <p>
-          함수가 인라인으로 선언되었다고 해서 항상 인라인되는 것은 아님을 유의하자;
-          예를 들면 가상 함수나 재귀 호출 함수는 보통 
+          함수가 인라인으로 선언되었다고 해서 항상 인라인되는 것은 아님을 
+          유의하자. 예를 들면 가상 함수나 재귀 호출 함수는 보통 
           인라인되지 않는다. 일반적으로 재귀 호출 함수는 인라인되면 안 된다.
           가상 함수를 인라인하는 이유는 주로 클래스에 정의를 넣기 위해서이며, 
           이는 편의 때문이거나, 하는 일을 문서화하기 위해서이다.
@@ -236,7 +236,7 @@ Tashana Landray
       <p>
         인라인 함수의 정의는 헤더 파일에 있어야 하며, 이것은 컴파일러가 인라인
         함수 호출부분을 컴파일 할 때 인라인 함수의 정의가 필요하기 때문이다.
-        하지만 구현 코드는 <code>.cc</code> 파일에 포함되는 것이 적절하하고,
+        하지만 구현 코드는 <code>.cc</code> 파일에 포함되는 것이 적절하고,
         가독성이나 성능상의 이점이 없는 경우 <code>.h</code> 파일에 실제 코드를
         많이 넣는 것을 좋아하지 않는다.
       </p>
@@ -265,7 +265,7 @@ Tashana Landray
 
   <STYLEPOINT title="함수 인자 순서">
     <SUMMARY>
-      <b>함수를 정의할 때 인자 순서는 입력이 먼저이고 출력이 다음이다.</b>
+      함수를 정의할 때 인자 순서는 입력이 먼저이고 출력이 다음이다.
     </SUMMARY>
     <BODY>
       <p>
@@ -273,20 +273,20 @@ Tashana Landray
         있다. 입력 인자는 보통 값(value)이거나 <code>const</code> 레퍼런스이고, 
         출력과 입출력 인자는 <code>const</code>가 아닌 포인터가 될 것이다. 함수 
         인자를 순서에 따라 배열할 때, 모든 입력 전용 인자를 출력 인자보다 앞에 
-        두라. 특히 단순히 새롭다는 이유로 새 인자를 함수 마지막에 추가하지 말라;
+        두라. 특히 단순히 새롭다는 이유로 새 인자를 함수 마지막에 추가하지 말라.
         새로운 입력 전용 인자가 있으면 출력 인자 앞에 두라.
       </p>
       <p>
-        <b>이것은 엄격한 규칙은 아니다. 입력이면서 출력인 인자(종종 클래스와 
+        이것은 엄격한 규칙은 아니다. 입력이면서 출력인 인자(종종 클래스와 
         구조체)는 일을 복잡하게 만든다. 그리고 언제나 그렇듯이 관련된 함수들과의 
-        일관성을 위해 이 규칙을 따르지 않을 수 있다.</b>
+        일관성을 위해 이 규칙을 따르지 않을 수 있다.
       </p>
     </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="include의 이름과 순서">
     <SUMMARY>
-      가독성을 높이고 숨겨진 종속성을 피하기 위해서 표준 순서를 사용하라:
+      가독성을 높이고 숨겨진 종속성을 피하기 위해서 표준 순서를 사용하라.
       C 라이브러리, C++ 라이브러리, 다른 라이브러리들의 <code>.h</code>, 그리고 
       당신의 프로젝트의 <code>.h</code>.
     </SUMMARY>
@@ -337,7 +337,7 @@ Tashana Landray
       <p>
         예를 들자면
         <code>google-awesome-project/src/foo/internal/fooserver.cc</code>의 
-        include들은 이렇게 보일 수 있다:
+        include들은 이렇게 보일 수 있다.
       </p>
       <CODE_SNIPPET>
         #include "foo/public/fooserver.h"  // 바람직한 위치
@@ -354,7 +354,7 @@ Tashana Landray
       <p>
         예외: 가끔 시스템에 특정한 코드들은 조건부 include를 필요로 한다. 이런
         코드들은 조건부 include를 다른 include 밑에 둘 수 있다. 당연히, 시스템에
-        특정한 코드들을 작고 국한되게 유지하라. 예를 들자면:
+        특정한 코드들을 작고 국한되게 유지하라. 예를 들자면,
       </p>
       <CODE_SNIPPET>
         #include "foo/public/fooserver.h"
@@ -396,7 +396,7 @@ Tashana Landray
         </p>
         <p>
           인라인 네임스페이스는 자동적으로 자신의 이름들을 자신을 포함하는 
-          네임스페이스에 넣는다. 예로 아래 코드 조각을 보라:
+          네임스페이스에 넣는다. 예로 아래 코드 조각을 보라.
         </p>
         <CODE_SNIPPET>
             namespace X {
@@ -435,7 +435,7 @@ Tashana Landray
         <SUBSECTION title="이름 없는 네임스페이스">
           <ul>
             <li> 런타임의 이름 충돌을 피하기 위해 <code>.cc</code> 파일에서 이름
-                 없는 네임스페이스는 허용되며 심지어 권장된다:
+                 없는 네임스페이스는 허용되며 심지어 권장된다.
                  <CODE_SNIPPET>
                    namespace {                           // 이 부분은 .cc 파일에 있다.
 
@@ -459,13 +459,13 @@ Tashana Landray
 
         <SUBSECTION title="이름 있는 네임스페이스">
           <p>
-            이름 있는 네임스페이스는 아래와 같이 사용되어야 한다:
+            이름 있는 네임스페이스는 아래와 같이 사용되어야 한다.
           </p>
           <ul>
             <li> 네임스페이스는 include 구문,
                  <a href="http://google-gflags.googlecode.com/">gflags</a> 
                  정의/선언, 다른 네임스페이스에 있는 클래스 전방 선언 아래부터 
-                 전체 소스 파일을 감싼다:
+                 전체 소스 파일을 감싼다.
                  <CODE_SNIPPET>
                    // .h 파일의 내부
                    namespace mynamespace {
@@ -546,7 +546,7 @@ Tashana Landray
                    // (.h 파일에서) 어떤 공통으로 사용되는 이름에 대한 축약된 접근
                    namespace librarian {
                    // 아래의 별칭은 이 헤더를 include하는 모든 파일에서 (librarian 네임스페이스로)
-                   // 사용 가능하다: 
+                   // 사용 가능하다. 
                    // 그러므로 별칭의 이름은 프로젝트 안에서 일관되게 선택되어야 한다.
                    namespace pd_s = ::pipeline_diagnostics::sidetable;
 
@@ -575,13 +575,13 @@ Tashana Landray
 
   <STYLEPOINT title="중첩 클래스">
     <SUMMARY>
-      <b>그들이 인터페이스의 일부인 경우에 public 중첩 클래스를 사용할 수 있다.
+      그들이 인터페이스의 일부인 경우에 public 중첩 클래스를 사용할 수 있다.
       그럼에도 불구하고 전체 영역(전역)에 선언이 들어가지 않도록 
-      <a href="#네임스페이스">네임스페이스</a> 를 고려하라.</b>
+      <a href="#네임스페이스">네임스페이스</a> 를 고려하라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        클래스는 다른 클래스를 그 안에 정의할 수 있다; 이는 
+        클래스는 다른 클래스를 그 안에 정의할 수 있다. 이는 
         <SYNTAX>멤버 클래스</SYNTAX>라고도 불린다.
         <CODE_SNIPPET>
           class Foo {
@@ -597,7 +597,7 @@ Tashana Landray
       </DEFINITION>
       <PROS>
         중첩 클래스(혹은 멤버 클래스)는 오직 감싼 클래스에 의해서만 사용될 때
-        유용하다: 클래스 이름으로 바깥 영역을 더럽히는 대신 클래스를 멤버로 
+        유용하다. 클래스 이름으로 바깥 영역을 더럽히는 대신 클래스를 멤버로 
         만들어 감싼 클래스 범위에 둔다. 중첩 클래스는 보통 오직 구현에만 
         연관되므로, 감싼 클래스의 선언에 중첩 클래스의 정의를 포함하지
         않기 위해 감싼 클래스 내에서 중첩 클래스를 전방 선언하고, 그 다음에 
@@ -619,7 +619,7 @@ Tashana Landray
   <STYLEPOINT title="비멤버 함수, 정적 멤버 함수, 전역 함수">
     <SUMMARY>
       네임스페이스 안에 있는 비멤버 함수나 정적 멤버 함수를 전역 함수보다 
-      선호하라; 완전한 전역 함수는 좀처럼 사용하지 말라.
+      선호하라. 완전한 전역 함수는 좀처럼 사용하지 말라.
     </SUMMARY>
     <BODY>
       <PROS>
@@ -643,7 +643,7 @@ Tashana Landray
         <p>
           생성된 클래스로서 같은 컴파일 단위에 정의된 함수들은 다른 컴파일 
           단위에서 직접 호출될 때 불필요한 커플링이나 링크 시의 종속 관계를 
-          유발할 수 있다; 정적 멤버 함수가 여기에 특별히 민감하다. 이런 함수들을
+          유발할 수 있다. 정적 멤버 함수가 여기에 특별히 민감하다. 이런 함수들을
           새 클래스로 뽑아 내거나, 아마 다른 라이브러리로 분리된 네임스페이스 
           안에 이런 함수들을 두는 것을 고려하라. 
         </p>
@@ -696,7 +696,7 @@ Tashana Landray
         while (const char* p = strchr(str, '/')) str = p + 1;
       </CODE_SNIPPET>
       <p>
-        경고할 게 있다: 만약 변수가 객체면 그 생성자는 범위에 들어가서 생성되는 
+        경고할 게 있다. 만약 변수가 객체면 그 생성자는 범위에 들어가서 생성되는 
         때마다 호출되고 그 소멸자는 범위를 빠져나갈 때마다 호출된다.
       </p>
       <BAD_CODE_SNIPPET>
@@ -708,7 +708,7 @@ Tashana Landray
       </BAD_CODE_SNIPPET>
       <p>
         반복문에서 사용되는 이런 변수를 선언할 때는 반복문 바깥에 하는 것이 
-        성능에 좋을 수 있다:
+        성능에 좋을 수 있다.
       </p>
       <CODE_SNIPPET>
         Foo f;  // 생성자와 소멸자는 각각 한 번 호출된다.
@@ -721,15 +721,15 @@ Tashana Landray
 
   <STYLEPOINT title="정적 변수와 전역 변수">
     <SUMMARY>
-      클래스 타입의 정적 변수와 전역 변수는 금지한다: 그들은 특정할 수 없는 
+      클래스 타입의 정적 변수와 전역 변수는 금지한다. 그들은 특정할 수 없는 
       생성과 소멸 순서로 인해 찾기 힘든 버그들을 만든다. 하지만 이들 변수가 
-      <code>constexpr</code>인 경우는 허용된다: 이들은 동적으로 초기화되거나 
+      <code>constexpr</code>인 경우는 허용된다. 이들은 동적으로 초기화되거나 
       소멸하지 않는다.
     </SUMMARY>
     <BODY>
       <p>
         전역 변수, 정적 변수, 정적 클래스 멤버 변수, 함수 정적 변수 등의 정적 
-        저장 기간을 가진 객체들은 반드시 Plain Old Data (POD)여야 한다: 오직 
+        저장 기간을 가진 객체들은 반드시 Plain Old Data (POD)여야 한다. 오직 
         int, char, float, 포인터, 혹은 POD의 배열, POD의 구조체여야 한다.
       </p>
       <p>
@@ -829,8 +829,8 @@ Tashana Landray
 
   <STYLEPOINT title="초기화">
     <SUMMARY>
-      당신의 클래스가 멤버 변수를 정의하는 경우, <b>당신은 반드시 모든 멤버 변수에
-      대해 클래스 내 초기화 구문을 제공하거나, 생성자를 작성해야 한다</b> (이는
+      당신의 클래스가 멤버 변수를 정의하는 경우, 당신은 반드시 모든 멤버 변수에
+      대해 클래스 내 초기화 구문을 제공하거나, 생성자를 작성해야 한다 (이는
       디폴트 생성자일 수 있다). 직접 어떠한 생성자도 선언하지 않은 경우
       컴파일러는 일부 필드를 초기화되지 않은 채로 내버려 두거나 부적절한 값으로
       초기화시키는 디폴트 생성자를 만들 것이다.
@@ -846,9 +846,9 @@ Tashana Landray
       </DEFINITION>
       <PROS>
         <p>
-          <b>초기화 구문</b>이 제공되지 않았다면 사용자가 정의한 디폴트 생성자가 객체를 
+          초기화 구문이 제공되지 않았다면 사용자가 정의한 디폴트 생성자가 객체를 
           초기화한다. 이는 객체가 항상 생성과 동시에 
-          유효하고 사용 가능한 상태임을 보장한다; 또한 디버깅을 지원하기 위해 
+          유효하고 사용 가능한 상태임을 보장한다. 또한 디버깅을 지원하기 위해 
           객체가 최초에는 명백하게 "불가능한" 상태로 생성되도록 보장한다.
         </p>
         <p>
@@ -918,7 +918,7 @@ Tashana Landray
         <p>
           우리는 인자가 하나인 모든 생성자들이 <code>explicit</code>일 것을 
           요구한다. 인자가 하나인 생성자 정의의 앞에 항상 
-          <code>explicit</code>을 넣으라; 
+          <code>explicit</code>을 넣으라. 
           <code>explicit Foo(string name);</code>
         </p>
         <p>
@@ -986,7 +986,7 @@ Tashana Landray
         </p>
         <p>
           편의상, <code>DISALLOW_COPY_AND_ASSIGN</code> 매크로가 사용될 수 
-          있다:
+          있다.
         </p>
         <CODE_SNIPPET>
           // 복사 생성자와 = 연산자 함수를 금지하는 매크로
@@ -996,7 +996,7 @@ Tashana Landray
             void operator=(const TypeName&amp;)
         </CODE_SNIPPET>
         <p>
-          그렇다면 클래스 <code>class Foo</code>에서 :
+          그렇다면 클래스 <code>class Foo</code>에서,
         </p>
         <CODE_SNIPPET>
           class Foo {
@@ -1025,7 +1025,7 @@ Tashana Landray
           생성자 위임과 생성자 상속은 생성자의 코드 중복을 줄이기 위해 모두 
           C++11에 도입된 기능으로 서로 다른 두 기능이다. 생성자 위임은 초기화
           리스트 문법의 특별한 변형을 사용하여 어느 클래스 생성자에서 그 
-          클래스의 다른 생성자로 작업을 넘겨줄 수 있도록 한다. 예를 들면:
+          클래스의 다른 생성자로 작업을 넘겨줄 수 있도록 한다. 예를 들면,
         </p>
         <CODE_SNIPPET>
           X::X(const string&amp; name) : name_(name) {
@@ -1038,7 +1038,7 @@ Tashana Landray
           생성자 상속은 하위 클래스가 직접 사용 가능한 상위 클래스의 생성자를,
           다시 선언하지 않고, 마치 상위 클래스의 다른 멤버 함수처럼 가질 수 
           있도록 한다. 이는 베이스 클래스가 여러 생성자를 가진 경우에 특히 
-          유용하다. 예를 들면:
+          유용하다. 예를 들면,
         </p>
         <CODE_SNIPPET>
           class Base {
@@ -1091,7 +1091,7 @@ Tashana Landray
 
   <STYLEPOINT title="구조체 대 클래스">
     <SUMMARY>
-      데이터를 나르는 수동적인 객체의 경우에만 <code>struct</code>를 사용하라;
+      데이터를 나르는 수동적인 객체의 경우에만 <code>struct</code>를 사용하라.
       그 외의 모든 경우에는 <code>class</code>를 쓰라.
     </SUMMARY>
     <BODY>
@@ -1102,13 +1102,13 @@ Tashana Landray
         한다.
       </p>
       <p>
-        <b><code>structs</code>는 데이터를 나르는 수동적 객체로서 사용되고, 연관된
+        <code>structs</code>는 데이터를 나르는 수동적 객체로서 사용되고, 연관된
         상수들을 가질 수 있으나, 데이터 멤버에 접근하거나 데이터 멤버를 설정하는
         이외의 어떤 기능도 가져서는 안 된다. 필드의 접근/설정은 메서드 호출이 
         아닌 직접 필드에 접근하는 방식으로 이루어 진다. 메서드는 오직 데이터 
         멤버를 셋업하는 것 외의 동작을 제공해서는 안 된다. 예를 들면 생성자, 
         소멸자, <code>Initialize()</code>, <code>Reset()</code>, 
-        <code>Validate()</code>.</b>
+        <code>Validate()</code>.
       </p>
       <p>
         만약 더 많은 기능이 필요하다면 <code>class</code>가 적당하다. 불확실한 
@@ -1128,14 +1128,14 @@ Tashana Landray
 
   <STYLEPOINT title="상속">
     <SUMMARY>
-      컴포지션이 종종 상속보다 더 적절하다. <b>상속을 쓰려면 
-      <code>public</code>으로 만들라.</b>
+      컴포지션이 종종 상속보다 더 적절하다. 상속을 쓰려면 
+      <code>public</code>으로 만들라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
         하위 클래스가 상위 클래스로부터 상속할 때, 하위 클래스는 부모인 상위 
         클래스가 정의한 모든 데이터와 동작을 포함한다. 실무적으로는 상속은 
-        C++에서 주로 두 가지 용도로 사용된다: 실제 코드가 자식에 의해 상속되는
+        C++에서 주로 두 가지 용도로 사용된다. 실제 코드가 자식에 의해 상속되는
         구현 상속과 오직 메서드 이름만이 상속되는 
         <A HREF="#인터페이스">인터페이스 상속</A>.
       </DEFINITION>
@@ -1161,12 +1161,12 @@ Tashana Landray
         </p>
         <p>
           구현 상속을 과용하지 말라. 대부분 컴포지션이 더 적절하다. 상속의 
-          사용을 "동일 관계"의 경우로 제한하려고 노력하라: <code>Bar</code>가 
+          사용을 "동일 관계"의 경우로 제한하려고 노력하라. <code>Bar</code>가 
           <code>Foo</code>의 "종류 중 하나"라고 합당하게 말할 수 있으면 
           <code>Bar</code>가 <code>Foo</code>의 하위 클래스이다. 
         </p>
         <p>
-          필요한 경우 소멸자를 <code>virtual</code>로 <b>만들라.</b> 만약 클래스가
+          필요한 경우 소멸자를 <code>virtual</code>로 만들라. 만약 클래스가
           가상 메서드를 가지고 있다면, 그 소멸자는 반드시
           <code>virtual</code>이어야 한다.
         </p>
@@ -1189,7 +1189,7 @@ Tashana Landray
   <STYLEPOINT title="다중 상속">
     <SUMMARY>
       다중 구현 상속이 실제로 유용한 경우는 매우 드물다. 우리는 상위 클래스들 중 
-      최대 하나가 구현을 가진 경우에만 다중 상속을 허용한다; 다른 모든 상위 
+      최대 하나가 구현을 가진 경우에만 다중 상속을 허용한다. 다른 모든 상위 
       클래스는 <code>Interface</code> 접미어가 달린 
       <A HREF="#인터페이스">순수한 인터페이스 클래스</A>여야 한다.
     </SUMMARY>
@@ -1222,13 +1222,13 @@ Tashana Landray
 
   <STYLEPOINT title="인터페이스">
     <SUMMARY>
-      <b>어떤 조건을 만족하는 클래스는 <code>Interface</code>라는 접미어로 끝날 
-      수 있다.</b>
+      어떤 조건을 만족하는 클래스는 <code>Interface</code>라는 접미어로 끝날 
+      수 있다.
     </SUMMARY>
     <BODY>
       <DEFINITION>
         <p>
-        아래와 같은 요구를 충족하는 클래스는 순수한 인터페이스이다:
+        아래와 같은 요구를 충족하는 클래스는 순수한 인터페이스이다.
         </p>
         <ul>
           <li> 오직 public 순수 가상 ("<code>= 0</code>") 메서드와 정적 
@@ -1267,7 +1267,7 @@ Tashana Landray
       </CONS>
       <DECISION>
         위의 조건을 만족하는 경우에만 클래스는 <code>Interface</code>로 끝날 수 
-        있다. 하지만 반대의 경우가 필요한 것은 아니다: 위의 조건을 만족하는 
+        있다. 하지만 반대의 경우가 필요한 것은 아니다. 위의 조건을 만족하는 
         클래스가 <code>Interface</code>로 끝나야 하는 것은 아니다.
       </DECISION>
     </BODY>
@@ -1302,7 +1302,7 @@ Tashana Landray
       </PROS>
       <CONS>
         연산자 오버로드는 코드를 더 직관적으로 만들 수 있는 반면, 몇 가지 단점이 
-        있다:
+        있다.
         <ul>
           <li> 비싼 연산을 값이 싼 내장 연산으로 생각하도록 우리의 직관을 속일 
                수 있다.
@@ -1344,7 +1344,7 @@ Tashana Landray
           만약 완벽히 정당화할 수 있는 경우 허용되지만, 가능한 매 순간마다 이를 
           피하려고 노력해야 한다. 특히 당신의 클래스가 STL 컨테이너에 키로 
           쓰일 수 있다는 이유만으로 <code>operator==</code>와 
-          <code>operator&lt;</code>를 오버로드하지 말라; 대신 컨테이너를 선언할 
+          <code>operator&lt;</code>를 오버로드하지 말라. 대신 컨테이너를 선언할 
           때, 항등과 비교 functor type을 만들어야 한다.
         </p>
         <p>
@@ -1385,7 +1385,7 @@ Tashana Landray
 
   <STYLEPOINT title="선언 순서">
     <SUMMARY>
-      클래스 내의 선언에는 특별한 순서를 사용하라: <code>public:</code>이 
+      클래스 내의 선언에는 특별한 순서를 사용하라. <code>public:</code>이 
       <code>private:</code>보다 먼저이며 메서드가 데이터 멤버 (변수)보다
       먼저이며, 기타 등등.
     </SUMMARY>
@@ -1446,7 +1446,7 @@ Tashana Landray
       </p>
       <p>
         당신은 어떤 코드에서 작업하다 길고 복잡한 함수를 만날 수 있다. 기존의 
-        코드를 수정하는 데 두려움을 가지지 말라: 그런 함수에서 작업하는 게 
+        코드를 수정하는 데 두려움을 가지지 말라. 그런 함수에서 작업하는 게 
         어려운 경우, 당신은 오류를 디버그하기 힘들어졌다고 깨닫게 되거나 함수가 
         가진 여러 다른 맥락의 조각을 사용하고 싶어질 것인데, 이 때 함수를 더 
         작고 관리 가능한 조각으로 쪼개는 것을 고려하라.
@@ -1460,7 +1460,7 @@ Tashana Landray
   <p>
     당신이 다른 곳에서 본 것과 다를 수 있는, 우리가 C++ 코드를 더 튼튼하게
     만들기 위해 사용하는 다양한 기법과 장치들과 C++을 사용하는 다양한 방법이
-    있다. <b>직역, 명료하지 않은 문장</b>
+    있다.
   </p>
   <STYLEPOINT title="소유권과 스마트 포인터">
     <SUMMARY>
@@ -1473,18 +1473,18 @@ Tashana Landray
           "소유권"이란 동적으로 할당된 메모리(와 다른 리소스)를 관리하기 위해
           기록하는 기법이다. 동적으로 할당된 객체의 소유자는 그 객체가 더 이상
           필요치 않을 때 삭제되는 것을 보장하는 객체나 함수다. 소유권은 종종
-          공유될 수 있는데, 이 경우에는 보통 마지막 소유자가 삭제를 책임진다 <b>의미 변화</b>.
+          공유될 수 있는데, 이 경우에는 보통 마지막 소유자가 삭제를 책임진다.
           소유권이 공유되지 않는 경우에도 소유권은 코드의 한 곳의 코드에서
-          다른 곳으로 이전될 수 있다. <b>의미 변화, 검토 필요, bookkeeping 단어 번역 검토</b>
+          다른 곳으로 이전될 수 있다.
         </p>
         <p>
           "스마트" 포인터는 포인터와 유사하게 동작하는 클래스로, 예를 들면 
           <code>*</code>와 <code>-&gt;</code> 연산자를 오버로드하여 만든다. 어떤
           스마트 포인터 타입은 이러한 책임이 충족되는 것을 보장하기 위해, 소유권 
-          기록을 자동화하기 위해 사용될 수 있다. <b>의미 다름, 이해 힘듦</b> 
+          기록을 자동화하기 위해 사용될 수 있다. 
           <a href="http://en.cppreference.com/w/cpp/memory/unique_ptr">
           <code>std::unique_ptr</code></a>는 동적으로 할당된 객체에 대한 
-          배타적인 소유권을 나타내는, C++11에서 도입된 스마트 포인터 타입이다; 
+          배타적인 소유권을 나타내는, C++11에서 도입된 스마트 포인터 타입이다. 
           <code>std::unique_ptr</code>이 범위 밖으로 사라지면 객체가 삭제된다. 
           복사될 수 없으나 소유권 이전에 해당하는 <em>이동</em>을 할 수 있다.
           <code>shared_ptr</code>은 복사가 가능한 것으로, 동적으로 할당된 객체에 대한 공유된 소유권을 
@@ -1517,17 +1517,18 @@ Tashana Landray
             재명명, 수명 주기, 가변성도 고민해야 한다.</li>
           <li>값 문법(value semantics)의 성능상 비용은 종종 과대평가되기 때문에
             소유권 이전의 성능상 이익은 가독성과 복잡성의 비용에 대해 정당화되지 
-            못할 수 있다. <b>직역</b></li>
+            못할 수 있다.</li>
           <li>소유권을 이전하는 API는 클라이언트가 하나의 메모리 관리 모델을 
             가지도록 강제한다.</li>
-          <li>스마트 포인터를 사용하는 코드는 리소스가 해제되는 곳이 덜 명시적이다. <b>의미 변화</b></li>
+          <li>스마트 포인터를 사용하는 코드는 리소스가 해제되는 곳이 덜 
+            명시적이다.</li>
           <li><code>std::unique_ptr</code>는 소유권 이전을 C++11의 이동 문법으로 표현하는 데,
             이는 구글 코드에서 <a href="#Rvalue_references">일반적으로 금지</a>된 것으로 몇몇
             프로그래머들에게는 혼란을 일으킬 수 있다.</li>
           <li>공유된 소유권은 주의 깊은 소유권 설계를 혼동시키는 유혹적인 대안이 
-            될 수 있다. <b>직역</b></li>
+            될 수 있다.</li>
           <li>공유된 소유권은 런타임 비용이 드는 명시적인 기록을 필요로
-            한다. <b>앞에서 언급한 바와 같이, "bookkeeping"->"기록" 번역이 어색</b></li>
+            한다.</li>
           <li>(순환 참조와 같은) 어떤 경우에는, 소유권이 공유된 객체들은
             영원히 삭제되지 않을 수 있다.</li>
           <li>스마트 포인터는 일반적인 포인터의 완전한 대용품이 아니다.</li>
@@ -1539,7 +1540,7 @@ Tashana Landray
           선호하라. 만약 다른 코드가 그 객체를 접근해야 할 필요가 있는 경우 
           소유권을 이전하기보다 복사본을 전달하거나, 포인터나 레퍼런스를 
           전달하는 것을 검토하라. 소유권 이전을 명시적으로 하기 위해 
-          <code>std::unique_ptr</code>를 사용하는 것을 선호하라. 예를 들면:
+          <code>std::unique_ptr</code>를 사용하는 것을 선호하라. 예를 들면,
             <CODE_SNIPPET>
               std::unique_ptr&lt;Foo&gt; FooFactory();
               void FooConsumer(std::unique_ptr&lt;Foo&gt; ptr);
@@ -1550,7 +1551,7 @@ Tashana Landray
           말라. 그런 이유 중 하나는 복사 작업의 비싼 비용을 회피하는 것이지만,
           기반 객체가 변경 불가능하며, 성능상 이익이 상당한 경우에만 공유 
           소유권을 사용해야 한다 (예를 들면 
-          <code>shared_ptr&lt;const Foo&gt;</code>). <b>직역</b>
+          <code>shared_ptr&lt;const Foo&gt;</code>).
           공유 소유권을 사용할 경우에는 <code>shared_ptr</code>의 사용을 
           선호하라.
           
@@ -1575,7 +1576,7 @@ Tashana Landray
         도구다. 완벽하지 않고, 오류 없는 것을 오류로 판정하는 문제와 오류를 
         식별하는 하지 못하는 문제를 모두 가지고 있지만, 여전히 소중한 도구다. 
         <code>// NOLINT</code>를 파일 마지막에 넣으면 오류 없는 것을 오류로 
-        식별하는 문제가 무시될 수 있다. <b>"오류 없는 것을 오류로"가 다른 의미로 읽힐 수 있음. False positive 번역 검토</b>
+        식별하는 문제가 무시될 수 있다.
       </p>
       
       <p>
@@ -1600,7 +1601,7 @@ Tashana Landray
       <DEFINITION>
         C에서, 함수가 변수를 변경할 필요가 있는 경우, 인자는 포인터를 사용해야
         한다, 예를 들면 <code>int foo(int *pval)</code>. C++에서는 함수가 
-        레퍼런스 인자를 선언할 수 있다: <code>int foo(int &amp;val)</code>
+        레퍼런스 인자를 선언할 수 있다. <code>int foo(int &amp;val)</code>
       </DEFINITION>
       <PROS>
         레퍼런스로 인자를 정의하는 것은 <code>(*pval)++</code>과 같은 못생긴 
@@ -1613,7 +1614,7 @@ Tashana Landray
       </CONS>
       <DECISION>
         <p>
-          함수 인자 리스트에 안의 모든 레퍼런스는 <code>const</code>여야 한다:
+          함수 인자 리스트에 안의 모든 레퍼런스는 <code>const</code>여야 한다.
         </p>
         <CODE_SNIPPET>
           void Foo(const string &amp;in, string *out);
@@ -1627,7 +1628,7 @@ Tashana Landray
         </p>
         <p>
           하지만 입력 인자에서 <code>const T&amp;</code>보다 
-          <code>const T*</code>를 사용하는 것이 나은 경우가 있다. 예를 들면:
+          <code>const T*</code>를 사용하는 것이 나은 경우가 있다. 예를 들면,
           <ul>
             <li>null 포인터를 전달하고 싶다.</li>
             <li>함수가 입력에 대한 포인터나 레퍼런스를 저장한다.</li>
@@ -1636,7 +1637,7 @@ Tashana Landray
           점을 기억하라. 그 대신 <code>const T*</code>를 사용하는 것은 읽는 
           사람에게 입력이 좀 다르게 다루어질 것이라고 알려주게 된다. 그러므로 
           만약 <code>const T&amp;</code> 대신 <code>const T*</code>를 택한다면 
-          분명한 이유가 있을 때여야 한다; 그렇게 하지 않으면 있지도 않는 설명을
+          분명한 이유가 있을 때여야 한다. 그렇게 하지 않으면 있지도 않는 설명을
           찾느라 읽는 사람이 혼란에 빠질 수 있다.
         </p>
       </DECISION>
@@ -1754,11 +1755,11 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <PROS>
-        디폴트 값을 쓰는 함수인데 때때로 디폴트 값을 바꾸고 싶은 경우가 자주 있다.
-        이런 예외적인 상황에서 많은 함수들을 정의하지 않고 이런 것을 할 수 있는
-        쉬운 방법이 디폴트 인자이다. 함수 오버로딩과 비교해서
-        디폴트 인자는 더 명확한 문법을 가지며, 반복 코드를 줄이고,
-        '필요'한지 '선택적'인지를 더 명확하게 구별하게 해준다.
+        함수가 디폴트 값을 사용하지만 때때로 그 디폴트 값을 바꾸고 싶은 경우가 
+        종종 있다. 이러한 흔치 않은 예외를 위한 함수들을 많이 정의하지 않고도 
+        이를 할 수 있는 쉬운 방법이 디폴트 인자다. 디폴트 인자는 함수 오버로딩과
+        비교해서 더 명확한 문법을 가지고 있고, 반복 코드가 적게 발생하며, 
+        '필요한' 인자와 '선택적' 인자를 더 선명하게 구분한다.
       </PROS>
       <CONS>
         디폴트 인자에서는 함수 포인터 사용이 혼란스럽다. 함수 시그너처와
@@ -1808,7 +1809,7 @@ Tashana Landray
       <CONS>
         가변길이 배열과 alloca 는 C++ 표준이 아니다.
         게다가, 할당되는 스택의 크기가 데이터에 의존적이라서, 찾기 어려운 메모리
-        덮어쓰기 버그를 만들 수도 있다. : "나의 머신에서는 잘 작동하였는데,
+        덮어쓰기 버그를 만들 수도 있다. "나의 머신에서는 잘 작동하였는데,
         릴리즈되면 이상하게도 죽어버린다"
       </CONS>
       
@@ -1889,11 +1890,11 @@ Tashana Landray
 
           <li>예외 안정성은 RAII 및 다른 코딩 관습들을 요구한다.
               정확한 예외안전코드를 알기 쉽게 작성하려면 많은 지원장치들이 필요하다.
-              <b>또한, 코드를 읽는 이가 전체 호출 그래프를 이해하지 않아도 되게 하려면,
+              또한, 코드를 읽는 이가 전체 호출 그래프를 이해하지 않아도 되게 하려면,
               예외안전코드는 영속적 상태를 수정하는 코드를
               최종 단계(commit phase) 안에 몰아두어야 한다. 이것은 혜택이 있으나
               비용도 존재한다. (아마 최종 단계를 고립시키기 위해 코드를 꼬아야
-              할 것이다.)</b> 예외를 허용하는 것이 그만한 가치가
+              할 것이다.) 예외를 허용하는 것이 그만한 가치가
               없을지라도 이런 비용들을 지불해야 할 것이다.</li>
 
           <li>예외를 사용하는 것은 만들어진 각 바이너리(binary)에 데이터를 추가하고
@@ -2042,7 +2043,7 @@ Tashana Landray
 
   <STYLEPOINT title="형변환">
     <SUMMARY>
-      <code>static_cast&lt;&gt;()</code> 같은 C++ <b>형변환</b>을 사용하라.
+      <code>static_cast&lt;&gt;()</code> 같은 C++ 형변환을 사용하라.
       <code>int y = (int)x;</code> 나 <code>int y = int(x);</code> 같은
       다른 형변환 형식을 사용하지 말라.
     </SUMMARY>
@@ -2160,7 +2161,7 @@ Tashana Landray
           <p>
             추가적인 논쟁이 계속 나올 수 있다.
             ("적절한 래퍼(wrapper)로 더 나아지지 않을까"라고 반문할 수 있지만,
-            <b>그것이 하나의 선택지에 참(true)이라면, 또 다른 선택지에서는 과연 거짓일까?)</b>
+            그것이 하나의 선택지에 참(true)이라면, 또 다른 선택지에서는 과연 거짓일까?)
             또한, 목표는 다른 사람이 배워야 할 문법을
             추가하는 것이 아니라 언어를 더 작게 만드는 것임을 기억하라.
           </p>
@@ -2272,10 +2273,10 @@ Tashana Landray
           그들은 보다 일관적이기 때문에 이것이 더 읽기 쉽다고 주장한다.
           이것은 <code>const</code> 가 항상 기술하는 객체를 따르는
           규칙을 유지한다.
-          <b>그러나 이 일관성 주장은, 간혹 볼 수 있는 깊게 중첩된 포인터 표현식에 
+          그러나 이 일관성 주장은, 간혹 볼 수 있는 깊게 중첩된 포인터 표현식에 
           적용되지 않는다. <code>const</code> 표현식 대부분은 단 하나의
           <const>const</const>를 가지며, 상수 속성이 중첩의 바로 밑 단계에
-          적용되기 때문이다. 이런 경우들에, 유지할 일관성은 없다.</b>
+          적용되기 때문이다. 이런 경우들에, 유지할 일관성은 없다.
           "형용사"(<code>const</code>) 가 "명사" (<code>int</code>)보다
           앞에 있는 것이 영어를 따르기 때문에 <code>const</code>를
           먼저 위치하는 것은 아마 좀 더 가독성있을 것이다.
@@ -2307,8 +2308,8 @@ Tashana Landray
       <CONS>
         너무 이르게 constexpr 로 표시해 두면 나중에 다운그레이드를 해야할 때
         마이그레이션 문제가 발생할 수 있다.
-        <b>constexpr함수와 생성자들에서 정의가능한 것이 현재 제한적이기 때문에,
-        불분명한 회피방법들이 정의에 포함될 수도 있다.</b>
+        constexpr함수와 생성자들에서 정의가능한 것이 현재 제한적이기 때문에,
+        불분명한 회피방법들이 정의에 포함될 수도 있다.
       </CONS>
       <DECISION>
         <p>
@@ -2776,7 +2777,7 @@ Tashana Landray
       </CODE_SNIPPET></p>
     
     <p>사용자 정의 타입 또한 <i>braced-init-list</i> 로부터 자동 생성되는 
-    <code>initializer_list</code>를 받는 생성자를 정의할 수 있다:
+    <code>initializer_list</code>를 받는 생성자를 정의할 수 있다.
       <CODE_SNIPPET>
         class MyType {
          public:
@@ -2873,7 +2874,7 @@ Tashana Landray
   <BODY>
     <DEFINITION>
       <a href="http://www.boost.org/">Boost 라이브러리</a> 는 
-      프로그래머들 사이에서 <b>검증되었고(peer-reviewed)</b>, 무료이고, 
+      프로그래머들 사이에서 검증되었고(peer-reviewed), 무료이고, 
       오픈소스인 C++ 라이브러리 모음이다.
     </DEFINITION>
     <PROS>
@@ -2998,7 +2999,7 @@ Tashana Landray
       </p>
       <ul>
         <li>
-          <b>후속 리턴타입(trailing return types)의 함수</b>. 예를 들면
+          후속 리턴타입(trailing return types)의 함수. 예를 들면
           <code>int foo();</code> 대신에 <code>auto foo() -&gt; int;</code> 로
           쓰는 것. 기존의 많은 함수 선언과 
           일관성을 유지하고 싶기 때문이다.
@@ -3037,13 +3038,13 @@ Tashana Landray
 
   <STYLEPOINT title="일반 네이밍 규칙">
     <SUMMARY>
-      함수이름, 변수이름, 파일이름은 <b>약자</b>를 피하고 서술적으로 지어야 한다.
+      함수이름, 변수이름, 파일이름은 약어를 피하고 서술적으로 지어야 한다.
     </SUMMARY>
     <BODY>
       <p>
         가능하면 상세한 이름을 사용하라. 짧은 이름보다 신입이 보기에도 
         한번에 이해가 가능하게 만드는 것이 더 중요하다.
-        프로젝트에 관계되지 않은 사람이 보기에 익숙하지 않은 <b>약자</b>를 사용하지 말고,
+        프로젝트에 관계되지 않은 사람이 보기에 익숙하지 않은 약어를 사용하지 말고,
         중간 글자를 지워서 축약해도 안된다.
       </p>
       <CODE_SNIPPET>
@@ -3216,7 +3217,7 @@ Tashana Landray
   <STYLEPOINT title="함수 이름">
     <SUMMARY>
       일반 함수들은 대소문자가 섞인 방식을 사용한다. 접근자와 변경자는 해당하는
-      변수의 이름과 같은 것을 쓴다: <code>MyExcitingFunction()</code>,
+      변수의 이름과 같은 것을 쓴다. <code>MyExcitingFunction()</code>,
       <code>MyExcitingMethod()</code>,
       <code>my_exciting_member_variable()</code>,
       <code>set_my_exciting_member_variable()</code>.
@@ -3270,7 +3271,7 @@ Tashana Landray
     
     <SUMMARY>
       네임스페이스 이름은 모두 소문자로 하며, 프로젝트의 이름과 아마도
-      디렉터리 구조에 기반하여 작성한다: <b>직역</b>
+      디렉터리 구조에 기반하여 작성한다.
       <code>google_awesome_project</code>.
     </SUMMARY>
     <BODY>
@@ -3284,7 +3285,7 @@ Tashana Landray
   <STYLEPOINT title="열거형 이름">
     <SUMMARY>
       열거형은 <A HREF="#Constant_Names">상수</A> 또는 
-      <A HREF="#Macro_Names">매크로</A> 방식 중 하나로 작성한다:
+      <A HREF="#Macro_Names">매크로</A> 방식 중 하나로 작성한다.
       <code>kEnumName</code> 또는 <code>ENUM_NAME</code>.
     </SUMMARY>
     <BODY>
@@ -3322,12 +3323,12 @@ Tashana Landray
   <STYLEPOINT title="매크로 이름">
     <SUMMARY>
       정말로 <A HREF="#프리프로세서_매크로">매크로를 정의</A>하려고 하는가?
-      그렇다면 다음과 같이 하라:
+      그렇다면 다음과 같이 하라.
       <code>MY_MACRO_THAT_SCARES_SMALL_CHILDREN</code>.
     </SUMMARY>
     <BODY>
       <p>
-        <a href="#프리프로세서_매크로">프리프로세서_매크로</a>를 참고하라;
+        <a href="#프리프로세서_매크로">프리프로세서_매크로</a>를 참고하라.
         일반적으로 매크로는 사용하지 <em>않는</em> 것이 좋다.
         하지만 절대적으로 필요하다면 대문자와 언더스코어로만 이름을 짓는다.
       </p>
@@ -3450,8 +3451,8 @@ Tashana Landray
       </CODE_SNIPPET>
       <p>
         당신이 이미 파일 상단의 주석에 클래스에 대한 상세한 설명을 두었다면,
-        "전체 설명을 보기 위해서 파일 상단을 보라"라고 부담 없이 적어라. <b>의미 변화</b>
-        단 어떤 종류의 주석을 반드시 가져야 한다. <b>이해 힘듦</b>
+        "전체 설명을 보기 위해서 파일 상단을 보라"라고 부담 없이 적어라.
+        단 어떤 종류의 주석을 반드시 가져야 한다.
       </p>
       <p>
         클래스가 가정하고 있는 동기화 가정이 있는 경우 그것을 설명하라. 만약 
@@ -3464,7 +3465,7 @@ Tashana Landray
 
   <STYLEPOINT title="함수 주석">
     <SUMMARY>
-      선언 주석은 함수의 사용을 설명한다; 함수 정의의 주석은 함수의 동작을 
+      선언 주석은 함수의 사용을 설명한다. 함수 정의의 주석은 함수의 동작을 
       설명한다.
     </SUMMARY>
     <BODY>
@@ -3497,7 +3498,7 @@ Tashana Landray
                </li>
         </ul>
         <p>
-          예제는 아래와 같다:
+          예제는 아래와 같다.
         </p>
         <CODE_SNIPPET>
           // 이 테이블에 대한 이터레이터를 반환한다. 사용이 끝난 후 이터레이터를
@@ -3506,7 +3507,7 @@ Tashana Landray
           //
           // 이터레이터는 최초에 테이블의 시작에 위치한다.
           //
-          // 이 메서는 아래와 동일하다:
+          // 이 메서드는 아래와 동일하다.
           //    Iterator* iter = table-&gt;NewIterator();
           //    iter-&gt;Seek("");
           //    return iter;
@@ -3540,7 +3541,7 @@ Tashana Landray
           설명하는 주석을 가져야 한다. 예를 들면, 당신이 사용하는 코딩 비결을 
           설명하거나, 당신이 통과하고 있는 단계에 대한 개요를 제시하거나, 왜 
           가능한 다른 대안을 사용하지 않고 당신이 한 방식으로 함수를 구현했는지 
-          함수 정의에서 설명할 수 있다. <b>직역</b> 예를 들면 함수의 전반부에는 lock을
+          함수 정의에서 설명할 수 있다. 예를 들면 함수의 전반부에는 lock을
           획득하지만 후반부에서는 lock이 필요없는 이유를 언급할 수 있다.
         </p>
         <p>
@@ -3565,7 +3566,7 @@ Tashana Landray
           그것이 무엇을 위한 것인지 설명하는 주석을 가져야 한다. 만약 변수가 
           null 포인터나 -1과 같은, 특별한 의미를 가지는 표식 값을 가질 수 있는
           경우 이를 설명해야 한다.
-          예를 들면: 
+          예를 들면, 
         </p>
         <CODE_SNIPPET>
           private:
@@ -3580,7 +3581,7 @@ Tashana Landray
         <p>
           데이터 멤버와 마찬가지로, 모든 전역 변수는 그것이 무엇이며 어디에 
           사용되는지 설명하는 주석을 가져야 한다.
-          예를 들면:
+          예를 들면,
         </p>
         <CODE_SNIPPET>
           // 이 회귀 테스트에서 통과한 테스트 케이스의 총 개수
@@ -3598,7 +3599,7 @@ Tashana Landray
     <BODY>
       <SUBSECTION title="클래스 데이터 멤버">
         <p>
-          까다롭거나 복잡한 코드 부분은 그들 앞에 주석을 가져야 한다. 예를 들면:
+          까다롭거나 복잡한 코드 부분은 그들 앞에 주석을 가져야 한다. 예를 들면,
         </p>
         <CODE_SNIPPET>
           // 덧셈에서 생긴 carry를 고려하여 결과를 2로 나눈다.
@@ -3615,7 +3616,7 @@ Tashana Landray
       <SUBSECTION title="줄 주석">
         <p>
           또한 명백하지 않은 부분도 줄 끝에 주석을 가져야 한다. 이러한 줄 끝 
-          주석은 2 스페이스 문자로 코드에서 분리되어야 한다. 예:  
+          주석은 2 스페이스 문자로 코드에서 분리되어야 한다. 예를 들면, 
         </p>
         <CODE_SNIPPET>
           // 충분한 메모리가 있는 경우, 데이터 부분도 mmap으로 처리한다.
@@ -3629,7 +3630,7 @@ Tashana Landray
         </p>
         <p>
           다음 줄에 여러 주석이 있는 경우, 종종 이들을 일렬로 세우는 것이 더 
-          읽기 쉬울 수 있다: 
+          읽기 쉬울 수 있다. 
         </p>
         <CODE_SNIPPET>
           DoSomething();                  // 주석을 일렬로 세우기 위해 여기에 주석을 둔다.
@@ -3647,7 +3648,7 @@ Tashana Landray
           null 포인터나 불리언 혹은 문자로 된 숫자 값을 함수에 전달할 때, 당신은
           그것들이 무엇인지에 관해 주석을 추가하는 것을 고려하거나, 상수를 
           사용하여 당신의 코드가 스스로 설명될 수 있게 만들어야 한다. 예를 
-          들자면 아래를 비교해보라: 
+          들자면 아래를 비교해 보라. 
         </p>
         <BAD_CODE_SNIPPET>
           bool success = CalculateSomething(interesting_value,
@@ -3682,7 +3683,7 @@ Tashana Landray
         <p>
           <em>절대로</em> 코드 그 자체를 설명하지 말아야 한다는 데 주목하라.
           코드를 읽는 사람이 당신이 하려고 하는 것을 모름에도 불구하고 당신보다
-          C++을 더 잘 알고 있다고 가정하라:
+          C++을 더 잘 알고 있다고 가정하라.
         </p>
         <BAD_CODE_SNIPPET>
            // 이제 b 배열을 통과하는데 만약 i가 있다면 다음 요소는 i+1임이 확실하다.
@@ -3715,8 +3716,8 @@ Tashana Landray
 
   <STYLEPOINT title="TODO 주석">
     <SUMMARY>
-      <b><code>TODO</code> 주석은 임시적이고, 단기적인 혹은 완벽하지는 
-      않지만 적당한 해결책이다.</b>
+      <code>TODO</code> 주석은 임시적이고, 단기적인 혹은 완벽하지는 
+      않지만 적당한 해결책이다.
     </SUMMARY>
     <BODY>
       <p>
@@ -3731,7 +3732,7 @@ Tashana Landray
       
       <CODE_SNIPPET>
         // TODO(kl@gmail.com): 연결 연산자로 "*"를 사용하라.
-        // TODO(Zeke) change this to use relations. <b>번역 누락</b>
+        // TODO(Zeke) change this to use relations.
       </CODE_SNIPPET>
       <p>
         <code>TODO</code> 주석의 형태가 "미래에 무엇을 한다"라면, 
@@ -3799,7 +3800,7 @@ Tashana Landray
       
       <p>
         이 규칙에 많은 의견들이 있지만, 기존의 많은 코드들이 이미 이 규칙을
-        따르고 있고, 우리는 일관성이 중요하다고 생각한다. <b>의미 변화</b>
+        따르고 있고, 우리는 일관성이 중요하다고 생각한다.
       </p>
       <PROS>
           80 문자 규칙을 좋아하는 사람들은 강제적인 윈도우창 크기 조절 혹은
@@ -3857,19 +3858,19 @@ Tashana Landray
         readability — for example, <code>"\xEF\xBB\xBF"</code>,
         or, even more simply, <code>u8"\uFEFF"</code>, is the
         Unicode zero-width no-break space character, which would be
-        invisible if included in the source as straight UTF-8. <b>번역 누락</b>
+        invisible if included in the source as straight UTF-8.
       </p>
       <p>
         <code>\uXXXX</code> escape sequence를 포함한 문자열이 UTF-8 로 인코딩되었음을
         보장하기 위해 <code>u8</code> 접두어를 사용하라. UTF-8 로 인코딩된
         비 ASCII 문자들을 포함한 문자열에는 이 접두어를 사용하지 않도록 하라. 컴파일러가 소스 파일을
-        UTF-8 로 해석하지 않을 경우 잘못된 결과를 내놓을 수 있기 때이다. <b>의미 변화</b>
+        UTF-8 로 해석하지 않을 경우 잘못된 결과를 내놓을 수 있기 때이다.
       </p>
       <p>
         C++11 의 <code>char16_t</code> 와 <code>char32_t</code>를 사용하지 않도록 하라. 
         그들은 비 UTF-8 문자를 지원하기 위한 것들이다. 비슷한 이유로
         <code>wchar_t</code>를 사용하지 않도록 하라(<code>wchar_t</code>를
-        광범위하게 사용하고 있는 윈도우 API 를 사용하는 코드를 작성하는 것이 아니라면) <b>의미 변화</b>
+        광범위하게 사용하고 있는 윈도우 API 를 사용하는 코드를 작성하는 것이 아니라면)
       </p>
     </BODY>
   </STYLEPOINT>
@@ -3977,7 +3978,7 @@ Tashana Landray
       </CODE_SNIPPET>
       <BAD_CODE_SNIPPET>
         // 나쁨 - 누군가 나중에 구현을 하려고 하더라도,
-        // 변수가 무엇을 의미하는지 명확하게 알 수 없다. <b>의미 변화, 검토 필요</b>
+        // 변수가 무엇을 의미하는지 명확하게 알 수 없다.
         void Circle::Rotate(double) {}
       </BAD_CODE_SNIPPET>
     </BODY>
@@ -4189,7 +4190,7 @@ Tashana Landray
   <STYLEPOINT title="반복문과 switch 문">
     <SUMMARY>
       switch 문은 블록마다 중괄호를 사용할 수 있다. 단순하지 않게 이어지는 
-      case 문들은 주석을 달아야 한다. <b>직역</b> 비어 있는 반복문은 <code>{}</code> 또는
+      case 문들은 주석을 달아야 한다. 비어 있는 반복문은 <code>{}</code> 또는
       <code>continue</code>를 사용해야 한다.
     </SUMMARY>
     <BODY>
@@ -4202,7 +4203,7 @@ Tashana Landray
         열거형 값에 대한 조건이 아닌 경우, switch 문은 항상 
         <code>default</code> case 를 갖는 것이 좋다. (열거형의 경우 처리하지 
         않은 값에 대해 컴파일러가 경고할 것이다.) 만약 default case 가 
-        실행되지 말아야 할 경우 간단히 <code>assert</code>하라:
+        실행되지 말아야 할 경우 간단히 <code>assert</code>하라.
       </p>
       
       <CODE_SNIPPET>
@@ -4256,7 +4257,7 @@ Tashana Landray
         x = r-&gt;y;
       </CODE_SNIPPET>
       <p>
-        다음에 주목하라:
+        다음에 주목하라.
       </p>
       <ul>
           <li> 멤버에 접근할 때 사용하는 마침표나 화살표 좌우
@@ -4290,14 +4291,14 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="불린 표현식">
+  <STYLEPOINT title="불리언 표현식">
     <SUMMARY>
-      <a href="#Line_Length">정해진 줄 길이</a>보다 긴 불린 표현식을 사용해야
+      <a href="#Line_Length">정해진 줄 길이</a>보다 긴 불리언 표현식을 사용해야
       할 때에는 줄바꿈을 일관성있게 해야 한다.
     </SUMMARY>
     <BODY>
       <p>
-        이 예시에서는 논리적 AND 연산자가 항상 줄의 마지막에 있다:
+        이 예시에서는 논리적 AND 연산자가 항상 줄의 마지막에 있다.
       </p>
       <CODE_SNIPPET>
         if (this_one_thing &gt; this_other_thing &amp;&amp;
@@ -4360,7 +4361,7 @@ Tashana Landray
       <p>
         <code>initializer_list</code> 생성자가 있는 타입에서 <code>{}</code>를
         사용할 때는 주의해야 한다. <code>{}</code> 문법은 가능한한 
-        <code>initializer_list</code> 생성자를 우선한다. <b>의미 변화</b>
+        <code>initializer_list</code> 생성자를 우선한다.
         <code>initializer_list</code>가 아닌 생성자를 사용하고자 하는 경우
         <code>()</code>를 사용하라.
       </p>
@@ -4373,7 +4374,7 @@ Tashana Landray
         프로그래밍 에러를 미연에 방지할 수 있다.
       </p>
       <CODE_SNIPPET>
-        int pi(3.14);  // 좋음 -- pi == 3. <b>"OK"는 좋음이 아니라 컴파일 에러의 반대 의미?</b>
+        int pi(3.14);  // 좋음 -- pi == 3.
         int pi{3.14};  // 컴파일 에러: 정밀도를 낮추는 캐스트
       </CODE_SNIPPET>
     </BODY>
@@ -4421,7 +4422,7 @@ Tashana Landray
     <BODY>
       <p>
         기본적인 포맷은 다음과 같다(주석 제외; 주석에 대해서는 
-        <a href="#Class_Comments">클래스 주석</a> 참조):
+        <a href="#Class_Comments">클래스 주석</a> 참조).
       </p>
       <CODE_SNIPPET>
         class MyClass : public OtherClass {
@@ -4478,7 +4479,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        다음은 초기화 리스트로 허용가능한 두 가지의 포맷이다:
+        다음은 초기화 리스트로 허용가능한 두 가지의 포맷이다.
       </p>
       <CODE_SNIPPET>
         // 모두 한 줄에 쓸 수 있는 경우
@@ -4636,7 +4637,7 @@ Tashana Landray
         사용하지 않아야 한다. 함수 내부에서도 빈 줄 사용을 절제하라
       </p>
       <p>
-        기본 원리는: 더 많은 코드가 스크린에 들어올수록 프로그램의
+        기본 원리는 더 많은 코드가 스크린에 들어올수록 프로그램의
         제어흐름을 따라가고 이해하기가 쉬워진다는 것이다. 물론
         지나치게 조밀한 코드도 지나치게 펼쳐진 코드만큼 가독성을 
         해칠 수 있으므로 각자 판단에 따르도록 한다. 하지만 
@@ -4687,7 +4688,7 @@ Tashana Landray
       윈도우 프로그래머는 그들만의 코딩 컨벤션을 발전시켜왔으며, 대개 
       윈도우 헤더와 다른 마이크로소프트 코드의 컨벤션을 따른다.
       당신의 코드를 모두가 쉽게 이해하도록 우리는 어떤 플랫폼에서든 
-      C++을 작성하는 모든 이들을 위한 하나의 가이드라인만을 가진다. <b>의미 변화</b>
+      C++을 작성하는 모든 이들을 위한 하나의 가이드라인만을 가진다.
     </SUMMARY>
     <BODY>
       <p>
@@ -4766,7 +4767,7 @@ Tashana Landray
     코드를 수정하는 경우 몇 분 정도 주변의 코드를 살펴보고 그것의 스타일을
     판단하라. 그 코드가 <code>if</code>문 주변에 스페이스를 사용한다면 
     당신도 그래야 한다. 만약 그 코드의 주석들이 작은 박스와 별표들을 사용한다면
-    당신의 코드도 작은 박스와 별표를 사용해야 한다. <b>직역</b>
+    당신의 코드도 작은 박스와 별표를 사용해야 한다.
   </p>
   <p>
     스타일 가이드라인의 요점은 코딩에 있어서 공통적인 어휘를 가짐으로써
