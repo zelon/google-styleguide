@@ -256,7 +256,7 @@ Tashana Landray
       </p>
       <p>
         <code>-inl.h</code> 파일도 다른 모든 헤더 파일과 마찬가지로 
-        <a href="#The__define_Guard"><code>#define</code> 가드</a>가 필요하다는 
+        <a href="#_define_가드"><code>#define</code> 가드</a>가 필요하다는 
         것을 잊지 말라.
       </p>
       
@@ -783,7 +783,6 @@ Tashana Landray
 <CATEGORY title="클래스">
   클래스는 C++의 코드의 기본적인 단위다. 당연히 우리는 이를 널리 쓴다. 이 섹션은
   클래스를 작성할 때 지켜야 할 것과 하지 말아야 할 것을 나열한다.
-
   <STYLEPOINT title="생성자에서의 작업">
     <SUMMARY>
       생성자에서 복잡한 초기화 작업을 하는 것을 피하라 (특히 실패할 수 있는 
@@ -799,8 +798,8 @@ Tashana Landray
       <CONS>
         생성자에서 작업을 할 때의 문제:
         <ul>
-          <li> (<a HREF="#Exceptions">금지되어 있는</a>) exception을 제외하고
-               생성자에서 오류를 알릴 수 있는 쉬운 방법이 없다.
+          <li> (<a HREF="#예외">금지되어 있는</a>) 예외를 제외하고 생성자에서 
+               오류를 알릴 수 있는 쉬운 방법이 없다.
                </li>
           <li> 만약 작업이 실패할 경우, 우리는 이제 초기화에 실패한 객체를 
                가지게 되고, 이런 객체는 특정할 수가 없는 상태일 수 있다.
@@ -1120,8 +1119,7 @@ Tashana Landray
       </p>
       <p>
         구조체와 클래스의 멤버 변수들은 
-        <a HREF="#Variable_Names">서로 다른 이름 규칙</a>을 가지는 데 
-        주목하라.
+        <a HREF="#변수_이름">서로 다른 이름 규칙</a>을 가지는 데 주목하라.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -1173,7 +1171,7 @@ Tashana Landray
         <p>
           하위 클래스로부터 접근해야 할 필요가 있을 수 있는 멤버 함수들에게만 
           <code>protected</code>의 사용을 제한하라. 
-          <a href="#Access_Control">데이터 멤버는 항상 private여야</a> 하는 데 
+          <a href="#접근_제어">데이터 멤버는 항상 private여야</a> 하는 데 
           주목하라.
         </p>
         <p>
@@ -1210,11 +1208,11 @@ Tashana Landray
       </CONS>
       <DECISION>
         다중 상속은 최대 하나의 예외를 제외하고는 모든 상위 클래스가 오직 
-        <A HREF="#Interfaces">순수한 인터페이스</A>일 때만 허용된다. 순수한 
+        <A HREF="#인터페이스">순수한 인터페이스</A>일 때만 허용된다. 순수한 
         인터페이스로 남아 있음을 보장하기 위해 이들은 <code>Interface</code>라는
         접미어로 끝나야 한다.
         <SUBSECTION title="주의:">
-          윈도우에는 이 규칙의 <a HREF="#Windows_Code">예외</a>가 하나 있다.
+          윈도우에는 이 규칙의 <a HREF="#윈도우_코드">예외</a>가 하나 있다.
         </SUBSECTION>
       </DECISION>
     </BODY>
@@ -1272,6 +1270,7 @@ Tashana Landray
       </DECISION>
     </BODY>
   </STYLEPOINT>
+  
   <STYLEPOINT title="연산자 오버로드">
     <SUMMARY>
       흔치 않은 특별한 상황이 아니면 연산자를 오버로드하지 말라. 사용자가 
@@ -1353,8 +1352,8 @@ Tashana Landray
           오버로드할 수 있다. 
         </p>
         <p>
-          <a HREF="#복사 연산자">복사 연산자</a>와 
-          <a HREF="#함수 오버로드">함수 오버로드</a>를 참조하라.
+          <a HREF="#복사_생성자">복사 생성자</a>와 
+          <a HREF="#함수_오버로드">함수 오버로드</a>를 참조하라.
         </p>
       </DECISION>
     </BODY>
@@ -1487,9 +1486,10 @@ Tashana Landray
           배타적인 소유권을 나타내는, C++11에서 도입된 스마트 포인터 타입이다. 
           <code>std::unique_ptr</code>이 범위 밖으로 사라지면 객체가 삭제된다. 
           복사될 수 없으나 소유권 이전에 해당하는 <em>이동</em>을 할 수 있다.
-          <code>shared_ptr</code>은 복사가 가능한 것으로, 동적으로 할당된 객체에 대한 공유된 소유권을 
-          나타내는 스마트 포인터 타입이다. 객체의 소유권은 모든 복사본에서 공유되며, 객체는 마지막 
-          <code>shared_ptr</code>가 파괴될 때 삭제된다.
+          <code>shared_ptr</code>은 복사가 가능한 것으로, 동적으로 할당된 객체에
+          대한 공유된 소유권을 나타내는 스마트 포인터 타입이다. 객체의 소유권은 
+          모든 복사본에서 공유되며, 객체는 마지막 <code>shared_ptr</code>가 
+          파괴될 때 삭제된다.
         </p>
       </DEFINITION>
       <PROS>
@@ -1498,8 +1498,8 @@ Tashana Landray
             것은 사실상 불가능하다.</li>
           <li>(복사가 가능한 경우라고 해도) 복사하는 것보다 객체의 소유권을 
             이전하는 것이 쌀 수 있다.</li>
-          <li>두 사용자 사이에서의 객체 수명주기를 조정할 필요를 줄여주기 때문에,
-            소유권을 이전하는 것이 포인터나 레퍼런스를 "빌려오는" 것보다 
+          <li>두 사용자 사이에서의 객체 수명주기를 조정할 필요를 줄여주기 
+            때문에, 소유권을 이전하는 것이 포인터나 레퍼런스를 "빌려오는" 것보다 
             간단할 수 있다.</li>
           <li>스마트 포인터는 소유권 로직을 명시적이고 자기 기술적이며 
             명료하게 만듦으로써 가독성을 향상시킬 수 있다.</li>
@@ -1513,8 +1513,8 @@ Tashana Landray
         <ul>
           <li>소유권은 (스마트이건 아니건) 포인터를 통해 표현되고 이전되어야 
             한다. 포인터 문법은 값 문법(value semantics)보다 복잡하고, 특히 
-            API에서 복잡하다. 당신은 단지 소유권 뿐만이 아니라, 다른 이슈들 가운데 
-            재명명, 수명 주기, 가변성도 고민해야 한다.</li>
+            API에서 복잡하다. 당신은 단지 소유권 뿐만이 아니라, 다른 이슈들 
+            가운데 재명명, 수명 주기, 가변성도 고민해야 한다.</li>
           <li>값 문법(value semantics)의 성능상 비용은 종종 과대평가되기 때문에
             소유권 이전의 성능상 이익은 가독성과 복잡성의 비용에 대해 정당화되지 
             못할 수 있다.</li>
@@ -1522,8 +1522,9 @@ Tashana Landray
             가지도록 강제한다.</li>
           <li>스마트 포인터를 사용하는 코드는 리소스가 해제되는 곳이 덜 
             명시적이다.</li>
-          <li><code>std::unique_ptr</code>는 소유권 이전을 C++11의 이동 문법으로 표현하는 데,
-            이는 구글 코드에서 <a href="#Rvalue_references">일반적으로 금지</a>된 것으로 몇몇
+          <li><code>std::unique_ptr</code>는 소유권 이전을 C++11의 이동 문법으로 
+            표현하는 데, 이는 구글 코드에서 
+            <a href="#rvalue_레퍼런스">일반적으로 금지</a>된 것으로 몇몇
             프로그래머들에게는 혼란을 일으킬 수 있다.</li>
           <li>공유된 소유권은 주의 깊은 소유권 설계를 혼동시키는 유혹적인 대안이 
             될 수 있다.</li>
@@ -1583,8 +1584,8 @@ Tashana Landray
         어떤 프로젝트는 그들의 프로젝트 툴에서 <code>cpplint.py</code>를 어떻게 구동할
         지에 대한 설명을 가지고 있다. 만약 당신이 기여하는 프로젝트가 그렇지 않다면 
         따로
-        <A HREF="http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py"><code>cpplint.py</code></A>를 
-        다운로드받을 수 있다.
+        <A HREF="http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py">
+        <code>cpplint.py</code></A>를 다운로드 받을 수 있다.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -1935,7 +1936,7 @@ Tashana Landray
           기능들에도 적용된다.
         </p>
         <p>
-          윈도우 코드에는 이 규칙의 <a HREF="#Windows_Code">예외사항</a>이 있다.
+          윈도우 코드에는 이 규칙의 <a HREF="#윈도우_코드">예외사항</a>이 있다.
         </p>
       </DECISION>
     </BODY>
@@ -2076,7 +2077,7 @@ Tashana Landray
                </li>
           <li> <code>const</code> 수식어를 제거하기 위해서 
                <code>const_cast</code> 를 사용하라.
-               (<a HREF="#Use_of_const">const</a> 참조)
+               (<a HREF="#const의_사용">const</a> 참조)
                </li>
           
           <li> 포인터 타입을 정수 및 다른 포인터 타입과 안전하지 않게 서로 
@@ -2432,11 +2433,11 @@ Tashana Landray
       <ul>
         <li>
           <p>
-            <code>printf()</code> 포맷 지정자 중에서 몇가지 타입은 
-            64비트와 32비트에 대한 완전한 이식성을 가지지 않는다. 
-            C99은 이식 가능한 포맷 지정자를 정의한다. 불행히도 MSVC 7.1에서 
-            이 중 몇 가지가 동작하지 않고 표준 중에서 몇 가지가 빠졌다. 
-            그래서 몇 가지 경우에 못생긴 버전을 정의했다.
+            <code>printf()</code> 포맷 지정자 중에서 몇 가지 타입은 64비트와 
+            32비트에 대해 완전한 이식성을 가지지 않는다. C99는 이식 가능한 포맷 
+            지정자를 정의한다. 불행히도 MSVC 7.1에서 이 중 몇 가지가 동작하지 
+            않고 표준 중에서 몇 가지가 빠졌다. 
+            그래서 몇 가지 경우에 대한 못 생긴 버전을 정의했다.
             (표준 인클루드 파일인 <code>inttypes.h</code>의 스타일에 맞추어)
           </p>
           <CODE_SNIPPET>
@@ -2511,35 +2512,36 @@ Tashana Landray
           </table>
           <p>
             <code>PRI*</code> 매크로는 컴파일러가 연결해주는 개별 문자열들로
-            확장된다. 비상수 포맷 문자열을 사용한다면 매크로 값을 이름에 넣는 것보다
-            포맷에 넣는 것이 좋다. 일반적으로 <code>PRI*</code>
+            확장된다. 비상수 포맷 문자열을 사용한다면 매크로 값을 이름에 
+            넣는 것보다 포맷에 넣는 것이 좋다. 일반적으로 <code>PRI*</code>
             매크로를 사용할 때, <code>%</code>뒤에 길이 지정자 등을 넣는 것은
-            여전히 가능하다. 예를 들면 <code>printf("x = %30"PRIuS"\n", x)</code>
-            는 32비트 리눅스에서 <code>printf("x = %30" "u" "\n", x)</code>으로
-            확장될 것이고, 컴파일러는 <code>printf("x = %30u\n", x)</code>로
-            간주할 것이다.
+            여전히 가능하다. 예를 들면 
+            <code>printf("x = %30"PRIuS"\n", x)</code>는 32비트 리눅스에서 
+            <code>printf("x = %30" "u" "\n", x)</code>으로 확장될 것이고, 
+            컴파일러는 <code>printf("x = %30u\n", x)</code>로 간주할 것이다.
           </p>
           
-          </li>
+        </li>
 
-        <li> <code>sizeof(void *)</code> != <code>sizeof(int)</code> 라는 것을 기억하라.
-             포인터 크기의 정수가 필요하면 <code>intptr_t</code>를 사용하라.
+        <li> <code>sizeof(void *)</code> != <code>sizeof(int)</code> 라는 것을 
+             기억하라. 포인터 크기의 정수가 필요하면 <code>intptr_t</code>를 
+             사용하라.
              </li>
 
-        <li> 구조체 정렬을 다루는데 주의해야 한다. 특히 구조체가 디스크에 저장될 때 
-             더욱 주의가 필요하다. <code>int64_t</code>/<code>uint64_t</code> 멤버를 
-             가진 클래스와 구조체는 64비트 시스템에서 기본으로 8바이트 정렬된다.
-             32비트와 64비트에서 디스크에 공유되는 구조체는 두 시스템에서 
-             모두 같은 방식으로 패킹되어야 한다. 대부분의 컴파일러는 구조체 정렬을 
-             변경하는 방법을 제공한다. gcc에서는 <code>__attribute__((packed))</code>
-             를 사용할 수 있고, MSVC에서는 <code>#pragma pack()</code>과 
-             <code>__declspec(align())</code>을 사용할 수 있다.
+        <li> 구조체 정렬을 다루는데 주의해야 한다. 특히 구조체가 디스크에 저장될 
+             때 더욱 주의가 필요하다. <code>int64_t</code>/<code>uint64_t</code> 
+             멤버를 가진 클래스와 구조체는 64비트 시스템에서 기본으로 8바이트 
+             정렬된다. 32비트와 64비트에서 디스크에 공유되는 구조체는 두 
+             시스템에서 모두 같은 방식으로 패킹되어야 한다. 대부분의 컴파일러는 
+             구조체 정렬을 변경하는 방법을 제공한다. gcc에서는 
+             <code>__attribute__((packed))</code>를 사용할 수 있고, MSVC에서는 
+             <code>#pragma pack()</code>과 <code>__declspec(align())</code>을 
+             사용할 수 있다.
              </li>
 
         <li>
-             
              64비트 상수 초기화에는 <code>LL</code> 이나 <code>ULL</code> 
-             접미사를 사용하라. 예를 들면
+             접미사를 사용하라. 예를 들면 
              
              <CODE_SNIPPET>
              int64_t my_value = 0x123456789LL;
@@ -2547,8 +2549,9 @@ Tashana Landray
              </CODE_SNIPPET>
              </li>
 
-        <li> 굳이 32비트와 64비트에서 다른 코드가 필요하다면 <code>#ifdef _LP64</code>
-             를 사용하라(가능하면 사용하지 않는 것이 최선이지만).
+        <li> 굳이 32비트와 64비트에서 다른 코드가 필요하다면 
+             <code>#ifdef _LP64</code>를 사용하라(가능하면 사용하지 않는 것이 
+             최선이지만).
              </li>
       </ul>
     </BODY>
@@ -2572,14 +2575,15 @@ Tashana Landray
         긴 변수 이름을 축약하는 용도로 매크로 대신에 레퍼런스를 사용하라. 
         조건부로 코드를 컴파일하는 용도로는, 글쎄, 아예 그렇게 하지 말라.
         (예외적으로 헤더파일 이중 include를 막는 
-        <code>#define</code> 가드 용도로는 사용해도 됨). 테스트를 훨씬 어렵게 만든다.
+        <code>#define</code> 가드 용도로는 사용해도 됨). 테스트를 훨씬 어렵게 
+        만든다.
       </p>
       <p>
         매크로는 다른 테크닉으로는 할 수 없는 것들을 가능케 하고, 하부 레벨의 
-        라이브러리 코드베이스에서 종종 볼 수 있다.그리고 문자열 변환(stringfying), 
-        문자열 연결과 같은 고유한 기능이 있다. 하지만 매크로를 사용하기 
-        전에 매크로를 사용하지 않고도 같은 결과를 얻을 수 있는 다른 방법을 
-        신중하게 고려하라.
+        라이브러리 코드베이스에서 종종 볼 수 있다.그리고 문자열로 변환하는 
+        기능이나 문자열을 연결하는 기능과 같은 고유한 기능이 있다. 하지만 
+        매크로를 사용하기 전에 매크로를 사용하지 않고도 같은 결과를 얻을 수 있는 
+        다른 방법을 신중하게 고려하라.
       </p>
       <p>
         아래 사용패턴을 따르면 매크로의 문제점들을 회피할 수 있다.
@@ -2605,452 +2609,463 @@ Tashana Landray
   </STYLEPOINT>
 
   <STYLEPOINT title="0과 nullptr/NULL">
-  <SUMMARY>
-    정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을,
-    포인터는 <code>nullptr</code> (혹은 <code>NULL</code>) 을,
-    char는 <code>'\0'</code> 을 사용하라.
-  </SUMMARY>
-  <BODY>
-    <p>
-      정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을 사용하는 것은 
-      명백하므로 논란이 없다.
-    </p>
-    <p>
-      포인터(변수를 가리키는 용도)에는 <code>0</code>, <code>NULL</code>, 
-      <code>nullptr</code>을 선택적으로 사용할 수 있다. C++11을 허용하는 
-      프로젝트에서는 nullptr을 사용하라. C++03 프로젝트에는 NULL이 
-      포인터처럼 보이기 때문에 NULL을 권장한다. 사실 어떤 C++ 컴파일러는 
-      유용한 경고메세지를 보여주는 것을 가능케 하는(예를 들면 sizeof(NULL)과 
-      sizeof(0)이 같지 않은 상황) NULL에 대한 특별한 정의가 있다.
-    </p>
-    <p>
-      char에는 '\0'을 사용하라. 알맞은 타입이고 코드 가독성도 향상된다.
-    </p>
-  </BODY>
+    <SUMMARY>
+      정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을,
+      포인터는 <code>nullptr</code> (혹은 <code>NULL</code>) 을,
+      char는 <code>'\0'</code> 을 사용하라.
+    </SUMMARY>
+    <BODY>
+      <p>
+        정수는 <code>0</code> 을, 실수는 <code>0.0</code> 을 사용하는 것은 
+        명백하므로 논란이 없다.
+      </p>
+      <p>
+        포인터(변수를 가리키는 용도)에는 <code>0</code>, <code>NULL</code>, 
+        <code>nullptr</code>을 선택적으로 사용할 수 있다. C++11을 허용하는 
+        프로젝트에서는 <code>nullptr</code>을 사용하라. C++03 프로젝트에는 NULL이 
+        포인터처럼 보이기 때문에 NULL을 권장한다. 사실 어떤 C++ 컴파일러는 
+        유용한 경고메세지를 보여주는 것을 가능케 하는(예를 들면 sizeof(NULL)과 
+        sizeof(0)이 같지 않은 상황) NULL에 대한 특별한 정의가 있다.
+      </p>
+      <p>
+        char에는 '\0'을 사용하라. 알맞은 타입이고 코드 가독성도 향상된다.
+      </p>
+    </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="sizeof">
-  <SUMMARY>
-    <code>sizeof(<var>type</var>)</code>보다 <code>sizeof(<var>varname</var>)</code>
-    사용을 권장한다.
-  </SUMMARY>
-  <BODY>
-    <p>
-      특정 변수의 사이즈가 필요할 때 <code>sizeof(<var>varname</var>)</code>을 
-      사용하라. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
-      타입을 변경했을 때에도 문제가 없다. <code>sizeof(<var>type</var>)</code>은 
-      특정 변수의 사이즈와 관련 없는 곳(예를 들면 외부나 내부의 데이터 포맷을 
-      관리하는 것)에서 사용될 수 있다.
-    </p>
-    <p>
-      <CODE_SNIPPET>
-        Struct data;
-        memset(&amp;data, 0, sizeof(data));
-      </CODE_SNIPPET>
-      <BAD_CODE_SNIPPET>
-        memset(&amp;data, 0, sizeof(Struct));
-      </BAD_CODE_SNIPPET>
-      <CODE_SNIPPET>
-        if (raw_size &lt; sizeof(int)) {
-          LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작다: " &lt;&lt; raw_size;
-          return false;
-        }
-      </CODE_SNIPPET>
-    </p>
-  </BODY>
+    <SUMMARY>
+      <code>sizeof(<var>type</var>)</code>보다 
+      <code>sizeof(<var>varname</var>)</code> 사용을 권장한다.
+    </SUMMARY>
+    <BODY>
+      <p>
+        특정 변수의 사이즈가 필요할 때 <code>sizeof(<var>varname</var>)</code>을 
+        사용하라. <code>sizeof(<var>varname</var>)</code>는 누군가가 그 변수의 
+        타입을 변경했을 때에도 문제가 없다. 
+        <code>sizeof(<var>type</var>)</code>은 특정 변수의 사이즈와 관련 없는 곳
+        (예를 들면 외부나 내부의 데이터 포맷을 관리하는 것)에서 사용될 수 있다.
+      </p>
+      <p>
+        <CODE_SNIPPET>
+          Struct data;
+          memset(&amp;data, 0, sizeof(data));
+        </CODE_SNIPPET>
+        <BAD_CODE_SNIPPET>
+          memset(&amp;data, 0, sizeof(Struct));
+        </BAD_CODE_SNIPPET>
+        <CODE_SNIPPET>
+          if (raw_size &lt; sizeof(int)) {
+            LOG(ERROR) &lt;&lt; "압축된 레코드가 너무 작다: " &lt;&lt; raw_size;
+            return false;
+          }
+        </CODE_SNIPPET>
+      </p>
+    </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="auto">
-  <SUMMARY>
-    타입이름을 사용하기 복잡한 곳에 <code>auto</code>를 사용하라. 
-    코드 가독성을 향상시켜주는 곳에는 명시적인 타입 선언을 사용하고, 
-    <code>auto</code>는 지역 변수에만 사용하라.
-  </SUMMARY>
-  <BODY>
-    <DEFINITION>
-      C++11에서의 <code>auto</code> 타입의 변수 표현식에서 변수 
-      초기화에 사용된다. 복사를 통해 변수를 초기화 하거나 레퍼런스를 
-      생성하는데 <code>auto</code>를 사용할 수 있다.
+    <SUMMARY>
+      타입이름을 사용하기 복잡한 곳에 <code>auto</code>를 사용하라. 
+      코드 가독성을 향상시켜주는 곳에는 명시적인 타입 선언을 사용하고, 
+      <code>auto</code>는 지역 변수에만 사용하라.
+    </SUMMARY>
+    <BODY>
+      <DEFINITION>
+        C++11에서의 <code>auto</code> 타입의 변수 표현식에서 변수 초기화에 
+        사용된다. 복사를 통해 변수를 초기화 하거나 레퍼런스를 생성하는데 
+        <code>auto</code>를 사용할 수 있다.
         <CODE_SNIPPET>
           vector&lt;string&gt; v;
           ...
-          auto s1 = v[0];  // Makes a copy of v[0].
-          const auto&amp; s2 = v[0];  // s2 is a reference to v[0].
+          auto s1 = v[0];  // v[0]의 복사본을 만든다.
+          const auto&amp; s2 = v[0];  // s2는 v[0]의 레퍼런스다.
         </CODE_SNIPPET>
-    </DEFINITION>
-    <PROS>
-      <p>
-        C++의 타입네임은 템플릿이나 네임스페이스와 연관되어 있을 때에는 
-        길고 복잡해진다. 예를 들면 아래 코드에서
-        <CODE_SNIPPET>
-          sparse_hash_map&lt;string, int&gt;::iterator iter = m.find(val);
-        </CODE_SNIPPET>
-        리턴 타입이 무엇인지, 구문의 목적이 무엇인지 알기가 어렵다. 
-        하지만 아래와 같이 변경하면 가독성이 향상된다.
-        <CODE_SNIPPET>
-          auto iter = m.find(val);
-        </CODE_SNIPPET>
-      </p>
-      <p>
-        <code>auto</code>가 없으면 한 구문에서 별 의미도 없이 
-        타입네임을 두 번 써야 하는 경우도 있다.
-        <CODE_SNIPPET>
-          diagnostics::ErrorStatus* status = new diagnostics::ErrorStatus("xyz");
-        </CODE_SNIPPET>
-      </p>
-      <p>
-        <code>auto</code>를 사용하면 타입을 명시적으로 써야하는 부담을 덜고
-        적절한 변수를 바로 사용하는 것이 쉬워진다.
-      </p>
-    </PROS>
-    <CONS>
-      <p>어떤 변수의 초기화가 멀리 선언되어 있는 다른 변수와 관련되어 있을때에는 
-        명시적인 타입을 사용하는 것이 명확할 때가 있다. 아래 구문에서
-        <CODE_SNIPPET>
-          auto i = x.Lookup(key);
-        </CODE_SNIPPET>
-        x가 선언된 부분이 코드에서 멀리 있으면, i의 타입이 무엇인지 알아내기가
-        쉽지 않다.
-      </p>
-
-      <p>프로그래머가 <code>auto</code>와 <code>const auto&amp;</code>의 차이를 
-      잘 알지 못하면  원치 않게 복사된 값을 얻게 될 수 있다. 
-      </p>
-
-      <p><code>auto</code>와 C++11 중괄호를 사용한 초기화(brace-initialization)의 
-        상호작용은 혼란스러울 수 있다. 아래 두 선언은 서로 다른 의미를 가진다.
-        <CODE_SNIPPET>
-          auto x(3);  // Note: 소괄호
-          auto y{3};  // Note: 중괄호
-        </CODE_SNIPPET>
-        <code>x</code>는 int이고, <code>y</code>는 초기화 목록(initializer_list)이다.
-        invisible proxy도 마찬가지이다.
-      </p>
-
-      <p><code>auto</code> 변수가 인터페이스에 선언되어 있다면(예를 들어 헤더의 상수로), 
-        프로그래머가 그 값을 바꾸려 했는데 타입이 바뀌어 버리면서 API가 근본적으로
-        변해버릴 수 있다.</p>
-    </CONS>
-    <DECISION>
-      <p><code>auto</code>는 지역변수로만 사용해야 한다. 파일 범위나 네임스페이스 범위에서 
-      사용하면 안되고, 클래스 멤버로도 사용해서는 안된다. 
-      <code>auto</code>타입 변수에 중괄호를 사용한 초기화 구문을 사용해도 안된다.</p>
-      
-      <p><code>auto</code> 키워드는 C++11 의 기능 중 하나인
-      "후속 리턴타입(trailing return types)"의 문법에 사용된다. 후속 리턴타입은 
-      사용을 허용하지 않는다.</p>
-    </DECISION>
-  </BODY>
+      </DEFINITION>
+      <PROS>
+        <p>
+          C++의 타입네임은 템플릿이나 네임스페이스와 연관되어 있을 때에는 
+          길고 복잡해진다. 예를 들면 아래 코드에서
+          <CODE_SNIPPET>
+            sparse_hash_map&lt;string, int&gt;::iterator iter = m.find(val);
+          </CODE_SNIPPET>
+          리턴 타입이 무엇인지, 구문의 목적이 무엇인지 알기가 어렵다. 
+          하지만 아래와 같이 변경하면 가독성이 향상된다.
+          <CODE_SNIPPET>
+            auto iter = m.find(val);
+          </CODE_SNIPPET>
+        </p>
+        <p>
+          <code>auto</code>가 없으면 한 구문에서 별 의미도 없이 
+          타입네임을 두 번 써야 하는 경우도 있다.
+          <CODE_SNIPPET>
+            diagnostics::ErrorStatus* status = new diagnostics::ErrorStatus("xyz");
+          </CODE_SNIPPET>
+        </p>
+        <p>
+          <code>auto</code>를 사용하면 타입을 명시적으로 써야하는 부담을 덜고
+          적절한 변수를 바로 사용하는 것이 쉬워진다.
+        </p>
+      </PROS>
+      <CONS>
+        <p>
+          어떤 변수의 초기화가 멀리 선언되어 있는 다른 변수와 관련되어 있을 
+          때에는 명시적인 타입을 사용하는 것이 명확할 때가 있다. 아래 구문에서
+          <CODE_SNIPPET>
+            auto i = x.Lookup(key);
+          </CODE_SNIPPET>
+          x가 선언된 부분이 코드에서 멀리 있으면, i의 타입이 무엇인지 알아내기가
+          쉽지 않다.
+        </p>
+        <p>
+          프로그래머가 <code>auto</code>와 <code>const auto&amp;</code>의 차이를 
+          잘 알지 못하면  원치 않게 복사된 값을 얻게 될 수 있다. 
+        </p>
+        <p>
+          <code>auto</code>와 C++11의 "중괄호 리스트 초기화"의 상호작용은 
+          혼란스러울 수 있다. 아래 두 선언은 서로 다른 의미를 가진다.
+          <CODE_SNIPPET>
+            auto x(3);  // Note: 소괄호
+            auto y{3};  // Note: 중괄호
+          </CODE_SNIPPET>
+          <code>x</code>는 int이고, <code>y</code>는 중괄호 초기화 리스트다.
+          invisible proxy도 마찬가지이다.
+        </p>
+        <p>
+          <code>auto</code> 변수가 인터페이스에 선언되어 있다면(예를 들어 헤더의
+          상수로), 프로그래머가 그 값을 바꾸려 했는데 타입이 바뀌어 버리면서 
+          API가 근본적으로 변해버릴 수 있다.
+        </p>
+      </CONS>
+      <DECISION>
+        <p>
+          <code>auto</code>는 지역변수로만 사용해야 한다. 파일 범위나 
+          네임스페이스 범위에서 사용하면 안되고, 클래스 멤버로도 사용해서는 
+          안된다. <code>auto</code>타입 변수에 중괄호를 사용한 초기화 구문을 
+          사용해도 안된다.
+        </p>
+        <p>
+          <code>auto</code> 키워드는 C++11 의 기능 중 하나인 "후속 
+          리턴타입(trailing return types)"의 문법에 사용된다. 후속 리턴타입은 
+          사용을 허용하지 않는다.
+        </p>
+      </DECISION>
+    </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="중괄호를 사용한 초기화">
-  <SUMMARY>
-    중괄호를 사용한 초기화(Brace Initialization)를 사용할 수 있다.
-  </SUMMARY>
-  <BODY>
-    <p>C++03에서 aggregate타입(배열, 그리고 생성자 없는 구조체)은 중괄호를 
-    사용해서 초기화 될 수 있다. 
-      <CODE_SNIPPET>
-        struct Point { int x; int y; };
-        Point p = {1, 2};
-      </CODE_SNIPPET></p>
+    <SUMMARY>
+      중괄호 리스트 초기화를 사용할 수 있다.
+    </SUMMARY>
+    <BODY>
+      <p>
+        C++03에서 (배열, 생성자 없는 구조체와 같은) aggregate 타입은 중괄호를 
+        사용해서 초기화 될 수 있다. 
+        <CODE_SNIPPET>
+          struct Point { int x; int y; };
+          Point p = {1, 2};
+        </CODE_SNIPPET>
+      </p>
+      <p>
+        C++11에서는 이 문법이 모든 데이터타입으로 확장되었다. 
+        이런 중괄호를 사용한 초기화 형태를 "중괄호 리스트 초기화"라고 부른다. 
+        아래에 몇가지 예제가 있다.
+        <CODE_SNIPPET>
+          // 요소 리스트를 받는 벡터 초기화.
+          vector&lt;string&gt; v{"foo", "bar"};
 
-    <p>C++11에서는 이 문법이 모든 데이터타입으로 확장되었다. 
-    이런 중괄호를 사용한 초기화 형태를 <i>braced-init-list</i> 라고 부른다. 
-    아래에 몇가지 예제가 있다.
-      <CODE_SNIPPET>
-        // element 목록을 받는 벡터 초기화.
-        vector&lt;string&gt; v{"foo", "bar"};
+          // 중괄호 리스트의 생성자가 explicit인 경우를 제외하고 사용가능
+          vector&lt;string&gt; v = {"foo", "bar"};
 
-        // initializer_list 생성자가 explicit인 경우를 제외하고 사용가능
-        vector&lt;string&gt; v = {"foo", "bar"};
+          // 중첩된 중괄호 리스트 초기화를 사용한 맵 초기화.
+          map&lt;int, string&gt; m = {{1, "one"}, {2, "2"}};
 
-        // 중첩된 braced-init-lists를 사용한 맵 초기화.
-        map&lt;int, string&gt; m = {{1, "one"}, {2, "2"}};
-
-        // braced-init-lists는 암묵적으로 리턴타입으로 변환될 수 있다.
-        vector&lt;int&gt; test_function() {
-          return {1, 2, 3};
-        }
-
-        // braced-init-list를 순환.
-        for (int i : {-1, -2, -3}) {}
-
-        // braced-init-list를 사용하여 함수 호출
-        void test_function2(vector&lt;int&gt; v) {}
-        test_function2({1, 2, 3});
-      </CODE_SNIPPET></p>
-    
-    <p>사용자 정의 타입 또한 <i>braced-init-list</i> 로부터 자동 생성되는 
-    <code>initializer_list</code>를 받는 생성자를 정의할 수 있다.
-      <CODE_SNIPPET>
-        class MyType {
-         public:
-          // initializer_list is a reference to the underlying init list,
-          // so it can be passed by value.
-          MyType(initializer_list&lt;int&gt; init_list) {
-            for (int element : init_list) {}
+          // 중괄호 초기화 리스트는 암묵적으로 리턴타입으로 변환될 수 있다.
+          vector&lt;int&gt; test_function() {
+            return {1, 2, 3};
           }
-        };
-        MyType m{2, 3, 5, 7};
-      </CODE_SNIPPET></p>
 
-    <p>마지막으로, 중괄호를 사용한 초기화는 <code>initializer_list</code> 
-    생성자를 가지지 않는 일반적인 생성자를 호출할 수 있다.
-      <CODE_SNIPPET>
-        double d{1.23};
-        // MyOtherType가 initializer_list 생성자를 
-        // 가지지 않는다면 일반적인 생성자를 호출
-        class MyOtherType {
-         public:
-          explicit MyOtherType(string);
-          MyOtherType(int, string);
-        };
-        MyOtherType m = {1, "b"};
-        // 생성자가 explicit이라면 "= {}" 사용불가
-        MyOtherType m{"b"};
-      </CODE_SNIPPET></p>
+          // 중괄호 초기화 리스트를 순환.
+          for (int i : {-1, -2, -3}) {}
 
-    
-    <p><i>braced-init-list</i> 를 auto 지역 변수에 할당하지 말라. 
-    요소가 하나인 경우에 혼동스러울 수 있다.
-      <BAD_CODE_SNIPPET>
-        auto d = {1.23};        // d는 initializer_list&lt;double&gt;이다
-      </BAD_CODE_SNIPPET>
-      <CODE_SNIPPET>
-        auto d = double{1.23};  // Good -- d는 initializer_list가 아니라 double.
-      </CODE_SNIPPET>
-    </p>
-  </BODY>
+          // 중괄호 초기화 리스트를 사용하여 함수 호출
+          void test_function2(vector&lt;int&gt; v) {}
+          test_function2({1, 2, 3});
+        </CODE_SNIPPET>
+      </p>
+      <p>
+        사용자 정의 타입 또한 <i>중괄호 초기화 리스트</i>로부터 자동 생성되는 
+        <code>initializer_list</code>를 받는 생성자를 정의할 수 있다.
+        <CODE_SNIPPET>
+          class MyType {
+           public:
+            // initializer_list는 기반 초기화 리스트의 레퍼런스이므로 
+            // 값으로(by value) 전달할 수 있다.
+            MyType(initializer_list&lt;int&gt; init_list) {
+              for (int element : init_list) {}
+            }
+          };
+          MyType m{2, 3, 5, 7};
+        </CODE_SNIPPET>
+      </p>
+      <p>
+        마지막으로, 중괄호를 사용한 초기화는 <code>initializer_list</code> 
+        생성자를 가지지 않는 일반적인 생성자를 호출할 수 있다.
+        <CODE_SNIPPET>
+          double d{1.23};
+          // MyOtherType가 initializer_list 생성자를 
+          // 가지지 않는다면 일반적인 생성자를 호출
+          class MyOtherType {
+           public:
+            explicit MyOtherType(string);
+            MyOtherType(int, string);
+          };
+          MyOtherType m = {1, "b"};
+          // 생성자가 explicit이라면 "= {}" 형태 사용 불가
+          MyOtherType m{"b"};
+        </CODE_SNIPPET>
+      </p>
+      <p>
+        <i>중괄호 초기화 리스트</i>를 auto 지역 변수에 할당하지 말라. 
+        요소가 하나인 경우에 혼동스러울 수 있다.
+        <BAD_CODE_SNIPPET>
+          auto d = {1.23};        // d는 initializer_list&lt;double&gt;이다
+        </BAD_CODE_SNIPPET>
+        <CODE_SNIPPET>
+          auto d = double{1.23};  // Good -- d는 initializer_list가 아니라 double.
+        </CODE_SNIPPET>
+      </p>
+    </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="람다 표현식">
     <SUMMARY>
-      람다 표현식이나 관련된 <code>std::function</code> 혹은
+      람다 표현식과 그와 연관이 있는 <code>std::function</code> 혹은 
       <code>std::bind</code> 유틸리티를 사용하지 말라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        람다 표현식으로 익명 함수 객체를 간결하게 생성할 수 있다.
-        함수의 인자로 사용될때 유용하다. 예를 들면
-        <code>
-          std::sort(v.begin(), v.end(),
-          [](string x, string y) { return x[1] &lt; y[1]; });
-        </code>
-        람다는 C++11에서 다형성 래퍼(wrapper)인 <code>std::function</code>을 비롯한 함수객체를 위한 
-        유틸리티들과 함께 소개되었다.
+        람다 표현식으로 익명 함수 객체를 간결하게 생성할 수 있다. 함수의 
+        인자로 사용할 때 유용하다. 예를 들면 <code>std::sort(v.begin(), 
+        v.end(), [](string x, string y) { return x[1] &lt; y[1]; });
+        </code>. 람다는 C++11에서 다형성 래퍼(wrapper)인 
+        <code>std::function</code>을 비롯한 함수객체를 위한 유틸리티들과 함께 
+        소개되었다.
       </DEFINITION>
       <PROS>
         <ul>
           <li>
-            람다로 STL algorithms 의 인자로 전달되는 함수객체를 다른 방식보다 
+            람다로 STL 알고리즘의 인자로 전달되는 함수객체를 다른 방식보다 
             훨씬 간결하게 만들 수 있고, 가독성도 향상된다.
           </li>
           <li>
-            람다, <code>std::function</code>, <code>std::bind</code>는 일반적인 
-            콜백 방식에 함께 사용될 수 있다. 함수를 인자로 쉽게 사용할 수 있게 해준다.
+            람다, <code>std::function</code>, <code>std::bind</code>는 
+            일반적인 콜백 방식에 함께 사용될 수 있다. 함수를 인자로 쉽게 
+            사용할 수 있게 해 준다.
           </li>
         </ul>
       </PROS>
       <CONS>
         <ul>
           <li>
-            람다의 변수 캡쳐는 사용하기 까다로울 수 있고, 
-            dangling-pointer버그의 온상이 될 수 있다.
+            람다의 변수 캡쳐는 사용하기 까다로울 수 있고, dangling-pointer
+            버그의 온상이 될 수 있다.
           </li>
           <li>
-            매우 길게 중첩된 익명함수는 코드를 이해하기 어렵고 감당할 수 없게 만든다.
+            매우 길게 중첩된 익명함수는 코드를 이해하기 어렵고 감당할 수 없게 
+            만든다.
           </li>
-          
         </ul>
       </CONS>
       <DECISION>
         <p>
-          람다 표현식, <code>std::function</code>, <code>std::bind</code>는 사용하지 말라.
+          람다 표현식, <code>std::function</code>, <code>std::bind</code>는 
+          사용하지 말라.
         </p>
       </DECISION>
     </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="Boost">
-  <SUMMARY>
-    사용이 허가된 Boost 라이브러리만 사용하라.
-  </SUMMARY>
-  <BODY>
-    <DEFINITION>
-      <a href="http://www.boost.org/">Boost 라이브러리</a> 는 
-      프로그래머들 사이에서 검증되었고(peer-reviewed), 무료이고, 
-      오픈소스인 C++ 라이브러리 모음이다.
-    </DEFINITION>
-    <PROS>
-      Boost 코드는 일반적으로 매우 고품질이고, 이식성이 높고, 
-      type trait, binder, 스마트 포인터 같은 C++ 표준 라이브러리의 
-      부족함을 충족시킨다. 또한 TR1 표준 확장 라이브러리로 제공된다.
-    </PROS>
-    <CONS>
-      일부 라이브러리는 메타프로그래밍이나 급진적인(advanced) 템플릿 
-      사용으로 가독성을 해치고 과도하게 함수형 프로그래밍 기법을 사용한다.
-
-    </CONS>
-    <DECISION>
-      
-      <div>
-        코드를 유지보수하는 모든 프로그래머들에게 높은 수준의 코드 
-        가독성을 제공하기 위해 일부 허용된 Boost 라이브러리만 사용한다. 
-        현재 아래의 라이브러리만 사용이 허가된다.
-        <ul>
-          <li> <a href="http://www.boost.org/libs/utility/call_traits.htm">
-               Call Traits</a> from <code>boost/call_traits.hpp</code>
-               </li>
-          <li> <a href="http://www.boost.org/libs/utility/compressed_pair.htm">
-               Compressed Pair</a> from <code>boost/compressed_pair.hpp</code>
-               </li>
-          <li> <a href="http://www.boost.org/libs/graph/">
-               The Boost Graph Library (BGL)</a> from <code>boost/graph</code>,
-               예외로 직렬화 (<code>adj_list_serialize.hpp</code>), 병렬/분산
-               알고리즘과 데이터 구조
-               (<code>boost/graph/parallel/*</code>, 
-               <code>boost/graph/distributed/*</code>)는 사용 불허.
-               </li>
-          <li> <a href="http://www.boost.org/libs/property_map/">
-               Property Map</a> from <code>boost/property_map</code>, 예외로 
-               병렬/분산 프로퍼티 맵은 사용 불허.(<code>boost/property_map/parallel/*</code>).
-               </li>
-          <li> The part of
-               <a href="http://www.boost.org/libs/iterator/">
-               Iterator</a> that deals with defining iterators:
-               <code>boost/iterator/iterator_adaptor.hpp</code>,
-               <code>boost/iterator/iterator_facade.hpp</code>, and
-               <code>boost/function_output_iterator.hpp</code></li>
-          <li> The part of
-               <a href="http://www.boost.org/libs/polygon/">
-               Polygon</a> that deals with Voronoi diagram construction and
-               doesn't depend on the rest of Polygon:
-               <code>boost/polygon/voronoi_builder.hpp</code>,
-               <code>boost/polygon/voronoi_diagram.hpp</code>, and
-               <code>boost/polygon/voronoi_geometry_type.hpp</code></li>
-          <li> <a href="http://www.boost.org/libs/bimap/">
-               Bimap</a> from <code>boost/bimap</code>
-               </li>
-          <li> <a href="http://www.boost.org/libs/math/doc/html/dist.html">
-               Statistical Distributions and Functions</a> from
-               <code>boost/math/distributions</code>
-               </li>
-
-        </ul>
-        다른 Boost 라이브러리도 허용 목록에 넣기 위해 활발하게 고려중이므로 
-        위의 목록은 더 추가될 수 있다.
-      </div>
-      <p>
-        아래 라이브러리도 사용이 가능하지만, C++ 11 확장 라이브러리로 대체되었다.
-        <ul>
-        <li> <a href="http://www.boost.org/libs/array/">
-             Array</a> from <code>boost/array.hpp</code>: use
-             <a href="http://en.cppreference.com/w/cpp/container/array">
-             <code>std::array</code></a> instead.
-             </li>
-        <li> <a href="http://www.boost.org/libs/ptr_container/">
-             Pointer Container</a> from <code>boost/ptr_container</code>:
-             use containers of <a href="http://en.cppreference.com/w/cpp/memory/unique_ptr">
-             <code>std::unique_ptr</code></a> instead.
-             </li>
-      </ul>
-      </p>
-    </DECISION>
-  </BODY>
+    <SUMMARY>
+      Boost 라이브러리 모음에서 공인된 라이브러리만 사용하라.
+    </SUMMARY>
+    <BODY>
+      <DEFINITION>
+        <a href="http://www.boost.org/">Boost 라이브러리</a>는 프로그래머들 
+        사이에서 검증되었고(peer-reviewed), 무료이고, 오픈소스인 C++ 
+        라이브러리 모음이다.
+      </DEFINITION>
+      <PROS>
+        Boost 코드는 일반적으로 매우 고품질이고, 이식성이 높고, type trait, 
+        binder, 스마트 포인터와 같은 C++ 표준 라이브러리의 부족함을 
+        충족시킨다. 또한 표준 라이브러리의 TR1 확장의 구현체를 제공한다.
+      </PROS>
+      <CONS>
+        일부 Boost 라이브러리는 메타프로그래밍이나 다른 고도의 템플릿 기법이나 
+        과도한 "함수형" 프로그래밍 기법 등의 가독성을 더욱 해칠 수 있는 코딩 
+        습관을 조장한다.    
+      </CONS>
+      <DECISION>
+        <div>
+          코드를 유지 보수하는 모든 프로그래머들에게 높은 수준의 코드 가독성을 
+          유지하기 위해 Boost의 공인된 일부 기능만 사용한다. 
+          현재로는 아래의 라이브러리를 사용할 수 있다.
+          <ul>
+            <li> <code>boost/call_traits.hpp</code>의 
+                 <a href="http://www.boost.org/libs/utility/call_traits.htm">
+                 Call Traits</a>
+                 </li>
+            <li> <code>boost/compressed_pair.hpp</code>의 
+                 <a href="http://www.boost.org/libs/utility/compressed_pair.htm">
+                 Compressed Pair</a>
+                 </li>
+            <li> <code>boost/graph</code>의 
+                 <a href="http://www.boost.org/libs/graph/">
+                 The Boost Graph Library (BGL)</a>,
+                 예외로 직렬화 (<code>adj_list_serialize.hpp</code>), 
+                 병렬/분산 알고리즘과 데이터 구조
+                 (<code>boost/graph/parallel/*</code>, 
+                 <code>boost/graph/distributed/*</code>)는 사용하지 말 것.
+                 </li>
+            <li> <code>boost/property_map</code>의 
+                 <a href="http://www.boost.org/libs/property_map/">프로퍼티 맵
+                 </a>, 예외로 병렬/분산 프로퍼티 맵은 사용하지 말 것 
+                 (<code>boost/property_map/parallel/*</code>).
+                 </li>
+            <li> 이터레이터 정의를 다루는 
+                 <a href="http://www.boost.org/libs/iterator/">이터레이터</a> 
+                 부분: <code>boost/iterator/iterator_adaptor.hpp</code>,
+                 <code>boost/iterator/iterator_facade.hpp</code>,
+                 <code>boost/function_output_iterator.hpp</code>
+                 </li>
+            <li> Voronoi 다이어그램 생성과 연관되고 나머지 폴리곤과 무관한 
+                 <a href="http://www.boost.org/libs/polygon/">폴리곤</a> 부분:
+                 <code>boost/polygon/voronoi_builder.hpp</code>,
+                 <code>boost/polygon/voronoi_diagram.hpp</code>, 
+                 <code>boost/polygon/voronoi_geometry_type.hpp</code>
+                 </li>
+            <li> <code>boost/bimap</code>의 
+                 <a href="http://www.boost.org/libs/bimap/">비트맵</a> 
+                 </li>
+            <li> <code>boost/math/distributions</code>의 
+                 <a href="http://www.boost.org/libs/math/doc/html/dist.html">
+                 통계적 분포와 함수</a>
+                 </li>
+          </ul>
+          다른 Boost 라이브러리도 허용 목록에 넣기 위해 활발하게 고려 중이므로 
+          위의 목록은 더 추가될 수 있다.
+        </div>
+        <p>
+          아래 라이브러리도 사용이 가능하지만, C++ 11 확장 라이브러리로 
+          대체되었다.
+          <ul>
+            <li> <code>boost/array.hpp</code>의 
+                 <a href="http://www.boost.org/libs/array/">배열</a>은 
+                 <a href="http://en.cppreference.com/w/cpp/container/array">
+                 <code>std::array</code></a>를 대신 사용하라.
+                 </li>
+            <li> <code>boost/ptr_container</code>의 
+                 <a href="http://www.boost.org/libs/ptr_container/">포인터 
+                 컨테이너 </a>는 
+                 <a href="http://en.cppreference.com/w/cpp/memory/unique_ptr">
+                 <code>std::unique_ptr</code></a>의 컨테이너를 대신 사용하라.
+                 </li>
+          </ul>
+        </p>
+      </DECISION>
+    </BODY>
   </STYLEPOINT>
-
   
-
   <STYLEPOINT title="C++11">
-  <SUMMARY>
-    C++11(기존의 C++0x)를 적절한 곳에 사용하라. 
+    <SUMMARY>
+      C++11(기존의 C++0x)를 적절한 곳에 사용하라. 
     
-    프로젝트에 C++11의 기능을 사용하기 전에 다른 환경으로의 이식성을 고려하라.
-  </SUMMARY>
-  <BODY>
-    <DEFINITION>
-      C++11은 최신의 ISO C++ 표준이다.
-      언어와 라이브러리의
-      <a href="http://en.wikipedia.org/wiki/C%2B%2B11">중요한 변경</a> 이
-      포함되어있다.
-    </DEFINITION>
-    <PROS>
-      C++11은 공식적으로 표준이고, 결국 대부분의 C++ 컴파일러가
-      지원하게 될것이다. 우리가 이미 사용하고 있는 공통 C++ 확장을 표준화했고,
-      일부 연산의 약칭(shorthands)을 허용하며,
-      성능과 안정성의 향상을 가져왔다.
-    </PROS>
-    <CONS>
-      <p>
-        C++11 표준은 이전 표준에 비해 상당히 복잡하고(1,300 페이지 vs 800 페이지),
-        많은 개발자들에게 생소하다. 몇 가지 기능에 대한 가독성과 유지보수에 대한 
-        장기적인 효과도 미지수이다. C++11의 다양한 기능이 여러 툴에 균일하게 언제 구현될것인지 
-        예측할 수 없다. 특히, 강제적으로 예전 버전의 툴을 사용하고 있는 프로젝트.
-      </p>
-      <p>
-        <a href="#Boost">Boost</a> 와 마찬가지로, 어떤 C++11 확장은 코드 가독성을 해치는 
-        코드를 만든다. 예를 들면 코드를 읽는 사람에게 유용할 수 있는 
-        checked redundancy(타입네임 같은)를 제거함으로써 혹은 템플릿 메타프로그래밍을 
-        장려함으로써. 어떤 확장은 기존 라이브러리가 제공하는 기능을 중복 제공해서
-        혼란과 변환 비용을 야기한다.
-      </p>
+      프로젝트에 C++11의 기능을 사용하기 전에 다른 환경으로의 이식성을 
+      고려하라.
+    </SUMMARY>
+    <BODY>
+      <DEFINITION>
+        C++11은 최신의 ISO C++ 표준이다.
+        언어와 라이브러리의
+        <a href="http://en.wikipedia.org/wiki/C%2B%2B11">중요한 변경</a> 이
+        포함되어있다.
+      </DEFINITION>
+      <PROS>
+        C++11은 공식 표준이고, 결국 대부분의 C++ 컴파일러가 지원하게 
+        될 것이다. 우리가 이미 사용하고 있는 공통 C++ 확장을 표준화했고,
+        일부 연산의 약칭(shorthands)을 허용하며, 성능과 안정성이 향상되었다. 
+      </PROS>
+      <CONS>
+        <p>
+          C++11 표준은 이전 표준에 비해 상당히 복잡하고(1,300 페이지 대 800 
+          페이지), 많은 개발자들에게 생소하다. 몇 가지 기능에 대한 가독성과 
+          유지 보수에 대한 장기적인 효과도 알 수 없다. 특히 예전 버전의 툴을
+          사용하도록 강제되는 프로젝트의 경우, 우리는 C++11의 다양한 기능이 
+          언제 모두 구현될 지 예측할 수 없다.
+        </p>
+        <p>
+          <a href="#Boost">Boost</a> 와 마찬가지로, 어떤 C++11 확장은 코드 
+          가독성을 해치는 코드를 만든다. 예를 들자면 코드를 읽는 사람에게 
+          유용할 수 있는 (타입 네임과 같은) checked redundancy를 제거하거나 
+          템플릿 메타프로그래밍을 장려한다. 어떤 확장은 기존 라이브러리가 
+          제공하는 기능을 중복 제공해서 혼란과 변환 비용을 야기한다.
+        </p>
       
-    </CONS>
-    <DECISION>
-      <p>
-       아래 명시된 기능 외에는 사용해도 된다. 사용이 금지된 기능을 
-       이 문서의 다른 부분에서 추가적으로 언급할 수도 있다.
-      </p>
-      <ul>
-        <li>
-          후속 리턴타입(trailing return types)의 함수. 예를 들면
-          <code>int foo();</code> 대신에 <code>auto foo() -&gt; int;</code> 로
-          쓰는 것. 기존의 많은 함수 선언과 
-          일관성을 유지하고 싶기 때문이다.
-        </li>
-        <li>
-          컴파일타임 유리수(rational numbers) (<code>&lt;ratio&gt;</code>).
-          비대한 템플릿 인터페이스 스타일과 엮일 수 있는 우려 때문이다.
-        </li>
-        <li>
-          <code>&lt;cfenv&gt;</code> 와 <code>&lt;fenv.h&gt;</code>
-          헤더. 많은 컴파일러가 안정적으로 지원하지 않기 때문이다.
-        </li>
+      </CONS>
+      <DECISION>
+        <p>
+           아래 명시된 기능 외에는 사용해도 된다. 사용이 금지된 기능을 이 
+           문서의 다른 부분에서 추가적으로 언급할 수도 있다.
+        </p>
+        <ul>
+          <li>
+            후속 리턴타입(trailing return types)의 함수. 예를 들면
+            <code>int foo();</code> 대신에 
+            <code>auto foo() -&gt; int;</code>로 쓰는 것. 기존의 많은 함수 
+            선언과 일관성을 유지하고 싶기 때문이다.
+          </li>
+          <li>
+            컴파일타임 유리수(rational numbers) (<code>&lt;ratio&gt;</code>).
+            비대한 템플릿 인터페이스 스타일과 엮일 수 있는 우려 때문이다.
+          </li>
+          <li>
+            <code>&lt;cfenv&gt;</code>와 <code>&lt;fenv.h&gt;</code> 헤더. 
+            많은 컴파일러가 안정적으로 지원하지 않기 때문이다.
+          </li>
         
-        <li>
-          람다 표현식, 혹은 그와 관련된<code>std::function</code>, 
-          <code>std::bind</code> 유틸리티.
-        </li>
-      </ul>
-    </DECISION>
-  </BODY>
+          <li>
+            람다 표현식, 혹은 그와 관련된<code>std::function</code>, 
+            <code>std::bind</code> 유틸리티.
+          </li>
+        </ul>
+      </DECISION>
+    </BODY>
   </STYLEPOINT>
-
 </CATEGORY>
 
-<CATEGORY title="네이밍">
+<CATEGORY title="이름 규칙">
   <p>
-    가장 중요한 일관성 규칙은 이름짓는 방법을 통제하는 것이다. 
-    이름의 스타일은 entity의 선언을 찾지 않아도 해당 entity가 타입인지, 변수인지,
+    가장 중요한 일관성 규칙은 이름 규칙을 통제하는 것이다. 
+    이름의 스타일은 요소의 선언을 찾지 않고 해당 요소가 타입인지, 변수인지,
     함수인지, 상수인지, 혹은 매크로인지 바로 알 수 있게 한다. 우리 머리속의
-    패턴매칭 엔진은 이러한 네이밍 규칙에 상당히 의존한다.
+    패턴매칭 엔진은 이러한 이름 규칙에 상당히 의존한다.
   </p>
   <p>
-    이름 짓는 규칙은 상당히 모호하지만, 일관성이 각각의 선호도보다 중요하다.
-    합리적이라 느끼던지 그렇지 않던지 규칙은 지켜져야 한다.
+    이름 규칙은 상당히 모호하지만, 이 영역에서 개인의 선호도보다 일관성이 
+    더 중요하다고 본다. 합리적이라고 생각하건 아니던 규칙은 지켜져야 한다.
   </p>
 
-  <STYLEPOINT title="일반 네이밍 규칙">
+  <STYLEPOINT title="일반 이름 규칙">
     <SUMMARY>
-      함수이름, 변수이름, 파일이름은 약어를 피하고 서술적으로 지어야 한다.
+      함수 이름, 변수 이름, 파일 이름은 약어를 피하고 서술적으로 지어야 한다.
     </SUMMARY>
     <BODY>
       <p>
-        가능하면 상세한 이름을 사용하라. 짧은 이름보다 신입이 보기에도 
-        한번에 이해가 가능하게 만드는 것이 더 중요하다.
-        프로젝트에 관계되지 않은 사람이 보기에 익숙하지 않은 약어를 사용하지 말고,
-        중간 글자를 지워서 축약해도 안된다.
+        가능하면 상세한 이름을 사용하라. 새로 읽는 사람이 즉시 이해할 수 있는 
+        것이 글자 길이를 줄이는 것보다 훨씬 중요하다. 프로젝트에 관계되지 않은 
+        사람이 익숙하지 않은 약어를 사용하지 말고, 중간 글자를 지워서 축약하지 
+        말라.
       </p>
       <CODE_SNIPPET>
         int price_count_reader;    // 축약없음.
@@ -3083,34 +3098,35 @@ Tashana Landray
           my_useful_class.cc<br/>
           my-useful-class.cc<br/>
           myusefulclass.cc<br/>
-          myusefulclass_test.cc  // _unittest and _regtest are deprecated.<br/>
+          myusefulclass_test.cc  // _unittest와 _regtest는 deprecate되었다.<br/>
         </code>
       </p>
       <p>
-        C++ 파일은 <code>.cc</code>으로 끝나고, 헤더 파일은
-        <code>.h</code>로 끝난다.
+        C++ 파일은 <code>.cc</code>으로 끝나고, 헤더 파일은 <code>.h</code>로 
+        끝난다.
       </p>
       <p>
-        <code>db.h</code>와 같이 <code>/usr/include</code>에 존재하는 
-        파일이름은 사용금지.
+        <code>db.h</code>와 같이 <code>/usr/include</code>에 이미 존재하는 
+        파일 이름은 사용하지 말라.
       </p>
       <p>
-        일반적으로 상세하게 파일이름을 지어라. 예를 들면 <code>http_server_logs.h</code>가
-        <code>logs.h</code>보다 좋다. <code>FooBar</code> 클래스를 위한 파일이름은
-        <code>foo_bar.h</code>, <code>foo_bar.cc</code>.
+        일반적으로 상세하게 파일이름을 지어라. 예를 들면 
+        <code>http_server_logs.h</code>가 <code>logs.h</code>보다 좋다. 
+        <code>FooBar</code> 클래스를 위한 파일 이름은 <code>foo_bar.h</code>, 
+        <code>foo_bar.cc</code>이다.
       </p>
       <p>
         인라인 함수는 <code>.h</code>에 있어야 한다. 인라인 함수의 코드가 
         짧으면 <code>.h</code> 안에 들어가고, 길다면 <code>-inl.h</code>로 
-        가야 한다. 클래스안에 많은 인라인 코드가 있다면 3개의 파일로 분리한다.
+        가야 한다. 클래스 안에 많은 인라인 코드가 있다면 3개의 파일로 분리한다.
       </p>
       <CODE_SNIPPET>
-        url_table.h      // The class declaration.
-        url_table.cc     // The class definition.
-        url_table-inl.h  // Inline functions that include lots of code.
+        url_table.h      // 클래스 선언
+        url_table.cc     // 클래스 정의
+        url_table-inl.h  // 많은 코드를 포함한 인라인 함수
       </CODE_SNIPPET>
       <p>
-        <a href="#The_-inl.h_Files">-inl.h Files</a> 섹션 참조.
+        <a href="#-inl.h_파일">-inl.h Files</a> 섹션 참조.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -3188,7 +3204,7 @@ Tashana Landray
         </CODE_SNIPPET>
         <p>
           어떤 경우에 클래스와 구조체를 써야 할 지에 대해서는
-          <a HREF="#Structs_vs._Classes">구조체 vs. 클래스</a>를 참고하라.
+          <a HREF="#구조체_대_클래스">구조체 대 클래스</a>를 참고하라.
         </p>
       </SUBSECTION>
 
@@ -3282,21 +3298,21 @@ Tashana Landray
     <BODY>
       <p>
         네임스페이스와 네임스페이스의 이름을 짓는 방식에 대해선
-        <a HREF="#Namespaces">네임스페이스</a>를 참고하라.
+        <a HREF="#네임스페이스">네임스페이스</a>를 참고하라.
       </p>
     </BODY>
   </STYLEPOINT>
 
   <STYLEPOINT title="열거형 이름">
     <SUMMARY>
-      열거형은 <A HREF="#Constant_Names">상수</A> 또는 
-      <A HREF="#Macro_Names">매크로</A> 방식 중 하나로 작성한다.
+      열거형은 <A HREF="#상수_이름">상수</A> 또는 
+      <A HREF="#매크로_이름">매크로</A> 방식 중 하나로 작성한다.
       <code>kEnumName</code> 또는 <code>ENUM_NAME</code>.
     </SUMMARY>
     <BODY>
       <p>
-        각각의 열거형 값은 <A HREF="#Constant_Names">상수</A>처럼 이름짓는
-        것이 선호된다. 하지만, <A HREF="#Macro_Names">매크로</A>처럼 이름짓는
+        각각의 열거형 값은 <A HREF="#상수_이름">상수</A>처럼 이름짓는
+        것이 선호된다. 하지만, <A HREF="#매크로_이름">매크로</A>처럼 이름짓는
         것도 허용한다. 열거형의 이름 (예: <code>UrlTableErrors</code>,
         <code>AlternateUrlTableErrors</code>)은 타입이므로 대소문자를 섞어서
         사용한다.
@@ -3314,7 +3330,7 @@ Tashana Landray
         };
       </CODE_SNIPPET>
       <p>
-        2009년 1월까지 열거형 값의 스타일은 <A HREF="#Macro_Names">매크로</A>
+        2009년 1월까지 열거형 값의 스타일은 <A HREF="#매크로_이름">매크로</A>
         방식이었다. 이 방식은 매크로와 열거형 값의 충돌을 일으켰고,
         상수 스타일의 이름을 선호하는 방식으로 규칙이 변경되었다. 
         새로 작성되는 코드는 상수 방식의 이름을 사용하는 것이 좋으나,
@@ -3836,7 +3852,7 @@ Tashana Landray
           있다. 이런 경우가 필요하지 않도록 노력하라.
         </p>
         <p>
-          예외: <a href="#The__define_Guard">header guards</a> 는 최대 길이의
+          예외: <a href="#_define_가드">헤더의 가드</a> 는 최대 길이의
           제한을 고려하지 않아도 된다.
         </p>
       </DECISION>
@@ -4036,8 +4052,8 @@ Tashana Landray
           }
       </CODE_SNIPPET>
       <p>
-        특히 이 방식은 함수 시그너쳐가 길어서 최대 <a href="#Line_Length">줄 
-        길이</a>에 맞출 수 없을 때 사용하는 것이 좋다.
+        특히 이 방식은 함수 시그너쳐가 길어서 최대 <a href="#줄_길이">줄 길이
+        </a>에 맞출 수 없을 때 사용하는 것이 좋다.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -4298,7 +4314,7 @@ Tashana Landray
 
   <STYLEPOINT title="불리언 표현식">
     <SUMMARY>
-      <a href="#Line_Length">정해진 줄 길이</a>보다 긴 불리언 표현식을 사용해야
+      <a href="#줄_길이">정해진 줄 길이</a>보다 긴 불리언 표현식을 사용해야
       할 때에는 줄바꿈을 일관성있게 해야 한다.
     </SUMMARY>
     <BODY>
@@ -4427,7 +4443,7 @@ Tashana Landray
     <BODY>
       <p>
         기본적인 포맷은 다음과 같다(주석 제외; 주석에 대해서는 
-        <a href="#Class_Comments">클래스 주석</a> 참조).
+        <a href="#클래스_주석">클래스 주석</a> 참조).
       </p>
       <CODE_SNIPPET>
         class MyClass : public OtherClass {
@@ -4471,7 +4487,7 @@ Tashana Landray
              부분을 작성한다.
              </li>
         <li> 이들 각각의 내부에서 사용되는 선언문의 순서에 관해서는 
-             <a HREF="#Declaration_Order">선언 순서</a>를 참조한다.
+             <a HREF="#선언_순서">선언 순서</a>를 참조한다.
              </li>
       </ul>
     </BODY>
@@ -4513,7 +4529,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <a href="#Namespaces">네임스페이스</a>는 들여쓰기를 증가시키지 않는다.
+        <a href="#네임스페이스">네임스페이스</a>는 들여쓰기를 증가시키지 않는다.
       </p>
       <CODE_SNIPPET>
         namespace {
@@ -4732,7 +4748,7 @@ Tashana Landray
         하지만 윈도우에서 규칙을 지키지 않아도 되는 것도 몇몇 있다.
       </p>
       <ul>
-        <li> 일반적으로 <a HREF="#Multiple_Inheritance">다중 상속의 사용은
+        <li> 일반적으로 <a HREF="#다중_상속">다중 상속의 사용은
              금지되지만</a>, COM이나 일부 ATL/WTL 클래스를 사용할 때는 이것이
              꼭 필요하다. COM이나 ATL/WTL 클래스와 인터페이스에는 다중 구현
              상속을 사용할 수 있다.
