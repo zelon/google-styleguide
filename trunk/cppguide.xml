@@ -1254,7 +1254,7 @@ Tashana Landray
       <PROS>
         클래스를 <code>Interface</code>라는 접미어로 표시하는 것은 다른 사람이 
         이들에 구현된 메서드나 정적이 아닌 데이터 멤버를 추가하면 안 된다는 
-        사실을 알게 한다. 이는 특히 <A HREF="#다중 상속">다중 상속</A>의 경우에 
+        사실을 알게 한다. 이는 특히 <A HREF="#다중_상속">다중 상속</A>의 경우에 
         특별히 중요하다. 또한 인터페이스 개념은 자바 프로그래머에게 이미 잘 
         알려져 있다.
       </PROS>
@@ -1376,7 +1376,7 @@ Tashana Landray
         보통 접근자의 정의는 헤더 파일에 인라인된다.
       </p>
       <p>
-        <a HREF="#상속">상속</a>과 <a HREF="#함수 이름">함수 이름</a>을 
+        <a HREF="#상속">상속</a>과 <a HREF="#함수_이름">함수 이름</a>을 
         참조하라.
       </p>
     </BODY>
@@ -1411,7 +1411,7 @@ Tashana Landray
         <code>friend</code> 선언은 항상 private 부분 안에 있어야 하고 
         <code>DISALLOW_COPY_AND_ASSIGN</code> 매크로 호출은 
         <code>private:</code> 부분의 마지막에 있어야 한다. 그는 클래스의 
-        마지막에 있는 것이어야 한다. <a HREF="#복사 생성자">복사 생성자</a>를 
+        마지막에 있는 것이어야 한다. <a HREF="#복사_생성자">복사 생성자</a>를 
         참조하라.
       </p>
       <p>
@@ -1421,7 +1421,7 @@ Tashana Landray
       <p>
         클래스 정의에 너무 많은 메서드 정의 인라인을 넣지 말라. 보통 사소하거나
         성능에 중요한, 매우 짧은 메서드만이 인라인으로 정의될 수 있다. 
-        <a HREF="#인라인 함수">인라인 함수</a>를 참조하라.
+        <a HREF="#인라인_함수">인라인 함수</a>를 참조하라.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -1699,7 +1699,7 @@ Tashana Landray
       <DECISION>
         <p>
           rvalue 레퍼런스를 사용하지 말고, <code>std::forward</code>나 
-          (본질적으로 rvalue 레퍼런스 타입으로 형변환하는 것에 불과한) 
+          (본질적으로 rvalue 레퍼런스 타입으로 형 변환하는 것에 불과한) 
           <code>std::move_if_noexcept</code> 유틸리티 함수나 
           <code>std::move_iterator</code>를 사용하지 말라. 복사 불가능한 개체
           (예를 들면 <code>std::unique_ptr</code>)에 대해서만, 혹은 복사 
@@ -2044,21 +2044,21 @@ Tashana Landray
     </BODY>
   </STYLEPOINT>
 
-  <STYLEPOINT title="형변환">
+  <STYLEPOINT title="형 변환">
     <SUMMARY>
-      <code>static_cast&lt;&gt;()</code> 같은 C++ 형변환을 사용하라.
+      <code>static_cast&lt;&gt;()</code> 같은 C++ 형 변환을 사용하라.
       <code>int y = (int)x;</code> 나 <code>int y = int(x);</code> 같은
-      다른 형변환 형식을 사용하지 말라.
+      다른 형 변환 형식을 사용하지 말라.
     </SUMMARY>
     <BODY>
       <DEFINITION>
-        C++은 C와는 달리 형변환의 타입을 구별하는 시스템을 도입하였다.
+        C++은 C와는 달리 형 변환의 타입을 구별하는 시스템을 도입하였다.
       </DEFINITION>
       <PROS>
-        C 형변환의 문제점은 연산이 모호하다는 것이다. 
+        C 형 변환의 문제점은 연산이 모호하다는 것이다. 
         가끔은 (<code>(int)3.5</code>와 같은) <em>conversion</em> 을 하고
         가끔은 (<code>(int)"hello"</code>와 같은) <em>cast</em> 을 한다.
-        C++ 형변환은 이것을 방지한다. 게다가 C++ 형변환은 검색하기도
+        C++ 형 변환은 이것을 방지한다. 게다가 C++ 형 변환은 검색하기도
         좋다.
       </PROS>
       <CONS>
@@ -2066,22 +2066,22 @@ Tashana Landray
       </CONS>
       <DECISION>
         <p>
-          C 스타일의 형변환을 사용하지 말라. 대신에 C++ 스타일의 형변환을 
+          C 스타일의 형 변환을 사용하지 말라. 대신에 C++ 스타일의 형 변환을 
           사용하라.
         </p>
         <ul>
           
-          <li> C 스타일 형변환이 하는 값변환에 대응되는 경우거나, 클래스의 
+          <li> C 스타일 형 변환이 하는 값변환에 대응되는 경우거나, 클래스의 
                포인터를 명시적으로 상위클래스로 업-캐스트(up-cast)를 할 때 
                <code>static_cast</code>를 사용하라.
                </li>
           <li> <code>const</code> 수식어를 제거하기 위해서 
                <code>const_cast</code> 를 사용하라.
-               (<a HREF="#const의_사용">const</a> 참조)
+               (<a href="#const의_사용">const</a> 참조)
                </li>
           
           <li> 포인터 타입을 정수 및 다른 포인터 타입과 안전하지 않게 서로 
-               형변환할 때 <code>reinterpret_cast</code>를 쓰라. 지금하는 것이 
+               형 변환할 때 <code>reinterpret_cast</code>를 쓰라. 지금하는 것이 
                무엇인지 알고, aliasing 문제를 이해할 때 이것을 쓰라.
                </li>
         </ul>
@@ -2413,7 +2413,7 @@ Tashana Landray
           이 코드는 절대 종료하지 않는다! 가끔 gcc 는 이 버그를 경고하지만, 
           경고하지 않는 경우도 많다. 마찬가지로 부호 있는 타입의 변수들과 
           부호 없는 타입의 변수들을 비교할 때 나쁜 버그들이 발생할 수 있다. 
-          근본적으로 C의 자동 형변환 방식은 부호 없는 타입들이 기대와 다르게 
+          근본적으로 C의 자동 형 변환 방식은 부호 없는 타입들이 기대와 다르게 
           거동하는 원인이 된다.
         </p>
         <p>
@@ -3126,7 +3126,7 @@ Tashana Landray
         url_table-inl.h  // 많은 코드를 포함한 인라인 함수
       </CODE_SNIPPET>
       <p>
-        <a href="#-inl.h_파일">-inl.h Files</a> 섹션 참조.
+        <a href="#-inl.h_파일">-inl.h 파일</a> 섹션 참조.
       </p>
     </BODY>
   </STYLEPOINT>
@@ -3349,7 +3349,7 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <a href="#프리프로세서_매크로">프리프로세서_매크로</a>를 참고하라.
+        <a href="#프리프로세서_매크로">프리프로세서 매크로</a>를 참고하라.
         일반적으로 매크로는 사용하지 <em>않는</em> 것이 좋다.
         하지만 절대적으로 필요하다면 대문자와 언더스코어로만 이름을 짓는다.
       </p>
@@ -4052,8 +4052,8 @@ Tashana Landray
           }
       </CODE_SNIPPET>
       <p>
-        특히 이 방식은 함수 시그너쳐가 길어서 최대 <a href="#줄_길이">줄 길이
-        </a>에 맞출 수 없을 때 사용하는 것이 좋다.
+        특히 이 방식은 함수 시그너쳐가 길어서 최대 
+        <a href="#줄_길이">줄 길이</a>에 맞출 수 없을 때 사용하는 것이 좋다.
       </p>
     </BODY>
   </STYLEPOINT>
