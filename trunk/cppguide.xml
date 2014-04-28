@@ -3048,11 +3048,11 @@ Tashana Landray
   <p>
     가장 중요한 일관성 규칙은 이름 규칙을 통제하는 것이다. 
     이름의 스타일은 요소의 선언을 찾지 않고 해당 요소가 타입인지, 변수인지,
-    함수인지, 상수인지, 혹은 매크로인지 바로 알 수 있게 한다. 우리 머리속의
+    함수인지, 상수인지, 혹은 매크로인지 바로 알 수 있게 한다. 우리 머리 속의
     패턴매칭 엔진은 이러한 이름 규칙에 상당히 의존한다.
   </p>
   <p>
-    이름 규칙은 상당히 모호하지만, 이 영역에서 개인의 선호도보다 일관성이 
+    이름 규칙은 상당히 모호하지만 이 영역에서 개인의 선호도보다 일관성이 
     더 중요하다고 본다. 합리적이라고 생각하건 아니던 규칙은 지켜져야 한다.
   </p>
 
@@ -3064,7 +3064,7 @@ Tashana Landray
       <p>
         가능하면 상세한 이름을 사용하라. 새로 읽는 사람이 즉시 이해할 수 있는 
         것이 글자 길이를 줄이는 것보다 훨씬 중요하다. 프로젝트에 관계되지 않은 
-        사람이 익숙하지 않은 약어를 사용하지 말고, 중간 글자를 지워서 축약하지 
+        사람이 익숙하지 않은 약어를 사용하지 말고 중간 글자를 지워서 축약하지 
         말라.
       </p>
       <CODE_SNIPPET>
@@ -3085,13 +3085,13 @@ Tashana Landray
 
   <STYLEPOINT title="파일 이름">
     <SUMMARY>
-      파일이름은 모두 소문자이어야 하고, 언더스코어 (<code>_</code>) 
+      파일이름은 모두 소문자이어야 하고 언더스코어 (<code>_</code>) 
       혹은 대쉬 (<code>-</code>)를 포함할 수 있다. 반드시 언더스코어를 
-      사용할 필요는 없고, 프로젝트에서 사용하는 관례를 따른다.
+      사용할 필요는 없고 프로젝트에서 사용하는 관례를 따른다.
     </SUMMARY>
     <BODY>
       <p>
-        사용가능한 파일이름:
+        사용 가능한 파일 이름:
       </p>
       <p>
         <code>
@@ -3102,7 +3102,7 @@ Tashana Landray
         </code>
       </p>
       <p>
-        C++ 파일은 <code>.cc</code>으로 끝나고, 헤더 파일은 <code>.h</code>로 
+        C++ 파일은 <code>.cc</code>으로 끝나고 헤더 파일은 <code>.h</code>로 
         끝난다.
       </p>
       <p>
@@ -3110,7 +3110,7 @@ Tashana Landray
         파일 이름은 사용하지 말라.
       </p>
       <p>
-        일반적으로 상세하게 파일이름을 지어라. 예를 들면 
+        일반적으로 상세하게 파일 이름을 지어라. 예를 들면 
         <code>http_server_logs.h</code>가 <code>logs.h</code>보다 좋다. 
         <code>FooBar</code> 클래스를 위한 파일 이름은 <code>foo_bar.h</code>, 
         <code>foo_bar.cc</code>이다.
@@ -3133,14 +3133,14 @@ Tashana Landray
 
   <STYLEPOINT title="타입 이름">
     <SUMMARY>
-      타입 이름은 대문자로 시작하며, 언더스코어 없이 단어마다 첫 글자로 
-      대문자를 사용한다. 예: <code>MyExcitingClass</code>, 
+      타입 이름은 대문자로 시작하며 언더스코어 없이 단어마다 첫 글자로 
+      대문자를 사용한다. 예를 들면 <code>MyExcitingClass</code>, 
       <code>MyExcitingEnum</code>.
     </SUMMARY>
     <BODY>
       <p>
         클래스, 구조체, typedef, 열거형을 포함한 모든 타입에 대해 같은 규칙이
-        적용된다. 다음 예시처럼, 타입 이름은 단어마다 대문자로 시작하며 
+        적용된다. 다음 예시처럼 타입 이름은 단어마다 대문자로 시작하며 
         언더스코어를 사용하지 않는다.
       </p>
       <CODE_SNIPPET>
@@ -3149,7 +3149,7 @@ Tashana Landray
         class UrlTableTester { ...
         struct UrlTableProperties { ...
 
-        // typedefs
+        // typedef
         typedef hash_map&lt;UrlTableProperties *, string&gt; PropertiesMap;
 
         // 열거형
@@ -3160,8 +3160,8 @@ Tashana Landray
 
   <STYLEPOINT title="변수 이름">
     <SUMMARY>
-      변수 이름은 모두 소문자로 작성하며, 단어 사이에 언더스코어를 사용한다.
-      클래스 멤버 변수는 이름의 끝에 언더스코어를 사용한다. 예: 
+      변수 이름은 모두 소문자로 작성하며 단어 사이에 언더스코어를 사용한다.
+      클래스 멤버 변수는 이름의 끝에 언더스코어를 사용한다. 예를 들면 
       <code>my_exciting_local_variable</code>,
       <code>my_exciting_member_variable_</code>.
     </SUMMARY>
@@ -3191,7 +3191,7 @@ Tashana Landray
         </CODE_SNIPPET>
       </SUBSECTION>
 
-      <SUBSECTION title="Struct Variables">
+      <SUBSECTION title="구조체 변수">
         <p>
           구조체에 안에 있는 데이터 멤버는 클래스에 있는 데이터 멤버와 다르게
           끝에 언더스코어를 붙이지 않고 보통 변수처럼 이름짓는다.
@@ -3210,9 +3210,9 @@ Tashana Landray
 
       <SUBSECTION title="전역 변수">
         <p>
-          제한적으로 사용되어야 하는 전역 변수의 이름에 대해서는 특별한 규칙은
-          없다. 하지만 전역 변수를 사용할 때에는 <code>g_</code>와 같이
-          로컬 변수와 쉽게 구분할 수 있는 접두어를 사용하는 것이 좋다.
+          제한적으로 사용되어야 하는 전역 변수의 이름에 대한 특별한 규칙은 없다. 
+          하지만 전역 변수를 사용할 때에는 <code>g_</code>와 같이 로컬 변수와 
+          쉽게 구분할 수 있는 접두어를 사용하는 것이 좋다.
         </p>
       </SUBSECTION>
     </BODY>
@@ -3220,12 +3220,12 @@ Tashana Landray
 
   <STYLEPOINT title="상수 이름">
     <SUMMARY>
-      <code>k</code>로 시작하는 대소문자가 섞인 이름을 사용한다. 예:
+      <code>k</code>로 시작하는 대소문자가 섞인 이름을 사용한다. 예를 들면 
       <code>kDaysInAWeek</code>.
     </SUMMARY>
     <BODY>
       <p>
-        지역변수인지, 전역변수인지, 클래스의 일부인지와 관계 없이 모든 컴파일
+        지역변수인지, 전역변수인지, 클래스의 일부인지와 상관 없이 모든 컴파일
         시점 상수들은 다른 변수들과 조금 다른 이름 규칙을 사용한다. 
         <code>k</code>로 시작하여 매 단어의 첫 글자를 대문자로 쓴다.
       </p>
@@ -3289,10 +3289,9 @@ Tashana Landray
   </STYLEPOINT>
 
   <STYLEPOINT title="네임스페이스 이름">
-    
     <SUMMARY>
       네임스페이스 이름은 모두 소문자로 하며, 프로젝트의 이름과 아마도
-      디렉터리 구조에 기반하여 작성한다.
+      디렉터리 구조에 기반하여 작성한다. 예를 들면
       <code>google_awesome_project</code>.
     </SUMMARY>
     <BODY>
@@ -3312,7 +3311,7 @@ Tashana Landray
     <BODY>
       <p>
         각각의 열거형 값은 <A HREF="#상수_이름">상수</A>처럼 이름짓는
-        것이 선호된다. 하지만, <A HREF="#매크로_이름">매크로</A>처럼 이름짓는
+        것이 선호된다. 하지만 <A HREF="#매크로_이름">매크로</A>처럼 이름짓는
         것도 허용한다. 열거형의 이름 (예: <code>UrlTableErrors</code>,
         <code>AlternateUrlTableErrors</code>)은 타입이므로 대소문자를 섞어서
         사용한다.
@@ -3337,7 +3336,6 @@ Tashana Landray
         이전 방식의 이름이 실제로 컴파일 오류를 발생시키는 것이 아니라면
         이전의 코드를 상수 스타일 이름으로 수정할 필요는 없다.
       </p>
-      
     </BODY>
   </STYLEPOINT>
 
@@ -3390,8 +3388,9 @@ Tashana Landray
     작성하는 것이 쉽지 않지만, 주석은 코드의 가독성을 유지하는 데에 절대적으로
     중요한 역할을 한다. 다음 규칙은 어디에 무엇을 주석으로 달아야 할지를 
     설명한다. 하지만 기억할 점은 주석은 매우 중요하지만, 가장 좋은 코드는
-    스스로에 대해 설명을 할 수 있는 코드라는 것이다. 타입과 변수에 이해할 수 있는
-    이름을 짓는 것이 이상한 이름을 짓고 주석을 통해 설명하는 것보다 훨씬 좋다.
+    스스로에 대해 설명을 할 수 있는 코드라는 것이다. 타입과 변수에 이해할 수 
+    있는 이름을 짓는 것이 이상한 이름을 짓고 주석을 통해 설명하는 것보다 훨씬 
+    좋다.
   </p>
   <p>
     주석을 작성할 때에는 주석을 읽는 이를 위해서 작성한다. 
@@ -3405,8 +3404,8 @@ Tashana Landray
     </SUMMARY>
     <BODY>
       <p>
-        <code>//</code> 와 <code>/* */</code>의 사용이 모두 허용되지만,
-        <code>//</code> 이 <em>아주</em> 많이 사용된다.
+        <code>//</code>와 <code>/* */</code>의 사용이 모두 허용되지만,
+        <code>//</code>이 <em>아주</em> 많이 사용된다.
         주석의 내용과 위치, 작성 방식에 일관성이 있어야 한다.
       </p>
     </BODY>
@@ -3414,12 +3413,11 @@ Tashana Landray
 
   <STYLEPOINT title="파일 주석">
     <SUMMARY>
-      모든 파일의 시작 부분에는 라이선스 문안이 있어야 하며,
+      모든 파일의 시작 부분에는 라이선스 문안이 있어야 하며, 
       이어서 파일의 내용에 대해서 설명한다.
     </SUMMARY>
     <BODY>
       <SUBSECTION title="법적 고지와 작성자 목록">
-        
         <p>
           모든 파일은 라이선스 문안을 포함해야 한다.
           프로젝트에서 사용하는 적절한 라이선스 문안을 선택하라.
