@@ -1,4 +1,4 @@
-<xsl:stylesheet version="1.0"
+﻿<xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -198,7 +198,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
   </xsl:template>
 
   <xsl:template match="PARTING_WORDS">
-    <H2>Parting Words</H2>
+    <H2>맺음말</H2>
     <xsl:apply-templates/>
   </xsl:template>
 
