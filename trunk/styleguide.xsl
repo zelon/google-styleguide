@@ -176,10 +176,10 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions">
     </xsl:variable>
     <DIV style="margin-left: 50%; font-size: 75%;">
       <P>
-        각각의 스타일 포인트마다의 추가적인 정보를 접고 펼치려면 다음과 같은 화살표 버튼을 클릭하세요:
+        각 단락에 포함된 추가정보를 보기 위해 다음과 같은 화살표 버튼을 클릭할 수 있다.
         <SPAN class="showhide_button" style="margin-left: 0; float: none">
           <xsl:value-of select="$show_button_text"/></SPAN>.
-        모든 추가정보를 한번에 접고 펼치려면, 큰 화살표 버튼을 클릭하세요:
+        모든 추가정보를 한 번에 접고 펼치려면 큰 화살표 버튼을 클릭할 수 있다.
       </P>
       <DIV style=" font-size: larger; margin-left: +2em;">
         <SPAN class="showhide_button" style="font-size: 180%; float: none">
